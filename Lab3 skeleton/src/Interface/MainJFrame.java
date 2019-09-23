@@ -27,6 +27,8 @@ public class MainJFrame extends javax.swing.JFrame {
     public MainJFrame() {
         initComponents();
         vsh = new VitalSignHistory();
+        maxBpTxtField.setText(String.valueOf(defaultMax));
+        minBpTxtField.setText(String.valueOf(defaultMin));
     }
 
     /**
