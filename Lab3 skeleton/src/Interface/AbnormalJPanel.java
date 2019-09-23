@@ -5,6 +5,10 @@
  */
 package Interface;
 
+import Business.VitalSignHistory;
+import Business.VitalSigns;
+import javax.swing.table.DefaultTableModel;
+
 /**
  *
  * @author ketanmalik
@@ -14,8 +18,30 @@ public class AbnormalJPanel extends javax.swing.JPanel {
     /**
      * Creates new form AbnormalJPanel
      */
-    public AbnormalJPanel() {
+    private VitalSignHistory vsh;
+    private double maxBp;
+    private double minBp;
+
+    public AbnormalJPanel(VitalSignHistory vsh, double maxBp, double minBp) {
         initComponents();
+        this.vsh = vsh;
+        this.maxBp = maxBp;
+        this.minBp = minBp;
+        populateTable();
+    }
+
+    private void populateTable() {
+        System.out.println("Interface.AbnormalJPanel.populateTable()");
+        DefaultTableModel dtm = (DefaultTableModel) vitalSignsTable.getModel();
+        dtm.setRowCount(0);
+
+        for (VitalSigns vs : vsh.getAbnormalList(maxBp, minBp)) {
+            Object row[] = new Object[2];
+            row[0] = vs;
+            row[1] = vs.getBloodPressure();
+            dtm.addRow(row);
+        }
+
     }
 
     /**

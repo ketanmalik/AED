@@ -97,11 +97,11 @@
                           <Group type="102" alignment="1" attributes="0">
                               <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
                               <Group type="103" groupAlignment="1" attributes="0">
-                                  <Component id="maxBpTxtField" alignment="1" min="-2" pref="53" max="-2" attributes="0"/>
+                                  <Component id="minBpTxtField" alignment="1" min="-2" pref="53" max="-2" attributes="0"/>
                                   <Group type="103" alignment="1" groupAlignment="1" max="-2" attributes="0">
                                       <Component id="jLabel1" alignment="0" max="32767" attributes="0"/>
                                       <Component id="jLabel2" alignment="0" max="32767" attributes="0"/>
-                                      <Component id="maxBpTxtField1" alignment="0" max="32767" attributes="0"/>
+                                      <Component id="maxBpTxtField" alignment="0" max="32767" attributes="0"/>
                                   </Group>
                               </Group>
                               <EmptySpace min="-2" pref="48" max="-2" attributes="0"/>
@@ -120,11 +120,11 @@
                       <EmptySpace type="separate" max="-2" attributes="0"/>
                       <Component id="jLabel1" min="-2" max="-2" attributes="0"/>
                       <EmptySpace type="unrelated" max="-2" attributes="0"/>
-                      <Component id="maxBpTxtField1" min="-2" pref="36" max="-2" attributes="0"/>
+                      <Component id="maxBpTxtField" min="-2" pref="36" max="-2" attributes="0"/>
                       <EmptySpace type="separate" max="-2" attributes="0"/>
                       <Component id="jLabel2" min="-2" max="-2" attributes="0"/>
                       <EmptySpace min="-2" pref="12" max="-2" attributes="0"/>
-                      <Component id="maxBpTxtField" min="-2" pref="36" max="-2" attributes="0"/>
+                      <Component id="minBpTxtField" min="-2" pref="36" max="-2" attributes="0"/>
                       <EmptySpace type="separate" max="-2" attributes="0"/>
                       <Component id="abnormalBtn" min="-2" max="-2" attributes="0"/>
                       <EmptySpace pref="179" max="32767" attributes="0"/>
@@ -180,14 +180,14 @@
                 <Property name="text" type="java.lang.String" value="MAX_BP:"/>
               </Properties>
             </Component>
-            <Component class="javax.swing.JTextField" name="maxBpTxtField">
+            <Component class="javax.swing.JTextField" name="minBpTxtField">
             </Component>
             <Component class="javax.swing.JLabel" name="jLabel2">
               <Properties>
                 <Property name="text" type="java.lang.String" value="MIN_BP:"/>
               </Properties>
             </Component>
-            <Component class="javax.swing.JTextField" name="maxBpTxtField1">
+            <Component class="javax.swing.JTextField" name="maxBpTxtField">
             </Component>
           </SubComponents>
         </Container>

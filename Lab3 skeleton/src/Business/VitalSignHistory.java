@@ -18,7 +18,7 @@ public class VitalSignHistory {
     public VitalSignHistory() {
         this.vitalSignHistory = new ArrayList<VitalSigns>();
     }
-    
+
     public VitalSignHistory(ArrayList<VitalSigns> vitalSignHistory) {
         this.vitalSignHistory = vitalSignHistory;
     }
@@ -38,10 +38,13 @@ public class VitalSignHistory {
     public void deleteVital(VitalSigns v) {
         vitalSignHistory.remove(v);
     }
-    
+
     public ArrayList<VitalSigns> getAbnormalList(double max, double min) {
         ArrayList<VitalSigns> list = new ArrayList<VitalSigns>();
         for (VitalSigns vs : this.getVitalSignHistory()) {
+            System.out.println(vs.getBloodPressure());
+            System.out.println(min);
+            System.out.println(max);
             if (vs.getBloodPressure() < min || vs.getBloodPressure() > max) {
                 list.add(vs);
             }

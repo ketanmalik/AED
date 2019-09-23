@@ -45,9 +45,9 @@ public class MainJFrame extends javax.swing.JFrame {
         viewBtn = new javax.swing.JButton();
         abnormalBtn = new javax.swing.JButton();
         jLabel1 = new javax.swing.JLabel();
-        maxBpTxtField = new javax.swing.JTextField();
+        minBpTxtField = new javax.swing.JTextField();
         jLabel2 = new javax.swing.JLabel();
-        maxBpTxtField1 = new javax.swing.JTextField();
+        maxBpTxtField = new javax.swing.JTextField();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setPreferredSize(new java.awt.Dimension(800, 600));
@@ -120,11 +120,11 @@ public class MainJFrame extends javax.swing.JFrame {
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, controlJpanelLayout.createSequentialGroup()
                         .addGap(0, 0, Short.MAX_VALUE)
                         .addGroup(controlJpanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addComponent(maxBpTxtField, javax.swing.GroupLayout.PREFERRED_SIZE, 53, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(minBpTxtField, javax.swing.GroupLayout.PREFERRED_SIZE, 53, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addGroup(controlJpanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
                                 .addComponent(jLabel1, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                                 .addComponent(jLabel2, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addComponent(maxBpTxtField1, javax.swing.GroupLayout.Alignment.LEADING)))
+                                .addComponent(maxBpTxtField, javax.swing.GroupLayout.Alignment.LEADING)))
                         .addGap(48, 48, 48))))
         );
         controlJpanelLayout.setVerticalGroup(
@@ -137,11 +137,11 @@ public class MainJFrame extends javax.swing.JFrame {
                 .addGap(18, 18, 18)
                 .addComponent(jLabel1)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(maxBpTxtField1, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(maxBpTxtField, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
                 .addComponent(jLabel2)
                 .addGap(12, 12, 12)
-                .addComponent(maxBpTxtField, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(minBpTxtField, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
                 .addComponent(abnormalBtn, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(179, Short.MAX_VALUE))
@@ -168,8 +168,13 @@ public class MainJFrame extends javax.swing.JFrame {
 
     private void abnormalBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_abnormalBtnActionPerformed
         // TODO add your handling code here:
-        AbnormalJPanel abnormalPanel = new AbnormalJPanel();
+        String maxBpString = maxBpTxtField.getText();
+        String minBpString = minBpTxtField.getText();
+        double maxBp = maxBpString.equals("") ? Double.MAX_VALUE : Double.parseDouble(maxBpString);
+        double minBp = minBpString.equals("") ? Double.MIN_VALUE : Double.parseDouble(minBpString);
+        AbnormalJPanel abnormalPanel = new AbnormalJPanel(vsh,maxBp,minBp);
         splitPanel.setRightComponent(abnormalPanel);
+        
     }//GEN-LAST:event_abnormalBtnActionPerformed
 
     /**
@@ -218,7 +223,7 @@ public class MainJFrame extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JTextField maxBpTxtField;
-    private javax.swing.JTextField maxBpTxtField1;
+    private javax.swing.JTextField minBpTxtField;
     private javax.swing.JSplitPane splitPanel;
     private javax.swing.JButton viewBtn;
     // End of variables declaration//GEN-END:variables
