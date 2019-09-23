@@ -27,6 +27,7 @@ public class ViewVitalJPanel extends javax.swing.JPanel {
         this.vsh = vsh;
         populateTable();
         enableTextFields(false);
+        confirmBtn.setEnabled(false);
     }
 
     /**
@@ -66,6 +67,11 @@ public class ViewVitalJPanel extends javax.swing.JPanel {
                 "Date", "Blood Pressure"
             }
         ));
+        vitalSignsTable.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                vitalSignsTableMouseClicked(evt);
+            }
+        });
         jScrollPane1.setViewportView(vitalSignsTable);
 
         jLabel1.setFont(new java.awt.Font("宋体", 0, 24)); // NOI18N
@@ -221,6 +227,7 @@ public class ViewVitalJPanel extends javax.swing.JPanel {
     private void detailButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_detailButtonActionPerformed
         int selectedRow = vitalSignsTable.getSelectedRow();
         enableTextFields(false);
+        confirmBtn.setEnabled(false);
 
         if (selectedRow >= 0) {
             VitalSigns vs = (VitalSigns) vitalSignsTable.getValueAt(selectedRow, 0);
@@ -249,6 +256,7 @@ public class ViewVitalJPanel extends javax.swing.JPanel {
     private void deleteButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_deleteButtonActionPerformed
         int selectedRow = vitalSignsTable.getSelectedRow();
         enableTextFields(false);
+        confirmBtn.setEnabled(false);
 
         if (selectedRow >= 0) {
             VitalSigns vs = (VitalSigns) vitalSignsTable.getValueAt(selectedRow, 0);
@@ -266,6 +274,7 @@ public class ViewVitalJPanel extends javax.swing.JPanel {
         int selectedRow = vitalSignsTable.getSelectedRow();
         if (selectedRow >= 0) {
             enableTextFields(true);
+            confirmBtn.setEnabled(true);
             VitalSigns vs = (VitalSigns) vitalSignsTable.getValueAt(selectedRow, 0);
             updateTextFields(vs, "Update");
 
@@ -276,7 +285,54 @@ public class ViewVitalJPanel extends javax.swing.JPanel {
 
     private void confirmBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_confirmBtnActionPerformed
         // TODO add your handling code here:
+        int selectedRow = vitalSignsTable.getSelectedRow();
+        System.out.println(selectedRow);
+        VitalSigns v = (VitalSigns) vitalSignsTable.getValueAt(selectedRow, 0);
+
+        String temp = tempTextField.getText();
+        try {
+            Double.parseDouble(temp);
+        } catch (NumberFormatException e) {
+            JOptionPane.showMessageDialog(null, temp + " is not a valid number.");
+        }
+        double temperature = Double.parseDouble(temp);
+        v.setTemperature(temperature);
+
+        String blood = bloodTextField.getText();
+        try {
+            Double.parseDouble(blood);
+        } catch (NumberFormatException e) {
+            JOptionPane.showMessageDialog(null, blood + " is not a valid number.");
+        }
+        double bloodPressure = Double.parseDouble(blood);
+        v.setBloodPressure(bloodPressure);
+
+        String p = pulseTextField.getText();
+        try {
+            Integer.parseInt(p);
+        } catch (NumberFormatException e) {
+            JOptionPane.showMessageDialog(null, p + " is not a valid number.");
+        }
+        int pulse = Integer.parseInt(p);
+        v.setPulse(pulse);
+
+        String date = dateTextField.getText();
+        v.setDate(date);
+        populateTable();
+        confirmBtn.setEnabled(false);
+        enableTextFields(false);
+        updateTextFields(v, "Delete");
+        JOptionPane.showMessageDialog(null, "Virtual sign updated successfully!");
+
     }//GEN-LAST:event_confirmBtnActionPerformed
+
+    private void vitalSignsTableMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_vitalSignsTableMouseClicked
+        // TODO add your handling code here:
+        if (confirmBtn.isEnabled()) {
+//            updateBtn.setEnabled(false);
+            confirmBtn.setEnabled(false);
+        }
+    }//GEN-LAST:event_vitalSignsTableMouseClicked
 
     private void enableTextFields(boolean b) {
         tempTextField.setEnabled(b);
@@ -292,8 +348,7 @@ public class ViewVitalJPanel extends javax.swing.JPanel {
             bloodTextField.setText(vs.getBloodPressure() + "");
             pulseTextField.setText(vs.getPulse() + "");
             dateTextField.setText(vs.getDate());
-        }
-        else{
+        } else {
             tempTextField.setText("");
             bloodTextField.setText("");
             pulseTextField.setText("");
@@ -312,6 +367,7 @@ public class ViewVitalJPanel extends javax.swing.JPanel {
             dtm.addRow(row);
         }
     }
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JTextField bloodTextField;
