@@ -26,11 +26,7 @@ public class ViewVitalJPanel extends javax.swing.JPanel {
         initComponents();
         this.vsh = vsh;
         populateTable();
-        
-        tempTextField.setEnabled(false);
-        bloodTextField.setEnabled(false);
-        pulseTextField.setEnabled(false);
-        dateTextField.setEnabled(false);
+        enableTextFields(false);
     }
 
     /**
@@ -224,15 +220,13 @@ public class ViewVitalJPanel extends javax.swing.JPanel {
 
     private void detailButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_detailButtonActionPerformed
         int selectedRow = vitalSignsTable.getSelectedRow();
+        enableTextFields(false);
 
         if (selectedRow >= 0) {
             VitalSigns vs = (VitalSigns) vitalSignsTable.getValueAt(selectedRow, 0);
-            tempTextField.setText(vs.getTemperature() + "");
-            bloodTextField.setText(vs.getBloodPressure() + "");
-            pulseTextField.setText(vs.getPulse() + "");
-            dateTextField.setText(vs.getDate());
+            updateTextFields(vs, "Update");
         } else {
-            JOptionPane.showMessageDialog(null, "Please select a row.");
+            JOptionPane.showMessageDialog(null, "Please select a vital sign to view");
         }
     }//GEN-LAST:event_detailButtonActionPerformed
 
@@ -254,28 +248,59 @@ public class ViewVitalJPanel extends javax.swing.JPanel {
 
     private void deleteButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_deleteButtonActionPerformed
         int selectedRow = vitalSignsTable.getSelectedRow();
+        enableTextFields(false);
 
         if (selectedRow >= 0) {
             VitalSigns vs = (VitalSigns) vitalSignsTable.getValueAt(selectedRow, 0);
             vsh.deleteVital(vs);
-            JOptionPane.showMessageDialog(null, "Vital Sign deleted.");
+            JOptionPane.showMessageDialog(null, "Vital Sign deleted");
             populateTable();
+            updateTextFields(vs, "Delete");
         } else {
-            JOptionPane.showMessageDialog(null, "Please select a row.");
+            JOptionPane.showMessageDialog(null, "Please select a vital sign to delete");
         }
-        tempTextField.setText("");
-        bloodTextField.setText("");
-        pulseTextField.setText("");
-        dateTextField.setText("");
     }//GEN-LAST:event_deleteButtonActionPerformed
 
     private void updateBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_updateBtnActionPerformed
         // TODO add your handling code here:
+        int selectedRow = vitalSignsTable.getSelectedRow();
+        if (selectedRow >= 0) {
+            enableTextFields(true);
+            VitalSigns vs = (VitalSigns) vitalSignsTable.getValueAt(selectedRow, 0);
+            updateTextFields(vs, "Update");
+
+        } else {
+            JOptionPane.showMessageDialog(null, "Please select a vital sign to update");
+        }
     }//GEN-LAST:event_updateBtnActionPerformed
 
     private void confirmBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_confirmBtnActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_confirmBtnActionPerformed
+
+    private void enableTextFields(boolean b) {
+        tempTextField.setEnabled(b);
+        bloodTextField.setEnabled(b);
+        pulseTextField.setEnabled(b);
+        dateTextField.setEnabled(b);
+    }
+
+    private void updateTextFields(VitalSigns vs, String mode) {
+
+        if (mode == "Update") {
+            tempTextField.setText(vs.getTemperature() + "");
+            bloodTextField.setText(vs.getBloodPressure() + "");
+            pulseTextField.setText(vs.getPulse() + "");
+            dateTextField.setText(vs.getDate());
+        }
+        else{
+            tempTextField.setText("");
+            bloodTextField.setText("");
+            pulseTextField.setText("");
+            dateTextField.setText("");
+        }
+
+    }
 
     private void populateTable() {
         DefaultTableModel dtm = (DefaultTableModel) vitalSignsTable.getModel();
