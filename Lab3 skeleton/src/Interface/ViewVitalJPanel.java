@@ -328,10 +328,9 @@ public class ViewVitalJPanel extends javax.swing.JPanel {
 
     private void vitalSignsTableMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_vitalSignsTableMouseClicked
         // TODO add your handling code here:
-        if (confirmBtn.isEnabled()) {
-//            updateBtn.setEnabled(false);
-            confirmBtn.setEnabled(false);
-        }
+        System.out.println("Interface.ViewVitalJPanel.vitalSignsTableMouseClicked()");
+        enableTextFields(false);
+        confirmBtn.setEnabled(false);
     }//GEN-LAST:event_vitalSignsTableMouseClicked
 
     private void enableTextFields(boolean b) {

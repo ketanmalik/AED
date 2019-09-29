@@ -186,43 +186,34 @@ public class CreateVitalJPanel extends javax.swing.JPanel {
         VitalSigns v = new VitalSigns();
 
         String temp = tempTextField.getText();
-        try {
-            Double.parseDouble(temp);
-        } catch (NumberFormatException e) {
-            JOptionPane.showMessageDialog(null, temp + " is not a valid number.");
-        }
-        double temperature = Double.parseDouble(temp);
-        v.setTemperature(temperature);
-
         String blood = bloodTextField.getText();
-        try {
-            Double.parseDouble(blood);
-        } catch (NumberFormatException e) {
-            JOptionPane.showMessageDialog(null, blood + " is not a valid number.");
-        }
-        double bloodPressure = Double.parseDouble(blood);
-        v.setBloodPressure(bloodPressure);
-
         String p = pulseTextField.getText();
-        try {
-            Integer.parseInt(p);
-        } catch (NumberFormatException e) {
-            JOptionPane.showMessageDialog(null, p + " is not a valid number.");
-        }
-        int pulse = Integer.parseInt(p);
-        v.setPulse(pulse);
-
         String date = dateTextField.getText();
         v.setDate(date);
-        
-        vsh.addVital(v);
 
-        JOptionPane.showMessageDialog(null, "Virtual Signs added successfully!");
+        try {
+            Double.parseDouble(temp);
+            double temperature = Double.parseDouble(temp);
+            v.setTemperature(temperature);
 
-        tempTextField.setText("");
-        bloodTextField.setText("");
-        pulseTextField.setText("");
-        dateTextField.setText("");
+            Double.parseDouble(blood);
+            double bloodPressure = Double.parseDouble(blood);
+            v.setBloodPressure(bloodPressure);
+
+            Integer.parseInt(p);
+            int pulse = Integer.parseInt(p);
+            v.setPulse(pulse);
+
+            vsh.addVital(v);
+            JOptionPane.showMessageDialog(null, "Virtual Signs added successfully!");
+            tempTextField.setText("");
+            bloodTextField.setText("");
+            pulseTextField.setText("");
+            dateTextField.setText("");
+
+        } catch (NumberFormatException e) {
+            JOptionPane.showMessageDialog(null, "Please add valid values");
+        }
     }//GEN-LAST:event_saveButtonActionPerformed
 
 
