@@ -7,6 +7,7 @@ package Interface;
 
 import Business.CarAttributes;
 import Business.CarFleet;
+import Business.FileUtil;
 import java.awt.CardLayout;
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -259,12 +260,12 @@ public class AddJPanel extends javax.swing.JPanel {
         } else {
             carObj.setName(name);
         }
-
-        try {
-            carObj.setModelNo(Integer.parseInt(modelTxtField.getText()));
-        } catch (NumberFormatException e) {
+        String modelNo = modelTxtField.getText();
+        if (modelNo == null || modelNo.equals("")) {
             showErrorMessage("Model Number");
             return;
+        } else {
+            carObj.setModelNo(modelNo);
         }
         try {
             carObj.setSerialNo(Integer.parseInt(serialNoTxtField.getText()));
@@ -272,41 +273,53 @@ public class AddJPanel extends javax.swing.JPanel {
             showErrorMessage("Serial Number");
             return;
         }
-        if (manufacturerTxtField.getText() == null || manufacturerTxtField.equals("")) {
+
+        if (manufacturerTxtField.getText()
+                == null || manufacturerTxtField.equals("")) {
             showErrorMessage("Manufacturer");
             return;
         } else {
             carObj.setManufacturer(manufacturerTxtField.getText());
         }
+
         try {
             carObj.setYearOfManufacture(Integer.parseInt(yomTxtField.getText()));
         } catch (NumberFormatException e) {
             showErrorMessage("Year of Manufacture");
             return;
         }
+
         try {
             carObj.setCapacity(Integer.parseInt(seatingCapacityTxtField.getText()));
         } catch (Exception e) {
             showErrorMessage("Seating Capacity");
             return;
         }
-        if (colorTxtField.getText() == null || colorTxtField.getText().equals("")) {
+
+        if (colorTxtField.getText()
+                == null || colorTxtField.getText().equals("")) {
             showErrorMessage("Color");
             return;
         } else {
             carObj.setColor(colorTxtField.getText());
         }
+
         carObj.setAvailability(availabilityCheckBox.isSelected());
         carObj.setMaintenanceCertificate(maintenanceCheckBox.isSelected());
-        JOptionPane.showMessageDialog(null, "Car added to fleet!", "Success", JOptionPane.PLAIN_MESSAGE);
+        carObj.setDateAdded(dateAddedTxtField.getText());
+        JOptionPane.showMessageDialog(
+                null, "Car added to fleet!", "Success", JOptionPane.PLAIN_MESSAGE);
         clearFields();
+        FileUtil fileUtil = new FileUtil();
+
+        fileUtil.writeToFile(carObj);
     }//GEN-LAST:event_confirmBtnActionPerformed
 
     private void showErrorMessage(String error) {
         JOptionPane.showMessageDialog(null, "Please enter valid " + error, "Invalid Entry", JOptionPane.ERROR_MESSAGE);
     }
-    
-    private void clearFields(){
+
+    private void clearFields() {
         nameTxtField.setText("");
         modelTxtField.setText("");
         serialNoTxtField.setText("");

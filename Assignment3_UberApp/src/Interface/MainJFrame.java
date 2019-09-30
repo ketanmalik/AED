@@ -6,6 +6,7 @@
 package Interface;
 
 import Business.CarFleet;
+import Business.FileUtil;
 import java.awt.CardLayout;
 
 /**
@@ -22,6 +23,9 @@ public class MainJFrame extends javax.swing.JFrame {
     public MainJFrame() {
         initComponents();
         this.carFleet = new CarFleet();
+        FileUtil fileUtil = new FileUtil();
+        fileUtil.readFile(carFleet);
+
     }
 
     /**
@@ -166,7 +170,7 @@ public class MainJFrame extends javax.swing.JFrame {
 //        System.out.println("Interface.MainJFrame.homeBtnActionPerformed()");
 //        CardLayout layout = (CardLayout) displayPanel.getLayout();
 //        layout.first(displayPanel);
-        
+
     }//GEN-LAST:event_homeBtnActionPerformed
 
     /**

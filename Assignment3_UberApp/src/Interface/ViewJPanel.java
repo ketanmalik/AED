@@ -23,7 +23,7 @@ public class ViewJPanel extends javax.swing.JPanel {
      */
     private JPanel displayPanel;
     private CarFleet carFleet;
-
+    
     public ViewJPanel(JPanel displayPanel, CarFleet carFleet) {
         initComponents();
         this.displayPanel = displayPanel;
@@ -341,11 +341,11 @@ public class ViewJPanel extends javax.swing.JPanel {
     private void confirmBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_confirmBtnActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_confirmBtnActionPerformed
-
+    
     private void populateTable() {
         DefaultTableModel dtm = (DefaultTableModel) tblCar.getModel();
         dtm.setRowCount(0);
-
+        
         for (CarAttributes e : carFleet.getCarFleet()) {
             Object row[] = new Object[4];
             row[0] = e;
@@ -355,7 +355,7 @@ public class ViewJPanel extends javax.swing.JPanel {
             dtm.addRow(row);
         }
     }
-
+    
     private void updateTextFields(CarAttributes cs, String mode) {
         if (mode.equals("update")) {
             nameTxtField.setText(cs.getName());
@@ -365,6 +365,7 @@ public class ViewJPanel extends javax.swing.JPanel {
             yomTxtField.setText(cs.getYearOfManufacture() + "");
             seatingCapacityTxtField.setText(cs.getCapacity() + "");
             colorTxtField.setText(cs.getColor());
+            dateAddedTxtField.setText(cs.getDateAdded());
             availabilityCheckBox.setSelected(cs.isAvailability());
             maintenanceCheckBox.setSelected(cs.isMaintenanceCertificate());
         } else {
@@ -375,11 +376,12 @@ public class ViewJPanel extends javax.swing.JPanel {
             yomTxtField.setText("");
             seatingCapacityTxtField.setText("");
             colorTxtField.setText("");
+            dateAddedTxtField.setText("");
             availabilityCheckBox.setSelected(false);
             maintenanceCheckBox.setSelected(false);
         }
     }
-
+    
     private void enableFields(boolean b) {
         nameTxtField.setEnabled(b);
         modelTxtField.setEnabled(b);

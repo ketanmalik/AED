@@ -5,6 +5,7 @@
  */
 package Business;
 
+import java.text.SimpleDateFormat;
 import java.util.Date;
 
 /**
@@ -14,7 +15,7 @@ import java.util.Date;
 public class CarAttributes {
 
     private String name;
-    private int modelNo;
+    private String modelNo;
     private int serialNo;
     private String manufacturer;
     private int yearOfManufacture;
@@ -23,6 +24,26 @@ public class CarAttributes {
     private String color;
     private Date dateOfCreation;
     private boolean maintenanceCertificate;
+    private String mode = "";
+    private String dateAdded;
+
+    public String getDateAdded() {
+        return dateAdded;
+    }
+
+    public void setDateAdded(String dateAdded) {
+        this.dateAdded = dateAdded;
+    }
+
+    public String getMode() {
+        return mode;
+    }
+
+    public void setMode(String mode) {
+        System.out.println(mode);
+        this.mode = mode;
+        System.out.println(this.mode);
+    }
 
     public String getName() {
         return name;
@@ -32,11 +53,11 @@ public class CarAttributes {
         this.name = name;
     }
 
-    public int getModelNo() {
+    public String getModelNo() {
         return modelNo;
     }
 
-    public void setModelNo(int modelNo) {
+    public void setModelNo(String modelNo) {
         this.modelNo = modelNo;
     }
 
@@ -106,6 +127,14 @@ public class CarAttributes {
 
     @Override
     public String toString() {
-        return this.manufacturer;
+        String s = "";
+        System.out.println(this.mode);
+        if (getMode().equals("writeToFile")) {
+            s = this.name + "," + this.modelNo + "," + this.serialNo + "," + this.manufacturer + "," + this.yearOfManufacture + "," + this.capacity + "," + this.color + "," + this.dateAdded;
+        } else {
+            s = this.manufacturer;
+        }
+        this.mode = "";
+        return s;
     }
 }
