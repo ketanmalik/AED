@@ -26,11 +26,14 @@ public class CarFleet {
     public void setCarFleet(ArrayList<CarAttributes> carFleet) {
         this.carFleet = carFleet;
     }
-    
-    public CarAttributes addCar(){
+
+    public CarAttributes addCar() {
         CarAttributes carObject = new CarAttributes();
         carFleet.add(carObject);
         return carObject;
     }
 
+    public void deleteCar(CarAttributes car) {
+        carFleet.remove(car);
+    }
 }

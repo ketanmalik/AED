@@ -104,4 +104,8 @@ public class CarAttributes {
         this.maintenanceCertificate = maintenanceCertificate;
     }
 
+    @Override
+    public String toString() {
+        return this.manufacturer;
+    }
 }

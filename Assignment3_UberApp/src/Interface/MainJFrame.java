@@ -40,7 +40,7 @@ public class MainJFrame extends javax.swing.JFrame {
         viewBtn = new javax.swing.JButton();
         searchBtn = new javax.swing.JButton();
         titleLabel = new javax.swing.JLabel();
-        jButton1 = new javax.swing.JButton();
+        homeBtn = new javax.swing.JButton();
         displayPanel = new javax.swing.JPanel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
@@ -80,10 +80,10 @@ public class MainJFrame extends javax.swing.JFrame {
         titleLabel.setFont(new java.awt.Font("Lucida Grande", 1, 36)); // NOI18N
         titleLabel.setText("Uber Car Fleet");
 
-        jButton1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Interface/homeButtonIcon.png"))); // NOI18N
-        jButton1.addActionListener(new java.awt.event.ActionListener() {
+        homeBtn.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Interface/homeButtonIcon.png"))); // NOI18N
+        homeBtn.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton1ActionPerformed(evt);
+                homeBtnActionPerformed(evt);
             }
         });
 
@@ -95,7 +95,7 @@ public class MainJFrame extends javax.swing.JFrame {
                 .addGap(23, 23, 23)
                 .addComponent(titleLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 274, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 119, Short.MAX_VALUE)
-                .addComponent(jButton1)
+                .addComponent(homeBtn)
                 .addGap(18, 18, 18)
                 .addComponent(addBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 115, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
@@ -113,7 +113,7 @@ public class MainJFrame extends javax.swing.JFrame {
             .addGroup(controlPanelLayout.createSequentialGroup()
                 .addGap(31, 31, 31)
                 .addGroup(controlPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(homeBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGroup(controlPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                         .addComponent(addBtn)
                         .addComponent(viewBtn)
@@ -156,19 +156,18 @@ public class MainJFrame extends javax.swing.JFrame {
     private void viewBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_viewBtnActionPerformed
         // TODO add your handling code here:
         ViewJPanel viewPanel = new ViewJPanel(displayPanel, carFleet);
-        displayPanel.add("displayPanel", viewPanel);
+        displayPanel.add("viewPanel", viewPanel);
         CardLayout layout = (CardLayout) displayPanel.getLayout();
         layout.next(displayPanel);
     }//GEN-LAST:event_viewBtnActionPerformed
 
-    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-        // TODO add your handling code here:
-        displayPanel.removeAll();
-//        displayPanel.add("homePage",displayPanel);
-        CardLayout layout = (CardLayout) displayPanel.getLayout();
-        layout.next(displayPanel);
+    private void homeBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_homeBtnActionPerformed
+//        // TODO add your handling code here:
+//        System.out.println("Interface.MainJFrame.homeBtnActionPerformed()");
+//        CardLayout layout = (CardLayout) displayPanel.getLayout();
+//        layout.first(displayPanel);
         
-    }//GEN-LAST:event_jButton1ActionPerformed
+    }//GEN-LAST:event_homeBtnActionPerformed
 
     /**
      * @param args the command line arguments
@@ -210,7 +209,7 @@ public class MainJFrame extends javax.swing.JFrame {
     private javax.swing.ButtonGroup buttonGroup1;
     private javax.swing.JPanel controlPanel;
     private javax.swing.JPanel displayPanel;
-    private javax.swing.JButton jButton1;
+    private javax.swing.JButton homeBtn;
     private javax.swing.JButton searchBtn;
     private javax.swing.JSplitPane splitPane;
     private javax.swing.JLabel titleLabel;

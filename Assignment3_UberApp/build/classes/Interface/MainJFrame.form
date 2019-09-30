@@ -63,7 +63,7 @@
                       <EmptySpace min="-2" pref="23" max="-2" attributes="0"/>
                       <Component id="titleLabel" min="-2" pref="274" max="-2" attributes="0"/>
                       <EmptySpace pref="119" max="32767" attributes="0"/>
-                      <Component id="jButton1" min="-2" max="-2" attributes="0"/>
+                      <Component id="homeBtn" min="-2" max="-2" attributes="0"/>
                       <EmptySpace type="separate" max="-2" attributes="0"/>
                       <Component id="addBtn" min="-2" pref="115" max="-2" attributes="0"/>
                       <EmptySpace type="separate" max="-2" attributes="0"/>
@@ -84,7 +84,7 @@
                   <Group type="102" alignment="0" attributes="0">
                       <EmptySpace min="-2" pref="31" max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="0" attributes="0">
-                          <Component id="jButton1" alignment="0" min="-2" pref="40" max="-2" attributes="0"/>
+                          <Component id="homeBtn" alignment="0" min="-2" pref="40" max="-2" attributes="0"/>
                           <Group type="103" alignment="0" groupAlignment="3" attributes="0">
                               <Component id="addBtn" alignment="3" min="-2" max="-2" attributes="0"/>
                               <Component id="viewBtn" alignment="3" min="-2" max="-2" attributes="0"/>
@@ -150,14 +150,14 @@
                 <Property name="text" type="java.lang.String" value="Uber Car Fleet"/>
               </Properties>
             </Component>
-            <Component class="javax.swing.JButton" name="jButton1">
+            <Component class="javax.swing.JButton" name="homeBtn">
               <Properties>
                 <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
                   <Image iconType="3" name="/Interface/homeButtonIcon.png"/>
                 </Property>
               </Properties>
               <Events>
-                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jButton1ActionPerformed"/>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="homeBtnActionPerformed"/>
               </Events>
             </Component>
           </SubComponents>
