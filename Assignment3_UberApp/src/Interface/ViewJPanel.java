@@ -23,7 +23,7 @@ public class ViewJPanel extends javax.swing.JPanel {
      */
     private JPanel displayPanel;
     private CarFleet carFleet;
-    
+
     public ViewJPanel(JPanel displayPanel, CarFleet carFleet) {
         initComponents();
         this.displayPanel = displayPanel;
@@ -70,6 +70,11 @@ public class ViewJPanel extends javax.swing.JPanel {
         dateAddedLabel = new javax.swing.JLabel();
         dateAddedTxtField = new javax.swing.JTextField();
         confirmBtn = new javax.swing.JButton();
+        cityLabel = new javax.swing.JLabel();
+        cityTxtField = new javax.swing.JTextField();
+        availTimeLabel = new javax.swing.JLabel();
+        availTimeTxtBox = new javax.swing.JTextField();
+        jLabel1 = new javax.swing.JLabel();
 
         setBackground(new java.awt.Color(204, 204, 204));
 
@@ -131,34 +136,30 @@ public class ViewJPanel extends javax.swing.JPanel {
             }
         });
 
-        manufacturerLabel.setFont(new java.awt.Font("Lucida Grande", 0, 18)); // NOI18N
         manufacturerLabel.setText("Manufacturer:");
 
-        yomLabel.setFont(new java.awt.Font("Lucida Grande", 0, 18)); // NOI18N
         yomLabel.setText("Year of Manufacture:");
 
-        nameLabel.setFont(new java.awt.Font("Lucida Grande", 0, 18)); // NOI18N
         nameLabel.setText("Name:");
 
-        modeLabel.setFont(new java.awt.Font("Lucida Grande", 0, 18)); // NOI18N
         modeLabel.setText("Model:");
 
-        serialNoLabel.setFont(new java.awt.Font("Lucida Grande", 0, 18)); // NOI18N
         serialNoLabel.setText("Serial Number:");
 
-        availabilityLabel.setFont(new java.awt.Font("Lucida Grande", 0, 18)); // NOI18N
         availabilityLabel.setText("Availability:");
 
-        maintenanceLabel.setFont(new java.awt.Font("Lucida Grande", 0, 18)); // NOI18N
+        availabilityCheckBox.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                availabilityCheckBoxMouseClicked(evt);
+            }
+        });
+
         maintenanceLabel.setText("Maintenance Certificate:");
 
-        seatingCapacityLabel.setFont(new java.awt.Font("Lucida Grande", 0, 18)); // NOI18N
         seatingCapacityLabel.setText("Seating Capacity:");
 
-        colorLabel.setFont(new java.awt.Font("Lucida Grande", 0, 18)); // NOI18N
         colorLabel.setText("Color:");
 
-        dateAddedLabel.setFont(new java.awt.Font("Lucida Grande", 0, 18)); // NOI18N
         dateAddedLabel.setText("Car added on:");
 
         dateAddedTxtField.setEnabled(false);
@@ -171,98 +172,114 @@ public class ViewJPanel extends javax.swing.JPanel {
             }
         });
 
+        cityLabel.setText("City");
+
+        availTimeLabel.setText("Available in:");
+
+        availTimeTxtBox.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                availTimeTxtBoxActionPerformed(evt);
+            }
+        });
+
+        jLabel1.setText("(minutes)");
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 578, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(145, 145, 145))
             .addGroup(layout.createSequentialGroup()
                 .addGap(28, 28, 28)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                                .addComponent(modeLabel)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(modelTxtField, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                                .addComponent(serialNoLabel)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(serialNoTxtField, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                                .addComponent(manufacturerLabel)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(manufacturerTxtField, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                                .addComponent(yomLabel)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(yomTxtField, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                                .addComponent(nameLabel)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(nameTxtField, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                                .addComponent(colorLabel)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(colorTxtField, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                                .addComponent(seatingCapacityLabel)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(seatingCapacityTxtField, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                                    .addComponent(dateAddedLabel)
-                                    .addComponent(availabilityLabel)
-                                    .addComponent(maintenanceLabel))
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(dateAddedTxtField, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(availabilityCheckBox)
-                                    .addComponent(maintenanceCheckBox)))))
                     .addComponent(titleLabel)
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(127, 127, 127)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(cityLabel, javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(serialNoLabel, javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(manufacturerLabel, javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(yomLabel, javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(nameLabel, javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(modeLabel, javax.swing.GroupLayout.Alignment.TRAILING))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(modelTxtField, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(serialNoTxtField, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(manufacturerTxtField, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(yomTxtField, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(nameTxtField, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(cityTxtField, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(60, 60, 60)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(availTimeLabel, javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(availabilityLabel, javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(maintenanceLabel, javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(seatingCapacityLabel, javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(colorLabel, javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(dateAddedLabel, javax.swing.GroupLayout.Alignment.TRAILING))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                .addComponent(colorTxtField, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(seatingCapacityTxtField, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(dateAddedTxtField, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(availabilityCheckBox)
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(availTimeTxtBox, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(jLabel1))
+                            .addComponent(maintenanceCheckBox)))
+                    .addGroup(layout.createSequentialGroup()
                         .addComponent(backBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 109, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(18, 18, 18)
-                        .addComponent(detailsBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 109, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 578, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(18, 18, 18)
-                        .addComponent(deleteBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 109, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(18, 18, 18)
-                        .addComponent(updateBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 109, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(18, 18, 18)
-                        .addComponent(confirmBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 109, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap(54, Short.MAX_VALUE))
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(detailsBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 109, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(deleteBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 109, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(updateBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 109, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(confirmBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 109, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                .addContainerGap(82, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addGap(19, 19, 19)
                 .addComponent(titleLabel)
-                .addGap(28, 28, 28)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(29, 29, 29)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(backBtn)
-                    .addComponent(detailsBtn)
-                    .addComponent(deleteBtn)
-                    .addComponent(updateBtn)
-                    .addComponent(confirmBtn))
-                .addGap(43, 43, 43)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(nameLabel)
-                            .addComponent(nameTxtField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(modeLabel)
-                            .addComponent(modelTxtField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(backBtn))
+                        .addGap(38, 38, 38)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(layout.createSequentialGroup()
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                    .addComponent(nameLabel)
+                                    .addComponent(nameTxtField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                    .addComponent(modeLabel)
+                                    .addComponent(modelTxtField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                            .addGroup(layout.createSequentialGroup()
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                    .addComponent(seatingCapacityLabel)
+                                    .addComponent(seatingCapacityTxtField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                    .addComponent(colorLabel)
+                                    .addComponent(colorTxtField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))))
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(detailsBtn)
+                        .addGap(18, 18, 18)
+                        .addComponent(deleteBtn)
+                        .addGap(18, 18, 18)
+                        .addComponent(updateBtn)
+                        .addGap(18, 18, 18)
+                        .addComponent(confirmBtn)))
+                .addGap(20, 20, 20)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(serialNoLabel)
                             .addComponent(serialNoTxtField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
@@ -274,27 +291,28 @@ public class ViewJPanel extends javax.swing.JPanel {
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(yomLabel)
                             .addComponent(yomTxtField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(dateAddedLabel)
+                            .addComponent(dateAddedTxtField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(18, 18, 18)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(availabilityLabel)
+                            .addComponent(availabilityCheckBox))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(availTimeLabel)
+                            .addComponent(availTimeTxtBox, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jLabel1))))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                        .addGroup(layout.createSequentialGroup()
-                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                                .addComponent(seatingCapacityLabel)
-                                .addComponent(seatingCapacityTxtField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                                .addComponent(colorLabel)
-                                .addComponent(colorTxtField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                                .addComponent(dateAddedLabel)
-                                .addComponent(dateAddedTxtField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addGap(18, 18, 18)
-                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                                .addComponent(availabilityLabel)
-                                .addComponent(availabilityCheckBox))
-                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                            .addComponent(maintenanceLabel))
+                        .addComponent(cityTxtField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(cityLabel))
+                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                        .addComponent(maintenanceLabel)
                         .addComponent(maintenanceCheckBox)))
-                .addContainerGap(136, Short.MAX_VALUE))
+                .addContainerGap(170, Short.MAX_VALUE))
         );
     }// </editor-fold>//GEN-END:initComponents
 
@@ -307,6 +325,7 @@ public class ViewJPanel extends javax.swing.JPanel {
 
     private void deleteBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_deleteBtnActionPerformed
         // TODO add your handling code here:
+        confirmBtn.setEnabled(false);
         int selectedRow = tblCar.getSelectedRow();
         if (selectedRow >= 0) {
             CarAttributes ca = (CarAttributes) tblCar.getValueAt(selectedRow, 0);
@@ -314,12 +333,24 @@ public class ViewJPanel extends javax.swing.JPanel {
             populateTable();
             updateTextFields(ca, "delete");
         } else {
-            JOptionPane.showMessageDialog(null, "Please select a car to delete", "Error", JOptionPane.ERROR_MESSAGE);
+            showErrorMessage("delete");
         }
     }//GEN-LAST:event_deleteBtnActionPerformed
 
     private void updateBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_updateBtnActionPerformed
         // TODO add your handling code here:
+        int selectedRow = tblCar.getSelectedRow();
+        if (selectedRow >= 0) {
+            CarAttributes ca = (CarAttributes) tblCar.getValueAt(selectedRow, 0);
+            updateTextFields(ca, "update");
+            enableFields(true);
+            availTimeTxtBox.setEnabled(availabilityCheckBox.isSelected());
+            confirmBtn.setEnabled(true);
+
+        } else {
+            showErrorMessage("update");
+        }
+//        confirmBtn.setEnabled(false);
     }//GEN-LAST:event_updateBtnActionPerformed
 
     private void detailsBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_detailsBtnActionPerformed
@@ -329,23 +360,131 @@ public class ViewJPanel extends javax.swing.JPanel {
             CarAttributes ca = (CarAttributes) tblCar.getValueAt(selectedRow, 0);
             updateTextFields(ca, "update");
         } else {
-            JOptionPane.showMessageDialog(null, "Please select a car to view", "Error", JOptionPane.ERROR_MESSAGE);
+            showErrorMessage("view details");
         }
     }//GEN-LAST:event_detailsBtnActionPerformed
 
     private void tblCarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tblCarMouseClicked
         // TODO add your handling code here:
-
+        updatePage();
     }//GEN-LAST:event_tblCarMouseClicked
 
     private void confirmBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_confirmBtnActionPerformed
         // TODO add your handling code here:
+        int selectedRow = tblCar.getSelectedRow();
+        CarAttributes ca = (CarAttributes) tblCar.getValueAt(selectedRow, 0);
+
+        String name = nameTxtField.getText();
+        if (name == null || name.equals("")) {
+            showErrorMessage1("Name");
+            System.out.println(nameTxtField.getText());
+            return;
+        } else {
+            ca.setName(name);
+        }
+        String modelNo = modelTxtField.getText();
+        if (modelNo == null || modelNo.equals("")) {
+            showErrorMessage1("Model Number");
+            return;
+        } else {
+            ca.setModelNo(modelNo);
+        }
+        try {
+            ca.setSerialNo(Integer.parseInt(serialNoTxtField.getText()));
+
+        } catch (NumberFormatException e) {
+            showErrorMessage1("Serial Number");
+            return;
+        }
+        String manufacturer = manufacturerTxtField.getText();
+        if (manufacturer == null || manufacturer.equals("")) {
+            showErrorMessage1("Manufacturer");
+            return;
+        } else {
+            ca.setManufacturer(manufacturer);
+        }
+        try {
+            ca.setYearOfManufacture(Integer.parseInt(yomTxtField.getText()));
+        } catch (NumberFormatException e) {
+            showErrorMessage1("Year of Manufacture");
+            return;
+        }
+        try {
+            ca.setCapacity(Integer.parseInt(seatingCapacityTxtField.getText()));
+        } catch (Exception e) {
+            showErrorMessage1("Seating Capacity");
+            return;
+        }
+        String color = colorTxtField.getText();
+        if (color == null || colorTxtField.getText().equals("")) {
+            showErrorMessage1("Color");
+            return;
+        } else {
+            ca.setColor(color);
+        }
+        if (availTimeTxtBox.isEnabled()) {
+            try {
+                ca.setAvailableMin(Integer.parseInt(availTimeTxtBox.getText()));
+            } catch (NumberFormatException e) {
+                showErrorMessage1("time");
+                return;
+            }
+        } else {
+            ca.setAvailableMin(0);
+        }
+        String city = cityTxtField.getText();
+        if (city == null || cityTxtField.getText().equals("")) {
+            showErrorMessage1("City");
+            return;
+        } else {
+            ca.setCity(city);
+        }
+        ca.setAvailability(availabilityCheckBox.isSelected());
+        ca.setMaintenanceCertificate(maintenanceCheckBox.isSelected());
+        populateTable();
+        updatePage();
     }//GEN-LAST:event_confirmBtnActionPerformed
-    
+
+    private void availTimeTxtBoxActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_availTimeTxtBoxActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_availTimeTxtBoxActionPerformed
+
+    private void availabilityCheckBoxMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_availabilityCheckBoxMouseClicked
+        // TODO add your handling code here:
+        availTimeTxtBox.setEnabled(availabilityCheckBox.isSelected());
+//        availTimeTxtBox.setText("");
+    }//GEN-LAST:event_availabilityCheckBoxMouseClicked
+
+    private void updatePage() {
+        enableFields(false);
+        confirmBtn.setEnabled(false);
+        nameTxtField.setText("");
+        modelTxtField.setText("");
+        serialNoTxtField.setText("");
+        manufacturerTxtField.setText("");
+        yomTxtField.setText("");
+        seatingCapacityTxtField.setText("");
+        colorTxtField.setText("");
+        dateAddedTxtField.setText("");
+        cityTxtField.setText("");
+        availTimeTxtBox.setText("");
+        availTimeTxtBox.setEnabled(false);
+        availabilityCheckBox.setSelected(false);
+        maintenanceCheckBox.setSelected(false);
+    }
+
+    private void showErrorMessage(String error) {
+        JOptionPane.showMessageDialog(null, "Please select a car to " + error, "Invalid Entry", JOptionPane.ERROR_MESSAGE);
+    }
+
+    private void showErrorMessage1(String error) {
+        JOptionPane.showMessageDialog(null, "Please enter valid " + error, "Invalid Entry", JOptionPane.ERROR_MESSAGE);
+    }
+
     private void populateTable() {
         DefaultTableModel dtm = (DefaultTableModel) tblCar.getModel();
         dtm.setRowCount(0);
-        
+
         for (CarAttributes e : carFleet.getCarFleet()) {
             Object row[] = new Object[4];
             row[0] = e;
@@ -355,7 +494,7 @@ public class ViewJPanel extends javax.swing.JPanel {
             dtm.addRow(row);
         }
     }
-    
+
     private void updateTextFields(CarAttributes cs, String mode) {
         if (mode.equals("update")) {
             nameTxtField.setText(cs.getName());
@@ -365,9 +504,16 @@ public class ViewJPanel extends javax.swing.JPanel {
             yomTxtField.setText(cs.getYearOfManufacture() + "");
             seatingCapacityTxtField.setText(cs.getCapacity() + "");
             colorTxtField.setText(cs.getColor());
-            dateAddedTxtField.setText(cs.getDateAdded());
+            dateAddedTxtField.setText(cs.getDateOfCreation());
+            cityTxtField.setText(cs.getCity());
             availabilityCheckBox.setSelected(cs.isAvailability());
             maintenanceCheckBox.setSelected(cs.isMaintenanceCertificate());
+            if ((cs.getAvailableMin() + "").equals("0")) {
+                availTimeTxtBox.setText("");
+            } else {
+                availTimeTxtBox.setText(cs.getAvailableMin() + "");
+            }
+
         } else {
             nameTxtField.setText("");
             modelTxtField.setText("");
@@ -377,11 +523,14 @@ public class ViewJPanel extends javax.swing.JPanel {
             seatingCapacityTxtField.setText("");
             colorTxtField.setText("");
             dateAddedTxtField.setText("");
+            cityTxtField.setText("");
+            availTimeTxtBox.setText("");
+            availTimeTxtBox.setEnabled(false);
             availabilityCheckBox.setSelected(false);
             maintenanceCheckBox.setSelected(false);
         }
     }
-    
+
     private void enableFields(boolean b) {
         nameTxtField.setEnabled(b);
         modelTxtField.setEnabled(b);
@@ -392,12 +541,18 @@ public class ViewJPanel extends javax.swing.JPanel {
         colorTxtField.setEnabled(b);
         availabilityCheckBox.setEnabled(b);
         maintenanceCheckBox.setEnabled(b);
+        cityTxtField.setEnabled(b);
+        availTimeTxtBox.setEnabled(b);
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JLabel availTimeLabel;
+    private javax.swing.JTextField availTimeTxtBox;
     private javax.swing.JCheckBox availabilityCheckBox;
     private javax.swing.JLabel availabilityLabel;
     private javax.swing.JButton backBtn;
+    private javax.swing.JLabel cityLabel;
+    private javax.swing.JTextField cityTxtField;
     private javax.swing.JLabel colorLabel;
     private javax.swing.JTextField colorTxtField;
     private javax.swing.JButton confirmBtn;
@@ -405,6 +560,7 @@ public class ViewJPanel extends javax.swing.JPanel {
     private javax.swing.JTextField dateAddedTxtField;
     private javax.swing.JButton deleteBtn;
     private javax.swing.JButton detailsBtn;
+    private javax.swing.JLabel jLabel1;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JCheckBox maintenanceCheckBox;
     private javax.swing.JLabel maintenanceLabel;

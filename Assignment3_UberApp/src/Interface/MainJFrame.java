@@ -6,7 +6,6 @@
 package Interface;
 
 import Business.CarFleet;
-import Business.FileUtil;
 import java.awt.CardLayout;
 
 /**
@@ -23,9 +22,6 @@ public class MainJFrame extends javax.swing.JFrame {
     public MainJFrame() {
         initComponents();
         this.carFleet = new CarFleet();
-        FileUtil fileUtil = new FileUtil();
-        fileUtil.readFile(carFleet);
-
     }
 
     /**
@@ -44,7 +40,6 @@ public class MainJFrame extends javax.swing.JFrame {
         viewBtn = new javax.swing.JButton();
         searchBtn = new javax.swing.JButton();
         titleLabel = new javax.swing.JLabel();
-        homeBtn = new javax.swing.JButton();
         displayPanel = new javax.swing.JPanel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
@@ -84,13 +79,6 @@ public class MainJFrame extends javax.swing.JFrame {
         titleLabel.setFont(new java.awt.Font("Lucida Grande", 1, 36)); // NOI18N
         titleLabel.setText("Uber Car Fleet");
 
-        homeBtn.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Interface/homeButtonIcon.png"))); // NOI18N
-        homeBtn.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                homeBtnActionPerformed(evt);
-            }
-        });
-
         javax.swing.GroupLayout controlPanelLayout = new javax.swing.GroupLayout(controlPanel);
         controlPanel.setLayout(controlPanelLayout);
         controlPanelLayout.setHorizontalGroup(
@@ -98,9 +86,7 @@ public class MainJFrame extends javax.swing.JFrame {
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, controlPanelLayout.createSequentialGroup()
                 .addGap(23, 23, 23)
                 .addComponent(titleLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 274, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 119, Short.MAX_VALUE)
-                .addComponent(homeBtn)
-                .addGap(18, 18, 18)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 193, Short.MAX_VALUE)
                 .addComponent(addBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 115, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
                 .addComponent(viewBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 115, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -116,12 +102,10 @@ public class MainJFrame extends javax.swing.JFrame {
                 .addGap(24, 24, 24))
             .addGroup(controlPanelLayout.createSequentialGroup()
                 .addGap(31, 31, 31)
-                .addGroup(controlPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(homeBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addGroup(controlPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                        .addComponent(addBtn)
-                        .addComponent(viewBtn)
-                        .addComponent(searchBtn)))
+                .addGroup(controlPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(addBtn)
+                    .addComponent(viewBtn)
+                    .addComponent(searchBtn))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
@@ -165,14 +149,6 @@ public class MainJFrame extends javax.swing.JFrame {
         layout.next(displayPanel);
     }//GEN-LAST:event_viewBtnActionPerformed
 
-    private void homeBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_homeBtnActionPerformed
-//        // TODO add your handling code here:
-//        System.out.println("Interface.MainJFrame.homeBtnActionPerformed()");
-//        CardLayout layout = (CardLayout) displayPanel.getLayout();
-//        layout.first(displayPanel);
-
-    }//GEN-LAST:event_homeBtnActionPerformed
-
     /**
      * @param args the command line arguments
      */
@@ -213,7 +189,6 @@ public class MainJFrame extends javax.swing.JFrame {
     private javax.swing.ButtonGroup buttonGroup1;
     private javax.swing.JPanel controlPanel;
     private javax.swing.JPanel displayPanel;
-    private javax.swing.JButton homeBtn;
     private javax.swing.JButton searchBtn;
     private javax.swing.JSplitPane splitPane;
     private javax.swing.JLabel titleLabel;

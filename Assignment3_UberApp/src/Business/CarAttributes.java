@@ -6,6 +6,7 @@
 package Business;
 
 import java.text.SimpleDateFormat;
+import java.time.LocalDate;
 import java.util.Date;
 
 /**
@@ -14,6 +15,7 @@ import java.util.Date;
  */
 public class CarAttributes {
 
+    RandomDataGeneration randomData = new RandomDataGeneration();
     private String name;
     private String modelNo;
     private int serialNo;
@@ -22,10 +24,48 @@ public class CarAttributes {
     private int capacity;
     private boolean availability;
     private String color;
-    private Date dateOfCreation;
+    private String dateOfCreation;
     private boolean maintenanceCertificate;
-    private String mode = "";
     private String dateAdded;
+    private String city;
+    private int availableMin;
+
+    public CarAttributes() {
+    }
+
+    public CarAttributes(String name, String modelNo, int serialNo, String manufacturer, int yearOfManufacture, int capacity, String color, String dateAdded, String city, int availableMin) {
+        this.name = name;
+        this.modelNo = modelNo;
+        this.serialNo = serialNo;
+        this.manufacturer = manufacturer;
+        this.yearOfManufacture = yearOfManufacture;
+        this.capacity = capacity;
+        this.availability = randomData.randomAvailabilityGeneration();
+        this.color = color;
+        this.dateOfCreation = randomData.randomDateGeneration();
+        this.maintenanceCertificate = randomData.randomMaintenanceGeneration();
+        this.dateAdded = dateAdded;
+        this.city = city;
+        this.availableMin = availableMin;
+        System.out.println("Business.CarAttributes.<init>()");
+        System.out.println(availability);
+    }
+
+    public int getAvailableMin() {
+        return availableMin;
+    }
+
+    public void setAvailableMin(int availableMin) {
+        this.availableMin = availableMin;
+    }
+
+    public String getCity() {
+        return city;
+    }
+
+    public void setCity(String city) {
+        this.city = city;
+    }
 
     public String getDateAdded() {
         return dateAdded;
@@ -33,16 +73,6 @@ public class CarAttributes {
 
     public void setDateAdded(String dateAdded) {
         this.dateAdded = dateAdded;
-    }
-
-    public String getMode() {
-        return mode;
-    }
-
-    public void setMode(String mode) {
-        System.out.println(mode);
-        this.mode = mode;
-        System.out.println(this.mode);
     }
 
     public String getName() {
@@ -94,6 +124,7 @@ public class CarAttributes {
     }
 
     public boolean isAvailability() {
+        System.out.println(availability);
         return availability;
     }
 
@@ -109,11 +140,11 @@ public class CarAttributes {
         this.color = color;
     }
 
-    public Date getDateOfCreation() {
+    public String getDateOfCreation() {
         return dateOfCreation;
     }
 
-    public void setDateOfCreation(Date dateOfCreation) {
+    public void setDateOfCreation(String dateOfCreation) {
         this.dateOfCreation = dateOfCreation;
     }
 
@@ -127,14 +158,7 @@ public class CarAttributes {
 
     @Override
     public String toString() {
-        String s = "";
-        System.out.println(this.mode);
-        if (getMode().equals("writeToFile")) {
-            s = this.name + "," + this.modelNo + "," + this.serialNo + "," + this.manufacturer + "," + this.yearOfManufacture + "," + this.capacity + "," + this.color + "," + this.dateAdded;
-        } else {
-            s = this.manufacturer;
-        }
-        this.mode = "";
-        return s;
+
+        return this.manufacturer;
     }
 }

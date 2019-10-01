@@ -21,84 +21,67 @@
   <Layout>
     <DimensionLayout dim="0">
       <Group type="103" groupAlignment="0" attributes="0">
-          <Group type="102" alignment="1" attributes="0">
-              <EmptySpace max="32767" attributes="0"/>
-              <Component id="jScrollPane1" min="-2" pref="578" max="-2" attributes="0"/>
-              <EmptySpace min="-2" pref="145" max="-2" attributes="0"/>
-          </Group>
           <Group type="102" alignment="0" attributes="0">
               <EmptySpace min="-2" pref="28" max="-2" attributes="0"/>
               <Group type="103" groupAlignment="0" attributes="0">
+                  <Component id="titleLabel" alignment="0" min="-2" max="-2" attributes="0"/>
                   <Group type="102" attributes="0">
                       <Group type="103" groupAlignment="0" attributes="0">
-                          <Group type="102" alignment="1" attributes="0">
-                              <Component id="modeLabel" min="-2" max="-2" attributes="0"/>
-                              <EmptySpace max="-2" attributes="0"/>
-                              <Component id="modelTxtField" min="-2" pref="200" max="-2" attributes="0"/>
-                          </Group>
-                          <Group type="102" alignment="1" attributes="0">
-                              <Component id="serialNoLabel" min="-2" max="-2" attributes="0"/>
-                              <EmptySpace max="-2" attributes="0"/>
-                              <Component id="serialNoTxtField" min="-2" pref="200" max="-2" attributes="0"/>
-                          </Group>
-                          <Group type="102" alignment="1" attributes="0">
-                              <Component id="manufacturerLabel" min="-2" max="-2" attributes="0"/>
-                              <EmptySpace max="-2" attributes="0"/>
-                              <Component id="manufacturerTxtField" min="-2" pref="200" max="-2" attributes="0"/>
-                          </Group>
-                          <Group type="102" alignment="1" attributes="0">
-                              <Component id="yomLabel" min="-2" max="-2" attributes="0"/>
-                              <EmptySpace max="-2" attributes="0"/>
-                              <Component id="yomTxtField" min="-2" pref="200" max="-2" attributes="0"/>
-                          </Group>
-                          <Group type="102" alignment="1" attributes="0">
-                              <Component id="nameLabel" min="-2" max="-2" attributes="0"/>
-                              <EmptySpace max="-2" attributes="0"/>
-                              <Component id="nameTxtField" min="-2" pref="200" max="-2" attributes="0"/>
-                          </Group>
+                          <Component id="cityLabel" alignment="1" min="-2" max="-2" attributes="0"/>
+                          <Component id="serialNoLabel" alignment="1" min="-2" max="-2" attributes="0"/>
+                          <Component id="manufacturerLabel" alignment="1" min="-2" max="-2" attributes="0"/>
+                          <Component id="yomLabel" alignment="1" min="-2" max="-2" attributes="0"/>
+                          <Component id="nameLabel" alignment="1" min="-2" max="-2" attributes="0"/>
+                          <Component id="modeLabel" alignment="1" min="-2" max="-2" attributes="0"/>
                       </Group>
-                      <EmptySpace type="unrelated" max="-2" attributes="0"/>
+                      <EmptySpace max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="0" attributes="0">
-                          <Group type="102" alignment="1" attributes="0">
-                              <Component id="colorLabel" min="-2" max="-2" attributes="0"/>
-                              <EmptySpace max="-2" attributes="0"/>
-                              <Component id="colorTxtField" min="-2" pref="200" max="-2" attributes="0"/>
+                          <Component id="modelTxtField" alignment="1" min="-2" pref="200" max="-2" attributes="0"/>
+                          <Component id="serialNoTxtField" alignment="1" min="-2" pref="200" max="-2" attributes="0"/>
+                          <Component id="manufacturerTxtField" alignment="1" min="-2" pref="200" max="-2" attributes="0"/>
+                          <Component id="yomTxtField" alignment="1" min="-2" pref="200" max="-2" attributes="0"/>
+                          <Component id="nameTxtField" alignment="1" min="-2" pref="200" max="-2" attributes="0"/>
+                          <Component id="cityTxtField" alignment="1" min="-2" pref="200" max="-2" attributes="0"/>
+                      </Group>
+                      <EmptySpace min="-2" pref="60" max="-2" attributes="0"/>
+                      <Group type="103" groupAlignment="0" attributes="0">
+                          <Component id="availTimeLabel" alignment="1" min="-2" max="-2" attributes="0"/>
+                          <Component id="availabilityLabel" alignment="1" min="-2" max="-2" attributes="0"/>
+                          <Component id="maintenanceLabel" alignment="1" min="-2" max="-2" attributes="0"/>
+                          <Component id="seatingCapacityLabel" alignment="1" min="-2" max="-2" attributes="0"/>
+                          <Component id="colorLabel" alignment="1" min="-2" max="-2" attributes="0"/>
+                          <Component id="dateAddedLabel" alignment="1" min="-2" max="-2" attributes="0"/>
+                      </Group>
+                      <EmptySpace max="-2" attributes="0"/>
+                      <Group type="103" groupAlignment="0" attributes="0">
+                          <Group type="103" groupAlignment="0" attributes="0">
+                              <Component id="colorTxtField" alignment="1" min="-2" pref="200" max="-2" attributes="0"/>
+                              <Component id="seatingCapacityTxtField" alignment="1" min="-2" pref="200" max="-2" attributes="0"/>
                           </Group>
-                          <Group type="102" alignment="1" attributes="0">
-                              <Component id="seatingCapacityLabel" min="-2" max="-2" attributes="0"/>
+                          <Component id="dateAddedTxtField" alignment="0" min="-2" pref="200" max="-2" attributes="0"/>
+                          <Component id="availabilityCheckBox" alignment="0" min="-2" max="-2" attributes="0"/>
+                          <Group type="102" alignment="0" attributes="0">
+                              <Component id="availTimeTxtBox" min="-2" pref="200" max="-2" attributes="0"/>
                               <EmptySpace max="-2" attributes="0"/>
-                              <Component id="seatingCapacityTxtField" min="-2" pref="200" max="-2" attributes="0"/>
+                              <Component id="jLabel1" min="-2" max="-2" attributes="0"/>
                           </Group>
-                          <Group type="102" alignment="1" attributes="0">
-                              <Group type="103" groupAlignment="1" attributes="0">
-                                  <Component id="dateAddedLabel" alignment="1" min="-2" max="-2" attributes="0"/>
-                                  <Component id="availabilityLabel" alignment="1" min="-2" max="-2" attributes="0"/>
-                                  <Component id="maintenanceLabel" alignment="1" min="-2" max="-2" attributes="0"/>
-                              </Group>
-                              <EmptySpace max="-2" attributes="0"/>
-                              <Group type="103" groupAlignment="0" attributes="0">
-                                  <Component id="dateAddedTxtField" alignment="0" min="-2" pref="200" max="-2" attributes="0"/>
-                                  <Component id="availabilityCheckBox" alignment="0" min="-2" max="-2" attributes="0"/>
-                                  <Component id="maintenanceCheckBox" alignment="0" min="-2" max="-2" attributes="0"/>
-                              </Group>
-                          </Group>
+                          <Component id="maintenanceCheckBox" alignment="0" min="-2" max="-2" attributes="0"/>
                       </Group>
                   </Group>
-                  <Component id="titleLabel" min="-2" max="-2" attributes="0"/>
-                  <Group type="102" alignment="0" attributes="0">
-                      <EmptySpace min="-2" pref="127" max="-2" attributes="0"/>
+                  <Group type="102" attributes="0">
                       <Component id="backBtn" min="-2" pref="109" max="-2" attributes="0"/>
                       <EmptySpace type="separate" max="-2" attributes="0"/>
-                      <Component id="detailsBtn" min="-2" pref="109" max="-2" attributes="0"/>
+                      <Component id="jScrollPane1" min="-2" pref="578" max="-2" attributes="0"/>
                       <EmptySpace type="separate" max="-2" attributes="0"/>
-                      <Component id="deleteBtn" min="-2" pref="109" max="-2" attributes="0"/>
-                      <EmptySpace type="separate" max="-2" attributes="0"/>
-                      <Component id="updateBtn" min="-2" pref="109" max="-2" attributes="0"/>
-                      <EmptySpace type="separate" max="-2" attributes="0"/>
-                      <Component id="confirmBtn" min="-2" pref="109" max="-2" attributes="0"/>
+                      <Group type="103" groupAlignment="0" attributes="0">
+                          <Component id="detailsBtn" min="-2" pref="109" max="-2" attributes="0"/>
+                          <Component id="deleteBtn" alignment="0" min="-2" pref="109" max="-2" attributes="0"/>
+                          <Component id="updateBtn" min="-2" pref="109" max="-2" attributes="0"/>
+                          <Component id="confirmBtn" min="-2" pref="109" max="-2" attributes="0"/>
+                      </Group>
                   </Group>
               </Group>
-              <EmptySpace pref="54" max="32767" attributes="0"/>
+              <EmptySpace pref="82" max="32767" attributes="0"/>
           </Group>
       </Group>
     </DimensionLayout>
@@ -107,29 +90,52 @@
           <Group type="102" alignment="0" attributes="0">
               <EmptySpace min="-2" pref="19" max="-2" attributes="0"/>
               <Component id="titleLabel" min="-2" max="-2" attributes="0"/>
-              <EmptySpace min="-2" pref="28" max="-2" attributes="0"/>
-              <Component id="jScrollPane1" min="-2" pref="200" max="-2" attributes="0"/>
               <EmptySpace min="-2" pref="29" max="-2" attributes="0"/>
-              <Group type="103" groupAlignment="3" attributes="0">
-                  <Component id="backBtn" alignment="3" min="-2" max="-2" attributes="0"/>
-                  <Component id="detailsBtn" alignment="3" min="-2" max="-2" attributes="0"/>
-                  <Component id="deleteBtn" alignment="3" min="-2" max="-2" attributes="0"/>
-                  <Component id="updateBtn" alignment="3" min="-2" max="-2" attributes="0"/>
-                  <Component id="confirmBtn" alignment="3" min="-2" max="-2" attributes="0"/>
-              </Group>
-              <EmptySpace min="-2" pref="43" max="-2" attributes="0"/>
               <Group type="103" groupAlignment="0" attributes="0">
                   <Group type="102" alignment="0" attributes="0">
-                      <Group type="103" groupAlignment="3" attributes="0">
-                          <Component id="nameLabel" alignment="3" min="-2" max="-2" attributes="0"/>
-                          <Component id="nameTxtField" alignment="3" min="-2" max="-2" attributes="0"/>
+                      <Group type="103" groupAlignment="0" attributes="0">
+                          <Component id="jScrollPane1" min="-2" pref="200" max="-2" attributes="0"/>
+                          <Component id="backBtn" min="-2" max="-2" attributes="0"/>
                       </Group>
-                      <EmptySpace type="unrelated" max="-2" attributes="0"/>
-                      <Group type="103" groupAlignment="3" attributes="0">
-                          <Component id="modeLabel" alignment="3" min="-2" max="-2" attributes="0"/>
-                          <Component id="modelTxtField" alignment="3" min="-2" max="-2" attributes="0"/>
+                      <EmptySpace min="-2" pref="38" max="-2" attributes="0"/>
+                      <Group type="103" groupAlignment="0" attributes="0">
+                          <Group type="102" alignment="0" attributes="0">
+                              <Group type="103" groupAlignment="3" attributes="0">
+                                  <Component id="nameLabel" alignment="3" min="-2" max="-2" attributes="0"/>
+                                  <Component id="nameTxtField" alignment="3" min="-2" max="-2" attributes="0"/>
+                              </Group>
+                              <EmptySpace type="unrelated" max="-2" attributes="0"/>
+                              <Group type="103" groupAlignment="3" attributes="0">
+                                  <Component id="modeLabel" alignment="3" min="-2" max="-2" attributes="0"/>
+                                  <Component id="modelTxtField" alignment="3" min="-2" max="-2" attributes="0"/>
+                              </Group>
+                          </Group>
+                          <Group type="102" alignment="0" attributes="0">
+                              <Group type="103" groupAlignment="3" attributes="0">
+                                  <Component id="seatingCapacityLabel" alignment="3" min="-2" max="-2" attributes="0"/>
+                                  <Component id="seatingCapacityTxtField" alignment="3" min="-2" max="-2" attributes="0"/>
+                              </Group>
+                              <EmptySpace type="unrelated" max="-2" attributes="0"/>
+                              <Group type="103" groupAlignment="3" attributes="0">
+                                  <Component id="colorLabel" alignment="3" min="-2" max="-2" attributes="0"/>
+                                  <Component id="colorTxtField" alignment="3" min="-2" max="-2" attributes="0"/>
+                              </Group>
+                          </Group>
                       </Group>
-                      <EmptySpace type="unrelated" max="-2" attributes="0"/>
+                  </Group>
+                  <Group type="102" alignment="0" attributes="0">
+                      <Component id="detailsBtn" min="-2" max="-2" attributes="0"/>
+                      <EmptySpace type="separate" max="-2" attributes="0"/>
+                      <Component id="deleteBtn" min="-2" max="-2" attributes="0"/>
+                      <EmptySpace type="separate" max="-2" attributes="0"/>
+                      <Component id="updateBtn" min="-2" max="-2" attributes="0"/>
+                      <EmptySpace type="separate" max="-2" attributes="0"/>
+                      <Component id="confirmBtn" min="-2" max="-2" attributes="0"/>
+                  </Group>
+              </Group>
+              <EmptySpace min="-2" pref="20" max="-2" attributes="0"/>
+              <Group type="103" groupAlignment="0" attributes="0">
+                  <Group type="102" attributes="0">
                       <Group type="103" groupAlignment="3" attributes="0">
                           <Component id="serialNoLabel" alignment="3" min="-2" max="-2" attributes="0"/>
                           <Component id="serialNoTxtField" alignment="3" min="-2" max="-2" attributes="0"/>
@@ -145,34 +151,36 @@
                           <Component id="yomTxtField" alignment="3" min="-2" max="-2" attributes="0"/>
                       </Group>
                   </Group>
-                  <Group type="103" alignment="0" groupAlignment="1" attributes="0">
-                      <Group type="102" alignment="1" attributes="0">
-                          <Group type="103" groupAlignment="3" attributes="0">
-                              <Component id="seatingCapacityLabel" alignment="3" min="-2" max="-2" attributes="0"/>
-                              <Component id="seatingCapacityTxtField" alignment="3" min="-2" max="-2" attributes="0"/>
-                          </Group>
-                          <EmptySpace type="unrelated" max="-2" attributes="0"/>
-                          <Group type="103" groupAlignment="3" attributes="0">
-                              <Component id="colorLabel" alignment="3" min="-2" max="-2" attributes="0"/>
-                              <Component id="colorTxtField" alignment="3" min="-2" max="-2" attributes="0"/>
-                          </Group>
-                          <EmptySpace type="unrelated" max="-2" attributes="0"/>
-                          <Group type="103" groupAlignment="3" attributes="0">
-                              <Component id="dateAddedLabel" alignment="3" min="-2" max="-2" attributes="0"/>
-                              <Component id="dateAddedTxtField" alignment="3" min="-2" max="-2" attributes="0"/>
-                          </Group>
-                          <EmptySpace type="separate" max="-2" attributes="0"/>
-                          <Group type="103" groupAlignment="3" attributes="0">
-                              <Component id="availabilityLabel" alignment="3" min="-2" max="-2" attributes="0"/>
-                              <Component id="availabilityCheckBox" alignment="3" min="-2" max="-2" attributes="0"/>
-                          </Group>
-                          <EmptySpace type="unrelated" max="-2" attributes="0"/>
-                          <Component id="maintenanceLabel" min="-2" max="-2" attributes="0"/>
+                  <Group type="102" attributes="0">
+                      <Group type="103" groupAlignment="3" attributes="0">
+                          <Component id="dateAddedLabel" alignment="3" min="-2" max="-2" attributes="0"/>
+                          <Component id="dateAddedTxtField" alignment="3" min="-2" max="-2" attributes="0"/>
                       </Group>
+                      <EmptySpace type="separate" max="-2" attributes="0"/>
+                      <Group type="103" groupAlignment="3" attributes="0">
+                          <Component id="availabilityLabel" alignment="3" min="-2" max="-2" attributes="0"/>
+                          <Component id="availabilityCheckBox" alignment="3" min="-2" max="-2" attributes="0"/>
+                      </Group>
+                      <EmptySpace type="unrelated" max="-2" attributes="0"/>
+                      <Group type="103" groupAlignment="3" attributes="0">
+                          <Component id="availTimeLabel" alignment="3" min="-2" max="-2" attributes="0"/>
+                          <Component id="availTimeTxtBox" alignment="3" min="-2" max="-2" attributes="0"/>
+                          <Component id="jLabel1" alignment="3" min="-2" max="-2" attributes="0"/>
+                      </Group>
+                  </Group>
+              </Group>
+              <EmptySpace type="unrelated" max="-2" attributes="0"/>
+              <Group type="103" groupAlignment="0" attributes="0">
+                  <Group type="103" groupAlignment="1" attributes="0">
+                      <Component id="cityTxtField" min="-2" max="-2" attributes="0"/>
+                      <Component id="cityLabel" min="-2" max="-2" attributes="0"/>
+                  </Group>
+                  <Group type="103" groupAlignment="1" attributes="0">
+                      <Component id="maintenanceLabel" alignment="1" min="-2" max="-2" attributes="0"/>
                       <Component id="maintenanceCheckBox" alignment="1" min="-2" max="-2" attributes="0"/>
                   </Group>
               </Group>
-              <EmptySpace pref="136" max="32767" attributes="0"/>
+              <EmptySpace pref="170" max="32767" attributes="0"/>
           </Group>
       </Group>
     </DimensionLayout>
@@ -285,9 +293,6 @@
     </Component>
     <Component class="javax.swing.JLabel" name="manufacturerLabel">
       <Properties>
-        <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
-          <Font name="Lucida Grande" size="18" style="0"/>
-        </Property>
         <Property name="text" type="java.lang.String" value="Manufacturer:"/>
       </Properties>
     </Component>
@@ -295,9 +300,6 @@
     </Component>
     <Component class="javax.swing.JLabel" name="yomLabel">
       <Properties>
-        <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
-          <Font name="Lucida Grande" size="18" style="0"/>
-        </Property>
         <Property name="text" type="java.lang.String" value="Year of Manufacture:"/>
       </Properties>
     </Component>
@@ -305,9 +307,6 @@
     </Component>
     <Component class="javax.swing.JLabel" name="nameLabel">
       <Properties>
-        <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
-          <Font name="Lucida Grande" size="18" style="0"/>
-        </Property>
         <Property name="text" type="java.lang.String" value="Name:"/>
       </Properties>
     </Component>
@@ -315,9 +314,6 @@
     </Component>
     <Component class="javax.swing.JLabel" name="modeLabel">
       <Properties>
-        <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
-          <Font name="Lucida Grande" size="18" style="0"/>
-        </Property>
         <Property name="text" type="java.lang.String" value="Model:"/>
       </Properties>
     </Component>
@@ -325,27 +321,21 @@
     </Component>
     <Component class="javax.swing.JLabel" name="serialNoLabel">
       <Properties>
-        <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
-          <Font name="Lucida Grande" size="18" style="0"/>
-        </Property>
         <Property name="text" type="java.lang.String" value="Serial Number:"/>
       </Properties>
     </Component>
     <Component class="javax.swing.JLabel" name="availabilityLabel">
       <Properties>
-        <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
-          <Font name="Lucida Grande" size="18" style="0"/>
-        </Property>
         <Property name="text" type="java.lang.String" value="Availability:"/>
       </Properties>
     </Component>
     <Component class="javax.swing.JCheckBox" name="availabilityCheckBox">
+      <Events>
+        <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="availabilityCheckBoxMouseClicked"/>
+      </Events>
     </Component>
     <Component class="javax.swing.JLabel" name="maintenanceLabel">
       <Properties>
-        <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
-          <Font name="Lucida Grande" size="18" style="0"/>
-        </Property>
         <Property name="text" type="java.lang.String" value="Maintenance Certificate:"/>
       </Properties>
     </Component>
@@ -353,9 +343,6 @@
     </Component>
     <Component class="javax.swing.JLabel" name="seatingCapacityLabel">
       <Properties>
-        <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
-          <Font name="Lucida Grande" size="18" style="0"/>
-        </Property>
         <Property name="text" type="java.lang.String" value="Seating Capacity:"/>
       </Properties>
     </Component>
@@ -363,9 +350,6 @@
     </Component>
     <Component class="javax.swing.JLabel" name="colorLabel">
       <Properties>
-        <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
-          <Font name="Lucida Grande" size="18" style="0"/>
-        </Property>
         <Property name="text" type="java.lang.String" value="Color:"/>
       </Properties>
     </Component>
@@ -373,9 +357,6 @@
     </Component>
     <Component class="javax.swing.JLabel" name="dateAddedLabel">
       <Properties>
-        <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
-          <Font name="Lucida Grande" size="18" style="0"/>
-        </Property>
         <Property name="text" type="java.lang.String" value="Car added on:"/>
       </Properties>
     </Component>
@@ -394,6 +375,28 @@
       <Events>
         <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="confirmBtnActionPerformed"/>
       </Events>
+    </Component>
+    <Component class="javax.swing.JLabel" name="cityLabel">
+      <Properties>
+        <Property name="text" type="java.lang.String" value="City"/>
+      </Properties>
+    </Component>
+    <Component class="javax.swing.JTextField" name="cityTxtField">
+    </Component>
+    <Component class="javax.swing.JLabel" name="availTimeLabel">
+      <Properties>
+        <Property name="text" type="java.lang.String" value="Available in:"/>
+      </Properties>
+    </Component>
+    <Component class="javax.swing.JTextField" name="availTimeTxtBox">
+      <Events>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="availTimeTxtBoxActionPerformed"/>
+      </Events>
+    </Component>
+    <Component class="javax.swing.JLabel" name="jLabel1">
+      <Properties>
+        <Property name="text" type="java.lang.String" value="(minutes)"/>
+      </Properties>
     </Component>
   </SubComponents>
 </Form>
