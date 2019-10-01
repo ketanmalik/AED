@@ -7,6 +7,9 @@ package Business;
 
 import java.util.List;
 import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Collections;
+import static java.util.Comparator.comparing;
 import java.util.Date;
 
 /**
@@ -19,16 +22,16 @@ public class CarFleet {
 
     public CarFleet() {
         carFleet = new ArrayList<>();
-        CarAttributes ca1 = new CarAttributes("1", "1", 0, "1", 1, 1, "1", "1", "1", 0);
-        CarAttributes ca2 = new CarAttributes("1", "1", 0, "1", 1, 1, "1", "1", "1", 0);
-        CarAttributes ca3 = new CarAttributes("1", "1", 0, "1", 1, 1, "1", "1", "1", 0);
-        CarAttributes ca4 = new CarAttributes("1", "1", 0, "1", 1, 1, "1", "1", "1", 0);
-        CarAttributes ca5 = new CarAttributes("1", "1", 0, "1", 1, 1, "1", "1", "1", 0);
-        CarAttributes ca6 = new CarAttributes("1", "1", 0, "1", 1, 1, "1", "1", "1", 0);
-        CarAttributes ca7 = new CarAttributes("1", "1", 0, "1", 1, 1, "1", "1", "1", 0);
-        CarAttributes ca8 = new CarAttributes("1", "1", 0, "1", 1, 1, "1", "1", "1", 0);
-        CarAttributes ca9 = new CarAttributes("1", "1", 0, "1", 1, 1, "1", "1", "1", 0);
-        CarAttributes ca10 = new CarAttributes("1", "1", 0, "1", 1, 1, "1", "1", "1", 0);
+        CarAttributes ca1 = new CarAttributes("CX-5", "Sport", 100, "Mazda", 2015, 4, "Grey", "Boston");
+        CarAttributes ca2 = new CarAttributes("Estima", "G 3.5L", 101, "Toyota", 2012, 7, "White", "Florida");
+        CarAttributes ca3 = new CarAttributes("Territory", "Titanium", 102, "Ford", 2015, 7, "Black", "Saint Louis");
+        CarAttributes ca4 = new CarAttributes("Rav4", "AWD", 103, "Toyota", 2016, 4, "Black", "Chicago");
+        CarAttributes ca5 = new CarAttributes("ATS", "AWD", 104, "Cadillac", 2017, 4, "Grey", "Boston");
+        CarAttributes ca6 = new CarAttributes("Tucson", "GLS", 105, "Hyundai", 2011, 4, "White", "Chicago");
+        CarAttributes ca7 = new CarAttributes("Armada", "RWD", 106, "Nissan", 2019, 7, "Blue", "Chicago");
+        CarAttributes ca8 = new CarAttributes("Terrain", "SLE1", 107, "GMC", 2011, 7, "Violet", "Florida");
+        CarAttributes ca9 = new CarAttributes("Optima", "FWD", 108, "Kia", 2019, 4, "Silver", "Saint Louis");
+        CarAttributes ca10 = new CarAttributes("Cherokee", "4WD", 109, "Jeep", 2017, 4, "Silver", "Boston");
 
         carFleet.add(ca1);
         carFleet.add(ca2);
@@ -59,5 +62,15 @@ public class CarFleet {
 
     public void deleteCar(CarAttributes car) {
         carFleet.remove(car);
+    }
+
+    public int firstAvailableCar() {
+        List<Integer> list = new ArrayList<>();
+        for (CarAttributes e : carFleet) {
+            list.add(e.getAvailableMin());
+        }
+        int res = Collections.min(list);
+        int index = list.indexOf(res);
+        return index;
     }
 }

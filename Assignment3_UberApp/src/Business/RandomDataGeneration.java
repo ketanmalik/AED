@@ -25,19 +25,27 @@ public class RandomDataGeneration {
         LocalDate d = LocalDate.ofEpochDay(rand);
         DateTimeFormatter f = DateTimeFormatter.ofPattern("dd MMMM yyyy");
         String date = d.format(f);
-        System.out.println(date);
         return date;
     }
 
     public boolean randomAvailabilityGeneration() {
         Random random = new Random();
-        System.out.println(random.nextBoolean());
         return random.nextBoolean();
     }
-        public boolean randomMaintenanceGeneration() {
+
+    public boolean randomMaintenanceGeneration() {
         Random random = new Random();
-        System.out.println(random.nextBoolean());
         return random.nextBoolean();
+    }
+
+    public int randomAvailMinutesGeneration(boolean availability) {
+        if (availability) {
+            Random random = new Random();
+            int res = random.nextInt(16);
+            return (res + 1);
+        } else {
+            return 100;
+        }
     }
 
 }

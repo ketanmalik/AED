@@ -33,7 +33,7 @@ public class CarAttributes {
     public CarAttributes() {
     }
 
-    public CarAttributes(String name, String modelNo, int serialNo, String manufacturer, int yearOfManufacture, int capacity, String color, String dateAdded, String city, int availableMin) {
+    public CarAttributes(String name, String modelNo, int serialNo, String manufacturer, int yearOfManufacture, int capacity, String color, String city) {
         this.name = name;
         this.modelNo = modelNo;
         this.serialNo = serialNo;
@@ -44,11 +44,8 @@ public class CarAttributes {
         this.color = color;
         this.dateOfCreation = randomData.randomDateGeneration();
         this.maintenanceCertificate = randomData.randomMaintenanceGeneration();
-        this.dateAdded = dateAdded;
         this.city = city;
-        this.availableMin = availableMin;
-        System.out.println("Business.CarAttributes.<init>()");
-        System.out.println(availability);
+        this.availableMin = randomData.randomAvailMinutesGeneration(this.availability);
     }
 
     public int getAvailableMin() {
@@ -124,7 +121,6 @@ public class CarAttributes {
     }
 
     public boolean isAvailability() {
-        System.out.println(availability);
         return availability;
     }
 

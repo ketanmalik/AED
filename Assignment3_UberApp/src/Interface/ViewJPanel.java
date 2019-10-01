@@ -377,7 +377,6 @@ public class ViewJPanel extends javax.swing.JPanel {
         String name = nameTxtField.getText();
         if (name == null || name.equals("")) {
             showErrorMessage1("Name");
-            System.out.println(nameTxtField.getText());
             return;
         } else {
             ca.setName(name);
@@ -508,7 +507,7 @@ public class ViewJPanel extends javax.swing.JPanel {
             cityTxtField.setText(cs.getCity());
             availabilityCheckBox.setSelected(cs.isAvailability());
             maintenanceCheckBox.setSelected(cs.isMaintenanceCertificate());
-            if ((cs.getAvailableMin() + "").equals("0")) {
+            if ((cs.getAvailableMin() + "").equals("0") || (cs.getAvailableMin()+"").equals("100")) {
                 availTimeTxtBox.setText("");
             } else {
                 availTimeTxtBox.setText(cs.getAvailableMin() + "");
