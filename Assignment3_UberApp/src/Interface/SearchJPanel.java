@@ -93,7 +93,7 @@ public class SearchJPanel extends javax.swing.JPanel {
         searchLabel.setFont(new java.awt.Font("Lucida Grande", 0, 15)); // NOI18N
         searchLabel.setText("Search by:");
 
-        searchDropdown.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "First available car", "Total available/unavailable cars", "Manufacturer", "Year of Manufacture", "Car capacity", "Serial number", "Model number", "Available cars in a city", "Cars which are due maintenance" }));
+        searchDropdown.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "First available car", "Total available/unavailable cars", "Manufacturer", "Year of Manufacture", "Car capacity", "Serial number", "Model", "Available cars in a city", "Cars which are due maintenance" }));
         searchDropdown.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 searchDropdownMouseClicked(evt);
@@ -329,21 +329,120 @@ public class SearchJPanel extends javax.swing.JPanel {
                 }
                 break;
             case "Serial number":
+                if (flag == 1) {
+                    serialNoTxtField.setText("");
+                    flag = 0;
+                }
                 if (serialNoTxtField.isVisible()) {
-                    showResult();
+                    findSerialNumber();
                 } else {
                     handleFieldsVisibility();
                     serialNoTxtField.setVisible(true);
                     serialNoTxtField.getParent().validate();
                 }
                 break;
-            case "Model number":
-                
+            case "Model":
+                if (flag == 1) {
+                    serialNoTxtField.setText("");
+                    flag = 0;
+                }
+                if (serialNoTxtField.isVisible()) {
+                    findModelNumber();
+                } else {
+                    handleFieldsVisibility();
+                    serialNoTxtField.setVisible(true);
+                    serialNoTxtField.getParent().validate();
+                }
+                break;
+            case "Available cars in a city":
+                if (flag == 1) {
+                    initializeCityDropdown();
+                    flag = 0;
+                }
+                if (resultDropdown.isVisible()) {
+                    findCityResults();
+                } else {
+                    initializeCityDropdown();
+                    resultDropdown.setVisible(true);
+                }
+                break;
+            case "Cars which are due maintenance":
+                handleFieldsVisibility();
+                findDueMaintenance();
 
         }
     }//GEN-LAST:event_searchBtnActionPerformed
 
-    private void showResult() {
+    private void findDueMaintenance() {
+        DefaultListModel<String> maintList = new DefaultListModel<>();
+        for (CarAttributes e : carFleet.getCarFleet()) {
+            if (!e.isMaintenanceCertificate()) {
+                maintList.addElement(e.getManufacturer() + " " + e.getName());
+            }
+        }
+        resultList.removeAll();
+        resultList.setModel(maintList);
+        resultListScrollPane.setVisible(true);
+        resultListScrollPane.getParent().validate();
+        resultList.setVisible(true);
+        resultList.getParent().validate();
+    }
+
+    private void findCityResults() {
+        handleFieldsVisibility();
+        resultDropdown.setVisible(true);
+        DefaultListModel<String> cityList = new DefaultListModel<>();
+        String city = String.valueOf(resultDropdown.getSelectedItem());
+        for (CarAttributes e : carFleet.getCarFleet()) {
+            if (e.getCity().equalsIgnoreCase(city)) {
+                cityList.addElement(e.getManufacturer() + " " + e.getName());
+            }
+        }
+        resultList.removeAll();
+        resultList.setModel(cityList);
+        resultListScrollPane.setVisible(true);
+        resultList.setVisible(true);
+    }
+
+    private void initializeCityDropdown() {
+        resultDropdown.removeAllItems();
+        resultDropdown.addItem("Boston");
+        resultDropdown.addItem("Florida");
+        resultDropdown.addItem("Saint Louis");
+        resultDropdown.addItem("Chicago");
+        tempList = new ArrayList<>();
+        tempList.add("Boston");
+        tempList.add("Florida");
+        tempList.add("Saint Louis");
+        tempList.add("Chicago");
+        for (CarAttributes e : carFleet.getCarFleet()) {
+            if (!(tempList.contains(e.getCity()))) {
+                resultDropdown.addItem(e.getCity());
+            }
+        }
+    }
+
+    private void findModelNumber() {
+        String modelNo = serialNoTxtField.getText();
+        if (modelNo == null || modelNo.equals("")) {
+            JOptionPane.showMessageDialog(null, "Pleae enter valid model");
+        } else {
+            DefaultListModel model = new DefaultListModel<>();
+            for (CarAttributes e : carFleet.getCarFleet()) {
+                if (e.getModelNo().equalsIgnoreCase(modelNo)) {
+                    model.addElement(e.getModelNo());
+                }
+            }
+            resultList.removeAll();
+            resultList.setModel(model);
+            resultListScrollPane.setVisible(true);
+            resultListScrollPane.getParent().validate();
+            resultList.setVisible(true);
+            resultList.getParent().validate();
+        }
+    }
+
+    private void findSerialNumber() {
         try {
             int sNo = Integer.parseInt(serialNoTxtField.getText());
             CarAttributes ca = new CarAttributes();
@@ -368,7 +467,6 @@ public class SearchJPanel extends javax.swing.JPanel {
         } catch (NumberFormatException e) {
             JOptionPane.showMessageDialog(null, "Please enter valid serial number");
         }
-
     }
 
     private void findAvailableCarsWithCapacity() {
@@ -390,7 +488,6 @@ public class SearchJPanel extends javax.swing.JPanel {
                 for (CarAttributes e : carFleet.getCarFleet()) {
                     if (e.isAvailability() && (e.getCapacity() >= min && e.getCapacity() <= max)) {
                         capList.addElement((e.getManufacturer() + " " + e.getName()));
-                        System.out.println((e.getManufacturer() + " " + e.getName()));
                     }
                 }
                 capacityList.setModel(capList);
@@ -402,7 +499,6 @@ public class SearchJPanel extends javax.swing.JPanel {
         } catch (NumberFormatException e) {
             JOptionPane.showMessageDialog(null, "Please enter valid value");
         }
-
     }
 
     private void findYomResults() {
@@ -498,6 +594,7 @@ public class SearchJPanel extends javax.swing.JPanel {
     private void searchDropdownActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_searchDropdownActionPerformed
         // TODO add your handling code here:
         flag = 1;
+        handleFieldsVisibility();
     }//GEN-LAST:event_searchDropdownActionPerformed
 
     private void maxCapacityActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_maxCapacityActionPerformed
