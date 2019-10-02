@@ -18,7 +18,7 @@ public class RandomDataGeneration {
 
     public String randomDateGeneration() {
         Random random = new Random();
-        int min = (int) LocalDate.of(2010, 1, 1).toEpochDay();
+        int min = (int) LocalDate.of(2019, 1, 1).toEpochDay();
         int max = (int) LocalDate.now().toEpochDay();
         long rand = min + random.nextInt(max - min);
 

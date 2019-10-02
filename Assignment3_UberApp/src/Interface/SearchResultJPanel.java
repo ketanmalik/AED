@@ -5,6 +5,11 @@
  */
 package Interface;
 
+import Business.CarAttributes;
+import Business.CarFleet;
+import java.awt.CardLayout;
+import javax.swing.JPanel;
+
 /**
  *
  * @author ketanmalik
@@ -14,8 +19,31 @@ public class SearchResultJPanel extends javax.swing.JPanel {
     /**
      * Creates new form SearchResultJPanel
      */
-    public SearchResultJPanel() {
+    private JPanel displayPanel;
+
+    public SearchResultJPanel(JPanel displayPanel, CarAttributes ca) {
         initComponents();
+        this.displayPanel = displayPanel;
+        displayData(ca);
+    }
+
+    private void displayData(CarAttributes ca) {
+        nameTxtField.setText(ca.getName());
+        modelTxtField.setText(ca.getModelNo());
+        serialNoTxtField.setText(ca.getSerialNo() + "");
+        manufacturerTxtField.setText(ca.getManufacturer());
+        yomTxtField.setText(ca.getYearOfManufacture() + "");
+        cityTxtField.setText(ca.getCity());
+        seatingCapacityTxtField.setText(ca.getCapacity() + "");
+        colorTxtField.setText(ca.getColor());
+        dateAddedTxtField.setText(ca.getDateOfCreation());
+        availabilityCheckBox.setSelected(ca.isAvailability());
+        maintenanceCheckBox.setSelected(ca.isMaintenanceCertificate());
+        if ((ca.getAvailableMin() + "").equals("0") || (ca.getAvailableMin() + "").equals("100")) {
+            availTimeTxtBox.setText("");
+        } else {
+            availTimeTxtBox.setText(ca.getAvailableMin() + "");
+        }
     }
 
     /**
@@ -28,11 +56,105 @@ public class SearchResultJPanel extends javax.swing.JPanel {
     private void initComponents() {
 
         titleLabel = new javax.swing.JLabel();
+        cityLabel = new javax.swing.JLabel();
+        modelTxtField = new javax.swing.JTextField();
+        cityTxtField = new javax.swing.JTextField();
+        serialNoLabel = new javax.swing.JLabel();
+        availTimeLabel = new javax.swing.JLabel();
+        availabilityLabel = new javax.swing.JLabel();
+        availTimeTxtBox = new javax.swing.JTextField();
+        availabilityCheckBox = new javax.swing.JCheckBox();
+        jLabel1 = new javax.swing.JLabel();
+        maintenanceLabel = new javax.swing.JLabel();
+        maintenanceCheckBox = new javax.swing.JCheckBox();
+        seatingCapacityLabel = new javax.swing.JLabel();
+        seatingCapacityTxtField = new javax.swing.JTextField();
+        colorLabel = new javax.swing.JLabel();
+        colorTxtField = new javax.swing.JTextField();
+        dateAddedLabel = new javax.swing.JLabel();
+        dateAddedTxtField = new javax.swing.JTextField();
+        serialNoTxtField = new javax.swing.JTextField();
+        manufacturerLabel = new javax.swing.JLabel();
+        manufacturerTxtField = new javax.swing.JTextField();
+        yomLabel = new javax.swing.JLabel();
+        yomTxtField = new javax.swing.JTextField();
+        nameLabel = new javax.swing.JLabel();
+        nameTxtField = new javax.swing.JTextField();
+        modeLabel = new javax.swing.JLabel();
+        backBtn = new javax.swing.JButton();
 
         setBackground(new java.awt.Color(204, 204, 204));
 
         titleLabel.setFont(new java.awt.Font("Lucida Grande", 1, 24)); // NOI18N
         titleLabel.setText("Search Results");
+
+        cityLabel.setText("City");
+
+        modelTxtField.setEnabled(false);
+
+        cityTxtField.setEnabled(false);
+
+        serialNoLabel.setText("Serial Number:");
+
+        availTimeLabel.setText("Available in:");
+
+        availabilityLabel.setText("Availability:");
+
+        availTimeTxtBox.setEnabled(false);
+        availTimeTxtBox.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                availTimeTxtBoxActionPerformed(evt);
+            }
+        });
+
+        availabilityCheckBox.setEnabled(false);
+        availabilityCheckBox.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                availabilityCheckBoxMouseClicked(evt);
+            }
+        });
+
+        jLabel1.setText("(minutes)");
+
+        maintenanceLabel.setText("Maintenance Certificate:");
+
+        maintenanceCheckBox.setEnabled(false);
+
+        seatingCapacityLabel.setText("Seating Capacity:");
+
+        seatingCapacityTxtField.setEnabled(false);
+
+        colorLabel.setText("Color:");
+
+        colorTxtField.setEnabled(false);
+
+        dateAddedLabel.setText("Car added on:");
+
+        dateAddedTxtField.setEnabled(false);
+
+        serialNoTxtField.setEnabled(false);
+
+        manufacturerLabel.setText("Manufacturer:");
+
+        manufacturerTxtField.setEnabled(false);
+
+        yomLabel.setText("Year of Manufacture:");
+
+        yomTxtField.setEnabled(false);
+
+        nameLabel.setText("Name:");
+
+        nameTxtField.setEnabled(false);
+
+        modeLabel.setText("Model:");
+
+        backBtn.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Interface/backIcon.png"))); // NOI18N
+        backBtn.setText("Back");
+        backBtn.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                backBtnActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
@@ -40,20 +162,162 @@ public class SearchResultJPanel extends javax.swing.JPanel {
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addGap(28, 28, 28)
-                .addComponent(titleLabel)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(backBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 109, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(titleLabel))
                 .addContainerGap(689, Short.MAX_VALUE))
+            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(layout.createSequentialGroup()
+                    .addGap(40, 40, 40)
+                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addComponent(cityLabel, javax.swing.GroupLayout.Alignment.TRAILING)
+                        .addComponent(serialNoLabel, javax.swing.GroupLayout.Alignment.TRAILING)
+                        .addComponent(manufacturerLabel, javax.swing.GroupLayout.Alignment.TRAILING)
+                        .addComponent(yomLabel, javax.swing.GroupLayout.Alignment.TRAILING)
+                        .addComponent(nameLabel, javax.swing.GroupLayout.Alignment.TRAILING)
+                        .addComponent(modeLabel, javax.swing.GroupLayout.Alignment.TRAILING))
+                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addComponent(modelTxtField, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(serialNoTxtField, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(manufacturerTxtField, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(yomTxtField, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(nameTxtField, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(cityTxtField, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGap(60, 60, 60)
+                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addComponent(availTimeLabel, javax.swing.GroupLayout.Alignment.TRAILING)
+                        .addComponent(availabilityLabel, javax.swing.GroupLayout.Alignment.TRAILING)
+                        .addComponent(maintenanceLabel, javax.swing.GroupLayout.Alignment.TRAILING)
+                        .addComponent(seatingCapacityLabel, javax.swing.GroupLayout.Alignment.TRAILING)
+                        .addComponent(colorLabel, javax.swing.GroupLayout.Alignment.TRAILING)
+                        .addComponent(dateAddedLabel, javax.swing.GroupLayout.Alignment.TRAILING))
+                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(colorTxtField, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(seatingCapacityTxtField, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addComponent(dateAddedTxtField, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(availabilityCheckBox)
+                        .addGroup(layout.createSequentialGroup()
+                            .addComponent(availTimeTxtBox, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                            .addComponent(jLabel1))
+                        .addComponent(maintenanceCheckBox))
+                    .addContainerGap(41, Short.MAX_VALUE)))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addGap(19, 19, 19)
                 .addComponent(titleLabel)
-                .addContainerGap(651, Short.MAX_VALUE))
+                .addGap(29, 29, 29)
+                .addComponent(backBtn)
+                .addContainerGap(582, Short.MAX_VALUE))
+            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(layout.createSequentialGroup()
+                    .addGap(202, 202, 202)
+                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGroup(layout.createSequentialGroup()
+                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                .addComponent(nameLabel)
+                                .addComponent(nameTxtField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                .addComponent(modeLabel)
+                                .addComponent(modelTxtField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addGroup(layout.createSequentialGroup()
+                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                .addComponent(seatingCapacityLabel)
+                                .addComponent(seatingCapacityTxtField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                .addComponent(colorLabel)
+                                .addComponent(colorTxtField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                    .addGap(20, 20, 20)
+                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGroup(layout.createSequentialGroup()
+                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                .addComponent(serialNoLabel)
+                                .addComponent(serialNoTxtField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                .addComponent(manufacturerLabel)
+                                .addComponent(manufacturerTxtField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                .addComponent(yomLabel)
+                                .addComponent(yomTxtField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addGroup(layout.createSequentialGroup()
+                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                .addComponent(dateAddedLabel)
+                                .addComponent(dateAddedTxtField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addGap(18, 18, 18)
+                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                .addComponent(availabilityLabel)
+                                .addComponent(availabilityCheckBox))
+                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                .addComponent(availTimeLabel)
+                                .addComponent(availTimeTxtBox, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(jLabel1))))
+                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(cityTxtField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(cityLabel))
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(maintenanceLabel)
+                            .addComponent(maintenanceCheckBox)))
+                    .addContainerGap(284, Short.MAX_VALUE)))
         );
     }// </editor-fold>//GEN-END:initComponents
 
+    private void availTimeTxtBoxActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_availTimeTxtBoxActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_availTimeTxtBoxActionPerformed
+
+    private void availabilityCheckBoxMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_availabilityCheckBoxMouseClicked
+        // TODO add your handling code here:
+        availTimeTxtBox.setEnabled(availabilityCheckBox.isSelected());
+        //        availTimeTxtBox.setText("");
+    }//GEN-LAST:event_availabilityCheckBoxMouseClicked
+
+    private void backBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_backBtnActionPerformed
+        // TODO add your handling code here:
+        displayPanel.remove(this);
+        CardLayout layout = (CardLayout) displayPanel.getLayout();
+        layout.previous(displayPanel);
+    }//GEN-LAST:event_backBtnActionPerformed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JLabel availTimeLabel;
+    private javax.swing.JTextField availTimeTxtBox;
+    private javax.swing.JCheckBox availabilityCheckBox;
+    private javax.swing.JLabel availabilityLabel;
+    private javax.swing.JButton backBtn;
+    private javax.swing.JLabel cityLabel;
+    private javax.swing.JTextField cityTxtField;
+    private javax.swing.JLabel colorLabel;
+    private javax.swing.JTextField colorTxtField;
+    private javax.swing.JLabel dateAddedLabel;
+    private javax.swing.JTextField dateAddedTxtField;
+    private javax.swing.JLabel jLabel1;
+    private javax.swing.JCheckBox maintenanceCheckBox;
+    private javax.swing.JLabel maintenanceLabel;
+    private javax.swing.JLabel manufacturerLabel;
+    private javax.swing.JTextField manufacturerTxtField;
+    private javax.swing.JLabel modeLabel;
+    private javax.swing.JTextField modelTxtField;
+    private javax.swing.JLabel nameLabel;
+    private javax.swing.JTextField nameTxtField;
+    private javax.swing.JLabel seatingCapacityLabel;
+    private javax.swing.JTextField seatingCapacityTxtField;
+    private javax.swing.JLabel serialNoLabel;
+    private javax.swing.JTextField serialNoTxtField;
     private javax.swing.JLabel titleLabel;
+    private javax.swing.JLabel yomLabel;
+    private javax.swing.JTextField yomTxtField;
     // End of variables declaration//GEN-END:variables
 }

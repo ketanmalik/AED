@@ -25,28 +25,14 @@ public class SearchJPanel extends javax.swing.JPanel {
      */
     private JPanel displayPanel;
     private CarFleet carFleet;
-    private List<String> manuf;
+    private List<String> tempList;
+    public int flag = 0;
 
     public SearchJPanel(JPanel displayPanel, CarFleet carFleet) {
         initComponents();
         this.displayPanel = displayPanel;
         this.carFleet = carFleet;
         handleFieldsVisibility();
-        manuf = new ArrayList<>();
-        manuf.add("Mazda");
-        manuf.add("Toyota");
-        manuf.add("Ford");
-        manuf.add("Cadillac");
-        manuf.add("Hyundai");
-        manuf.add("Nissan");
-        manuf.add("GMC");
-        manuf.add("Kia");
-        manuf.add("Jeep");
-        for (CarAttributes e : carFleet.getCarFleet()) {
-            if (!(manuf.contains(e.getManufacturer()))) {
-                manufacturerDropdown.addItem(e.getManufacturer());
-            }
-        }
     }
 
     /**
@@ -71,10 +57,16 @@ public class SearchJPanel extends javax.swing.JPanel {
         unavailCarsLabel = new javax.swing.JLabel();
         availCarsTxtField = new javax.swing.JTextField();
         unavailCarsTxtField = new javax.swing.JTextField();
-        manufacturerDropdown = new javax.swing.JComboBox<>();
-        manuFacturerListScrollPane = new javax.swing.JScrollPane();
-        manufacturerSearchResult = new javax.swing.JList<>();
-        yomTxtField = new javax.swing.JTextField();
+        resultDropdown = new javax.swing.JComboBox<>();
+        resultListScrollPane = new javax.swing.JScrollPane();
+        resultList = new javax.swing.JList<>();
+        capacityScrollPane = new javax.swing.JScrollPane();
+        capacityList = new javax.swing.JList<>();
+        minCapacity = new javax.swing.JTextField();
+        maxCapacity = new javax.swing.JTextField();
+        minCapacityLabel = new javax.swing.JLabel();
+        maxCapacityLabel = new javax.swing.JLabel();
+        serialNoTxtField = new javax.swing.JTextField();
 
         jLabel1.setText("jLabel1");
 
@@ -107,6 +99,11 @@ public class SearchJPanel extends javax.swing.JPanel {
                 searchDropdownMouseClicked(evt);
             }
         });
+        searchDropdown.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                searchDropdownActionPerformed(evt);
+            }
+        });
 
         searchBtn.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Interface/searchIcon.png"))); // NOI18N
         searchBtn.setText("Search");
@@ -131,15 +128,25 @@ public class SearchJPanel extends javax.swing.JPanel {
 
         unavailCarsTxtField.setEnabled(false);
 
-        manufacturerDropdown.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Mazda", "Toyota", "Ford", "Cadillac", "Hyundai", "Nissan", "GMC", "Kia", "Jeep" }));
+        resultList.setEnabled(false);
+        resultListScrollPane.setViewportView(resultList);
 
-        manufacturerSearchResult.setEnabled(false);
-        manuFacturerListScrollPane.setViewportView(manufacturerSearchResult);
+        capacityList.setEnabled(false);
+        capacityScrollPane.setViewportView(capacityList);
 
-        yomTxtField.setEnabled(false);
-        yomTxtField.addComponentListener(new java.awt.event.ComponentAdapter() {
+        maxCapacity.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                maxCapacityActionPerformed(evt);
+            }
+        });
+
+        minCapacityLabel.setText("Min Capacity:");
+
+        maxCapacityLabel.setText("Max Capacity:");
+
+        serialNoTxtField.addComponentListener(new java.awt.event.ComponentAdapter() {
             public void componentHidden(java.awt.event.ComponentEvent evt) {
-                yomTxtFieldComponentHidden(evt);
+                serialNoTxtFieldComponentHidden(evt);
             }
         });
 
@@ -148,39 +155,54 @@ public class SearchJPanel extends javax.swing.JPanel {
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
+                .addGap(232, 232, 232)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(28, 28, 28)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(titleLabel)
+                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                                .addComponent(availCarsLabel)
+                                .addComponent(unavailCarsLabel))
                             .addGroup(layout.createSequentialGroup()
-                                .addComponent(backBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 109, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(18, 18, 18)
-                                .addComponent(searchLabel)
-                                .addGap(18, 18, 18)
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(searchBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 109, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addGroup(layout.createSequentialGroup()
-                                        .addComponent(searchDropdown, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                        .addGap(18, 18, 18)
-                                        .addComponent(manufacturerDropdown, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))))))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(300, 300, 300)
-                        .addComponent(firstAvailCarTxtField, javax.swing.GroupLayout.PREFERRED_SIZE, 143, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(19, 19, 19)
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                                    .addComponent(minCapacityLabel)
+                                    .addComponent(maxCapacityLabel))))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(availCarsLabel, javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addComponent(unavailCarsLabel, javax.swing.GroupLayout.Alignment.TRAILING))
+                            .addGroup(layout.createSequentialGroup()
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.CENTER)
+                                    .addComponent(firstAvailCarTxtField)
+                                    .addComponent(availCarsTxtField)
+                                    .addComponent(unavailCarsTxtField, javax.swing.GroupLayout.PREFERRED_SIZE, 107, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addContainerGap(447, Short.MAX_VALUE))
+                            .addGroup(layout.createSequentialGroup()
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                                    .addComponent(maxCapacity, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 136, Short.MAX_VALUE)
+                                    .addComponent(minCapacity, javax.swing.GroupLayout.Alignment.LEADING))
+                                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(capacityScrollPane, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(availCarsTxtField)
-                            .addComponent(unavailCarsTxtField, javax.swing.GroupLayout.PREFERRED_SIZE, 60, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 138, Short.MAX_VALUE)
-                .addComponent(manuFacturerListScrollPane, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(53, 53, 53))
+                        .addComponent(resultListScrollPane, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addContainerGap())))
             .addGroup(layout.createSequentialGroup()
-                .addGap(62, 62, 62)
-                .addComponent(yomTxtField, javax.swing.GroupLayout.PREFERRED_SIZE, 143, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(28, 28, 28)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(titleLabel)
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(backBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 109, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(18, 18, 18)
+                        .addComponent(searchLabel)
+                        .addGap(18, 18, 18)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(searchBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 109, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(18, 18, 18)
+                                .addComponent(serialNoTxtField, javax.swing.GroupLayout.PREFERRED_SIZE, 135, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(searchDropdown, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(18, 18, 18)
+                                .addComponent(resultDropdown, javax.swing.GroupLayout.PREFERRED_SIZE, 131, javax.swing.GroupLayout.PREFERRED_SIZE)))))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
@@ -189,30 +211,40 @@ public class SearchJPanel extends javax.swing.JPanel {
                 .addGap(19, 19, 19)
                 .addComponent(titleLabel)
                 .addGap(29, 29, 29)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(backBtn)
-                    .addComponent(searchLabel)
-                    .addComponent(searchDropdown, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(manufacturerDropdown, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(18, 18, 18)
-                .addComponent(searchBtn)
-                .addGap(45, 45, 45)
-                .addComponent(yomTxtField, javax.swing.GroupLayout.PREFERRED_SIZE, 123, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addComponent(firstAvailCarTxtField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(3, 3, 3)
-                        .addComponent(manuFacturerListScrollPane, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addGroup(layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(availCarsLabel)
-                            .addComponent(availCarsTxtField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(14, 14, 14)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(unavailCarsLabel)
-                            .addComponent(unavailCarsTxtField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                .addContainerGap(191, Short.MAX_VALUE))
+                            .addComponent(backBtn)
+                            .addComponent(searchLabel)
+                            .addComponent(searchDropdown, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(resultDropdown, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(18, 18, 18)
+                        .addComponent(searchBtn))
+                    .addComponent(serialNoTxtField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 82, Short.MAX_VALUE)
+                .addComponent(firstAvailCarTxtField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(minCapacity, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(minCapacityLabel))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(maxCapacity, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(maxCapacityLabel))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(availCarsTxtField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(availCarsLabel))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(unavailCarsTxtField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(unavailCarsLabel))
+                        .addGap(47, 47, 47)
+                        .addComponent(capacityScrollPane, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(resultListScrollPane, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(101, 101, 101))
         );
     }// </editor-fold>//GEN-END:initComponents
 
@@ -258,58 +290,202 @@ public class SearchJPanel extends javax.swing.JPanel {
                 break;
 
             case "Manufacturer":
-                if (manufacturerDropdown.isVisible()) {
-                    findByManufacturer();
+                if (flag == 1) {
+                    initializeManufacturerDropdown();
+                    flag = 0;
+                }
+                if (resultDropdown.isVisible()) {
+                    findManufacturerResults();
                 } else {
+                    initializeManufacturerDropdown();
                     handleFieldsVisibility();
-                    manufacturerDropdown.setVisible(true);
+                    resultDropdown.setVisible(true);
                 }
                 break;
             case "Year of Manufacture":
-                if (yomTxtField.isVisible()) {
-                    findByYom();
+                if (flag == 1) {
+                    initializeYomDropdown();
+                    flag = 0;
+                }
+                if (resultDropdown.isVisible()) {
+                    findYomResults();
+                } else {
+                    initializeYomDropdown();
+                    handleFieldsVisibility();
+                    resultDropdown.setVisible(true);
+                }
+                break;
+            case "Car capacity":
+                if (minCapacity.isVisible()) {
+                    findAvailableCarsWithCapacity();
                 } else {
                     handleFieldsVisibility();
-                    yomTxtField.setVisible(true);
+                    minCapacity.setVisible(true);
+                    minCapacity.getParent().validate();
+                    minCapacityLabel.setVisible(true);
+                    maxCapacity.setVisible(true);
+                    maxCapacity.getParent().validate();
+                    maxCapacityLabel.setVisible(true);
                 }
+                break;
+            case "Serial number":
+                if (serialNoTxtField.isVisible()) {
+                    showResult();
+                } else {
+                    handleFieldsVisibility();
+                    serialNoTxtField.setVisible(true);
+                    serialNoTxtField.getParent().validate();
+                }
+                break;
+            case "Model number":
+                
 
         }
     }//GEN-LAST:event_searchBtnActionPerformed
 
-    private void findByYom() {
-        handleFieldsVisibility();
-        yomTxtField.setVisible(true);
-//        System.out.println(yomTxtField.isVisible());
-//        try {
-//            int yom = Integer.parseInt((yomTxtField.getText()));
-//            DefaultListModel<String> yomList = new DefaultListModel<>();
-//            for (CarAttributes e : carFleet.getCarFleet()) {
-//                if (e.getYearOfManufacture() == yom) {
-//                    yomList.addElement(e.getManufacturer() + " " + e.getName());
-//                }
-//            }
-//            manufacturerSearchResult.setModel(yomList);
-//            manuFacturerListScrollPane.setVisible(true);
-//            manufacturerSearchResult.setVisible(true);
-//        } catch (NumberFormatException e) {
-//            JOptionPane.showMessageDialog(null, "Please enter valid Year of Manufacture");
-//        }
-//        System.out.println("Interface.SearchJPanel.findByYom()");
+    private void showResult() {
+        try {
+            int sNo = Integer.parseInt(serialNoTxtField.getText());
+            CarAttributes ca = new CarAttributes();
+            ca = null;
+
+            for (CarAttributes e : carFleet.getCarFleet()) {
+                if (e.getSerialNo() == sNo) {
+                    ca = e;
+                    break;
+                }
+            }
+            if (ca != null) {
+                SearchResultJPanel results = new SearchResultJPanel(displayPanel, ca);
+                displayPanel.add("results", results);
+                CardLayout layout = (CardLayout) displayPanel.getLayout();
+                layout.next(displayPanel);
+
+            } else {
+                JOptionPane.showMessageDialog(null, "Serial Number does not exist");
+            }
+
+        } catch (NumberFormatException e) {
+            JOptionPane.showMessageDialog(null, "Please enter valid serial number");
+        }
+
     }
 
-    private void findByManufacturer() {
+    private void findAvailableCarsWithCapacity() {
         handleFieldsVisibility();
-        manufacturerDropdown.setVisible(true);
+        minCapacity.setVisible(true);
+        minCapacity.getParent().validate();
+        minCapacityLabel.setVisible(true);
+        maxCapacity.setVisible(true);
+        maxCapacity.getParent().validate();
+        maxCapacityLabel.setVisible(true);
+
+        try {
+            int min = Integer.parseInt(minCapacity.getText());
+            int max = Integer.parseInt(maxCapacity.getText());
+            if (min > max) {
+                JOptionPane.showMessageDialog(null, "Minimum capacity should be less than maximum capacity");
+            } else {
+                DefaultListModel<String> capList = new DefaultListModel<>();
+                for (CarAttributes e : carFleet.getCarFleet()) {
+                    if (e.isAvailability() && (e.getCapacity() >= min && e.getCapacity() <= max)) {
+                        capList.addElement((e.getManufacturer() + " " + e.getName()));
+                        System.out.println((e.getManufacturer() + " " + e.getName()));
+                    }
+                }
+                capacityList.setModel(capList);
+                capacityScrollPane.setVisible(true);
+                capacityScrollPane.getParent().validate();
+                capacityList.setVisible(true);
+                capacityList.getParent().validate();
+            }
+        } catch (NumberFormatException e) {
+            JOptionPane.showMessageDialog(null, "Please enter valid value");
+        }
+
+    }
+
+    private void findYomResults() {
+        handleFieldsVisibility();
+        resultDropdown.setVisible(true);
+        DefaultListModel<String> yomList = new DefaultListModel<>();
+        String yom = String.valueOf(resultDropdown.getSelectedItem());
+        for (CarAttributes e : carFleet.getCarFleet()) {
+            if ((e.getYearOfManufacture() + "").equals(yom)) {
+                yomList.addElement((e.getManufacturer() + " " + e.getName()));
+            }
+        }
+        resultList.removeAll();
+        resultList.setModel(yomList);
+        resultListScrollPane.setVisible(true);
+        resultList.setVisible(true);
+    }
+
+    private void initializeYomDropdown() {
+        resultDropdown.removeAllItems();
+        resultDropdown.addItem(2011 + "");
+        resultDropdown.addItem(2012 + "");
+        resultDropdown.addItem(2015 + "");
+        resultDropdown.addItem(2016 + "");
+        resultDropdown.addItem(2017 + "");
+        resultDropdown.addItem(2019 + "");
+        tempList = new ArrayList<>();
+        tempList.add(2011 + "");
+        tempList.add(2012 + "");
+        tempList.add(2015 + "");
+        tempList.add(2016 + "");
+        tempList.add(2017 + "");
+        tempList.add(2019 + "");
+        for (CarAttributes e : carFleet.getCarFleet()) {
+            if (!(tempList.contains(e.getYearOfManufacture() + ""))) {
+                resultDropdown.addItem(e.getYearOfManufacture() + "");
+            }
+        }
+
+    }
+
+    private void findManufacturerResults() {
+        handleFieldsVisibility();
+        resultDropdown.setVisible(true);
         DefaultListModel<String> manufacturerList = new DefaultListModel<>();
-        String manufacturer = String.valueOf(manufacturerDropdown.getSelectedItem());
+        String manufacturer = String.valueOf(resultDropdown.getSelectedItem());
         for (CarAttributes e : carFleet.getCarFleet()) {
             if (e.getManufacturer().equals(manufacturer)) {
                 manufacturerList.addElement(e.getName());
             }
         }
-        manufacturerSearchResult.setModel(manufacturerList);
-        manuFacturerListScrollPane.setVisible(true);
-        manufacturerSearchResult.setVisible(true);
+        resultList.removeAll();
+        resultList.setModel(manufacturerList);
+        resultListScrollPane.setVisible(true);
+        resultList.setVisible(true);
+    }
+
+    private void initializeManufacturerDropdown() {
+        resultDropdown.removeAllItems();
+        resultDropdown.addItem("Mazda");
+        resultDropdown.addItem("Toyota");
+        resultDropdown.addItem("Ford");
+        resultDropdown.addItem("Cadillac");
+        resultDropdown.addItem("Hyundai");
+        resultDropdown.addItem("Nissan");
+        resultDropdown.addItem("GMC");
+        resultDropdown.addItem("Kia");
+        resultDropdown.addItem("Jeep");
+        tempList = new ArrayList<>();
+        tempList.add("Mazda");
+        tempList.add("Toyota");
+        tempList.add("Ford");
+        tempList.add("Cadillac");
+        tempList.add("Hyundai");
+        tempList.add("Nissan");
+        tempList.add("GMC");
+        tempList.add("Kia");
+        tempList.add("Jeep");
+        for (CarAttributes e : carFleet.getCarFleet()) {
+            if (!(tempList.contains(e.getManufacturer()))) {
+                resultDropdown.addItem(e.getManufacturer());
+            }
+        }
     }
     private void firstAvailCarTxtFieldComponentHidden(java.awt.event.ComponentEvent evt) {//GEN-FIRST:event_firstAvailCarTxtFieldComponentHidden
         // TODO add your handling code here:
@@ -319,39 +495,59 @@ public class SearchJPanel extends javax.swing.JPanel {
         // TODO add your handling code here:
     }//GEN-LAST:event_searchDropdownMouseClicked
 
-    private void yomTxtFieldComponentHidden(java.awt.event.ComponentEvent evt) {//GEN-FIRST:event_yomTxtFieldComponentHidden
+    private void searchDropdownActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_searchDropdownActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_yomTxtFieldComponentHidden
+        flag = 1;
+    }//GEN-LAST:event_searchDropdownActionPerformed
+
+    private void maxCapacityActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_maxCapacityActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_maxCapacityActionPerformed
+
+    private void serialNoTxtFieldComponentHidden(java.awt.event.ComponentEvent evt) {//GEN-FIRST:event_serialNoTxtFieldComponentHidden
+        // TODO add your handling code here:
+    }//GEN-LAST:event_serialNoTxtFieldComponentHidden
     private void handleFieldsVisibility() {
         firstAvailCarTxtField.setVisible(false);
         availCarsTxtField.setVisible(false);
         availCarsLabel.setVisible(false);
         unavailCarsTxtField.setVisible(false);
         unavailCarsLabel.setVisible(false);
-        manufacturerDropdown.setVisible(false);
-        manufacturerSearchResult.setVisible(false);
-        manuFacturerListScrollPane.setVisible(false);
-        yomTxtField.setVisible(false);
-
+        resultDropdown.setVisible(false);
+        resultList.setVisible(false);
+        resultListScrollPane.setVisible(false);
+        minCapacity.setVisible(false);
+        minCapacityLabel.setVisible(false);
+        maxCapacity.setVisible(false);
+        maxCapacityLabel.setVisible(false);
+        capacityScrollPane.setVisible(false);
+        capacityList.setVisible(false);
+        serialNoTxtField.setVisible(false);
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel availCarsLabel;
     private javax.swing.JTextField availCarsTxtField;
     private javax.swing.JButton backBtn;
+    private javax.swing.JList<String> capacityList;
+    private javax.swing.JScrollPane capacityScrollPane;
     private javax.swing.JTextField firstAvailCarTxtField;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JList<String> jList1;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JScrollPane manuFacturerListScrollPane;
-    private javax.swing.JComboBox<String> manufacturerDropdown;
-    private javax.swing.JList<String> manufacturerSearchResult;
+    private javax.swing.JTextField maxCapacity;
+    private javax.swing.JLabel maxCapacityLabel;
+    private javax.swing.JTextField minCapacity;
+    private javax.swing.JLabel minCapacityLabel;
+    private javax.swing.JComboBox<String> resultDropdown;
+    private javax.swing.JList<String> resultList;
+    private javax.swing.JScrollPane resultListScrollPane;
     private javax.swing.JButton searchBtn;
     private javax.swing.JComboBox<String> searchDropdown;
     private javax.swing.JLabel searchLabel;
+    private javax.swing.JTextField serialNoTxtField;
     private javax.swing.JLabel titleLabel;
     private javax.swing.JLabel unavailCarsLabel;
     private javax.swing.JTextField unavailCarsTxtField;
-    private javax.swing.JTextField yomTxtField;
     // End of variables declaration//GEN-END:variables
 }
