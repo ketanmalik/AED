@@ -350,7 +350,6 @@ public class ViewJPanel extends javax.swing.JPanel {
         } else {
             showErrorMessage("update");
         }
-//        confirmBtn.setEnabled(false);
     }//GEN-LAST:event_updateBtnActionPerformed
 
     private void detailsBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_detailsBtnActionPerformed

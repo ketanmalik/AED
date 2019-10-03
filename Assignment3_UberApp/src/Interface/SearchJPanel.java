@@ -52,7 +52,6 @@ public class SearchJPanel extends javax.swing.JPanel {
         searchLabel = new javax.swing.JLabel();
         searchDropdown = new javax.swing.JComboBox<>();
         searchBtn = new javax.swing.JButton();
-        firstAvailCarTxtField = new javax.swing.JTextField();
         availCarsLabel = new javax.swing.JLabel();
         unavailCarsLabel = new javax.swing.JLabel();
         availCarsTxtField = new javax.swing.JTextField();
@@ -60,8 +59,6 @@ public class SearchJPanel extends javax.swing.JPanel {
         resultDropdown = new javax.swing.JComboBox<>();
         resultListScrollPane = new javax.swing.JScrollPane();
         resultList = new javax.swing.JList<>();
-        capacityScrollPane = new javax.swing.JScrollPane();
-        capacityList = new javax.swing.JList<>();
         minCapacity = new javax.swing.JTextField();
         maxCapacity = new javax.swing.JTextField();
         minCapacityLabel = new javax.swing.JLabel();
@@ -93,7 +90,7 @@ public class SearchJPanel extends javax.swing.JPanel {
         searchLabel.setFont(new java.awt.Font("Lucida Grande", 0, 15)); // NOI18N
         searchLabel.setText("Search by:");
 
-        searchDropdown.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "First available car", "Total available/unavailable cars", "Manufacturer", "Year of Manufacture", "Car capacity", "Serial number", "Model", "Available cars in a city", "Cars which are due maintenance" }));
+        searchDropdown.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "First available car", "Total available/unavailable cars", "Manufacturer", "Year of Manufacture", "Car capacity", "Serial number", "Model", "Available cars in a city", "Cars which are due maintenance", "Manufacturer & Due maintenance" }));
         searchDropdown.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 searchDropdownMouseClicked(evt);
@@ -113,13 +110,6 @@ public class SearchJPanel extends javax.swing.JPanel {
             }
         });
 
-        firstAvailCarTxtField.setEnabled(false);
-        firstAvailCarTxtField.addComponentListener(new java.awt.event.ComponentAdapter() {
-            public void componentHidden(java.awt.event.ComponentEvent evt) {
-                firstAvailCarTxtFieldComponentHidden(evt);
-            }
-        });
-
         availCarsLabel.setText("Available Cars:");
 
         unavailCarsLabel.setText("Unavailable Cars:");
@@ -130,9 +120,6 @@ public class SearchJPanel extends javax.swing.JPanel {
 
         resultList.setEnabled(false);
         resultListScrollPane.setViewportView(resultList);
-
-        capacityList.setEnabled(false);
-        capacityScrollPane.setViewportView(capacityList);
 
         maxCapacity.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -155,55 +142,42 @@ public class SearchJPanel extends javax.swing.JPanel {
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(232, 232, 232)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                                .addComponent(availCarsLabel)
-                                .addComponent(unavailCarsLabel))
-                            .addGroup(layout.createSequentialGroup()
-                                .addGap(19, 19, 19)
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                                    .addComponent(minCapacityLabel)
-                                    .addComponent(maxCapacityLabel))))
+                        .addGap(242, 242, 242)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(maxCapacityLabel)
+                            .addComponent(minCapacityLabel)
+                            .addComponent(availCarsLabel)
+                            .addComponent(unavailCarsLabel))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(layout.createSequentialGroup()
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.CENTER)
-                                    .addComponent(firstAvailCarTxtField)
-                                    .addComponent(availCarsTxtField)
-                                    .addComponent(unavailCarsTxtField, javax.swing.GroupLayout.PREFERRED_SIZE, 107, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                .addContainerGap(447, Short.MAX_VALUE))
-                            .addGroup(layout.createSequentialGroup()
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                                    .addComponent(maxCapacity, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 136, Short.MAX_VALUE)
-                                    .addComponent(minCapacity, javax.swing.GroupLayout.Alignment.LEADING))
-                                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(unavailCarsTxtField)
+                            .addComponent(maxCapacity)
+                            .addComponent(minCapacity, javax.swing.GroupLayout.DEFAULT_SIZE, 136, Short.MAX_VALUE)
+                            .addComponent(availCarsTxtField)))
                     .addGroup(layout.createSequentialGroup()
-                        .addComponent(capacityScrollPane, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(resultListScrollPane, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addContainerGap())))
-            .addGroup(layout.createSequentialGroup()
-                .addGap(28, 28, 28)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(titleLabel)
-                    .addGroup(layout.createSequentialGroup()
-                        .addComponent(backBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 109, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(18, 18, 18)
-                        .addComponent(searchLabel)
-                        .addGap(18, 18, 18)
+                        .addGap(28, 28, 28)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(titleLabel)
                             .addGroup(layout.createSequentialGroup()
-                                .addComponent(searchBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 109, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(backBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 109, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addGap(18, 18, 18)
-                                .addComponent(serialNoTxtField, javax.swing.GroupLayout.PREFERRED_SIZE, 135, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addGroup(layout.createSequentialGroup()
-                                .addComponent(searchDropdown, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(searchLabel)
                                 .addGap(18, 18, 18)
-                                .addComponent(resultDropdown, javax.swing.GroupLayout.PREFERRED_SIZE, 131, javax.swing.GroupLayout.PREFERRED_SIZE)))))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addGroup(layout.createSequentialGroup()
+                                        .addComponent(searchBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 109, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addGap(18, 18, 18)
+                                        .addComponent(serialNoTxtField, javax.swing.GroupLayout.PREFERRED_SIZE, 135, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                    .addGroup(layout.createSequentialGroup()
+                                        .addComponent(searchDropdown, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addGap(18, 18, 18)
+                                        .addComponent(resultDropdown, javax.swing.GroupLayout.PREFERRED_SIZE, 131, javax.swing.GroupLayout.PREFERRED_SIZE))))))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(302, 302, 302)
+                        .addComponent(resultListScrollPane, javax.swing.GroupLayout.PREFERRED_SIZE, 247, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addContainerGap(257, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -221,30 +195,25 @@ public class SearchJPanel extends javax.swing.JPanel {
                         .addGap(18, 18, 18)
                         .addComponent(searchBtn))
                     .addComponent(serialNoTxtField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 82, Short.MAX_VALUE)
-                .addComponent(firstAvailCarTxtField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(minCapacity, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(minCapacityLabel))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(maxCapacity, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(maxCapacityLabel))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(availCarsTxtField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(availCarsLabel))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(unavailCarsTxtField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(unavailCarsLabel))
-                        .addGap(47, 47, 47)
-                        .addComponent(capacityScrollPane, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addComponent(resultListScrollPane, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(101, 101, 101))
+                .addGap(18, 18, 18)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(unavailCarsTxtField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(unavailCarsLabel))
+                .addGap(18, 18, 18)
+                .addComponent(resultListScrollPane, javax.swing.GroupLayout.PREFERRED_SIZE, 250, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(94, Short.MAX_VALUE))
         );
     }// </editor-fold>//GEN-END:initComponents
 
@@ -292,7 +261,7 @@ public class SearchJPanel extends javax.swing.JPanel {
                     flag = 0;
                 }
                 if (resultDropdown.isVisible()) {
-                    findManufacturerResults();
+                    findManufacturerResults("Single Filter");
                 } else {
                     initializeManufacturerDropdown();
                     handleFieldsVisibility();
@@ -368,6 +337,20 @@ public class SearchJPanel extends javax.swing.JPanel {
             case "Cars which are due maintenance":
                 handleFieldsVisibility();
                 findDueMaintenance();
+                break;
+            case "Manufacturer & Due maintenance":
+                if (flag == 1) {
+                    initializeManufacturerDropdown();
+                    flag = 0;
+                }
+                if (resultDropdown.isVisible()) {
+                    findManufacturerResults("Multiple Filter");
+                } else {
+                    initializeManufacturerDropdown();
+                    handleFieldsVisibility();
+                    resultDropdown.setVisible(true);
+                }
+                break;
 
         }
     }//GEN-LAST:event_searchBtnActionPerformed
@@ -418,21 +401,19 @@ public class SearchJPanel extends javax.swing.JPanel {
 
     private void initializeCityDropdown() {
         resultDropdown.removeAllItems();
-        resultDropdown.addItem("Boston");
-        resultDropdown.addItem("Florida");
-        resultDropdown.addItem("Saint Louis");
-        resultDropdown.addItem("Chicago");
         for (CarAttributes e : carFleet.getCarFleet()) {
-            String nameInFleet = e.getCity();
-            for (int i = 0; i < resultDropdown.getItemCount(); i++) {
-                String nameInDropdown = resultDropdown.getItemAt(i);
-                if (nameInDropdown.equalsIgnoreCase(nameInFleet)) {
-                    found = true;
-                    break;
+            if (resultDropdown.getItemCount() > 0) {
+                String nameInFleet = String.valueOf(e.getYearOfManufacture());
+                for (int i = 0; i < resultDropdown.getItemCount(); i++) {
+                    String nameInDropdown = String.valueOf(resultDropdown.getItemAt(i));
+                    if (nameInDropdown.equals(nameInFleet)) {
+                        found = true;
+                        break;
+                    }
                 }
             }
             if (!found) {
-                resultDropdown.addItem(nameInFleet);
+                resultDropdown.addItem(e.getName());
             }
             found = false;
         }
@@ -513,11 +494,12 @@ public class SearchJPanel extends javax.swing.JPanel {
                         capList.addElement((e.getManufacturer() + " " + e.getName()));
                     }
                 }
-                capacityList.setModel(capList);
-                capacityScrollPane.setVisible(true);
-                capacityScrollPane.getParent().validate();
-                capacityList.setVisible(true);
-                capacityList.getParent().validate();
+                resultList.removeAll();
+                resultList.setModel(capList);
+                resultListScrollPane.setVisible(true);
+                resultListScrollPane.getParent().validate();
+                resultList.setVisible(true);
+                resultList.getParent().validate();
             }
         } catch (NumberFormatException e) {
             JOptionPane.showMessageDialog(null, "Please enter valid value");
@@ -542,73 +524,84 @@ public class SearchJPanel extends javax.swing.JPanel {
 
     private void initializeYomDropdown() {
         resultDropdown.removeAllItems();
-        resultDropdown.addItem(2011 + "");
-        resultDropdown.addItem(2012 + "");
-        resultDropdown.addItem(2015 + "");
-        resultDropdown.addItem(2016 + "");
-        resultDropdown.addItem(2017 + "");
-        resultDropdown.addItem(2019 + "");
+        System.out.println(resultDropdown.getItemCount());
         for (CarAttributes e : carFleet.getCarFleet()) {
-            String yomInFleet = String.valueOf(e.getYearOfManufacture());
-            for (int i = 0; i < resultDropdown.getItemCount(); i++) {
-                String yomInDropdown = String.valueOf(resultDropdown.getItemAt(i));
-                if (yomInDropdown.equals(yomInFleet)) {
-                    found = true;
-                    break;
+            if (resultDropdown.getItemCount() > 0) {
+                String yomInFleet = String.valueOf(e.getYearOfManufacture());
+                for (int i = 0; i < resultDropdown.getItemCount(); i++) {
+                    String yomInDropdown = String.valueOf(resultDropdown.getItemAt(i));
+                    if (yomInDropdown.equals(yomInFleet)) {
+                        found = true;
+                        break;
+                    }
                 }
             }
             if (!found) {
-                resultDropdown.addItem(yomInFleet);
+                resultDropdown.addItem(String.valueOf(e.getYearOfManufacture()));
             }
             found = false;
         }
     }
 
-    private void findManufacturerResults() {
+    private void findManufacturerResults(String mode) {
         handleFieldsVisibility();
-        resultDropdown.setVisible(true);
-        DefaultListModel<String> manufacturerList = new DefaultListModel<>();
-        String manufacturer = String.valueOf(resultDropdown.getSelectedItem());
-        for (CarAttributes e : carFleet.getCarFleet()) {
-            if (e.getManufacturer().equals(manufacturer)) {
-                manufacturerList.addElement(e.getName());
+        resultList.removeAll();
+        if (mode.equals("Single Filter")) {
+            resultDropdown.setVisible(true);
+            DefaultListModel<String> manufacturerList = new DefaultListModel<>();
+            String manufacturer = String.valueOf(resultDropdown.getSelectedItem());
+            for (CarAttributes e : carFleet.getCarFleet()) {
+                if (e.getManufacturer().equals(manufacturer)) {
+                    manufacturerList.addElement(e.getName());
+                }
+            }
+            resultList.setModel(manufacturerList);
+            resultListScrollPane.setVisible(true);
+            resultList.setVisible(true);
+        } else {
+            DefaultListModel multipleFilterList = new DefaultListModel<>();
+            String manufacturer = String.valueOf(resultDropdown.getSelectedItem());
+            for (CarAttributes e : carFleet.getCarFleet()) {
+                if ((e.getManufacturer().equalsIgnoreCase(manufacturer))) {
+                    if (!e.isMaintenanceCertificate()) {
+                        multipleFilterList.addElement(e.getManufacturer() + " " + e.getName());
+                        found = true;
+                    }
+                }
+            }
+            if (found) {
+                resultList.setModel(multipleFilterList);
+                resultListScrollPane.setVisible(true);
+                resultList.setVisible(true);
+            }
+            else{
+                JOptionPane.showMessageDialog(null, "No car found in the fleet");
             }
         }
-        resultList.removeAll();
-        resultList.setModel(manufacturerList);
-        resultListScrollPane.setVisible(true);
-        resultList.setVisible(true);
+
     }
 
     private void initializeManufacturerDropdown() {
         resultDropdown.removeAllItems();
-        resultDropdown.addItem("Mazda");
-        resultDropdown.addItem("Toyota");
-        resultDropdown.addItem("Ford");
-        resultDropdown.addItem("Cadillac");
-        resultDropdown.addItem("Hyundai");
-        resultDropdown.addItem("Nissan");
-        resultDropdown.addItem("GMC");
-        resultDropdown.addItem("Kia");
-        resultDropdown.addItem("Jeep");
         for (CarAttributes e : carFleet.getCarFleet()) {
-            String manufacturerInFleet = e.getManufacturer();
-            for (int i = 0; i < resultDropdown.getItemCount(); i++) {
-                String manufacturerInDropdown = resultDropdown.getItemAt(i);
-                if (manufacturerInDropdown.equalsIgnoreCase(manufacturerInFleet)) {
-                    found = true;
-                    break;
+            if (resultDropdown.getItemCount() > 0) {
+                String manufacturerInFleet = String.valueOf(e.getManufacturer());
+                for (int i = 0; i < resultDropdown.getItemCount(); i++) {
+                    String manufacturerInDropdown = String.valueOf(resultDropdown.getItemAt(i));
+                    if (manufacturerInDropdown.equals(manufacturerInFleet)) {
+                        found = true;
+                        break;
+                    }
                 }
             }
             if (!found) {
-                resultDropdown.addItem(manufacturerInFleet);
+                resultDropdown.addItem(e.getManufacturer());
             }
             found = false;
         }
     }
 
     private void handleFieldsVisibility() {
-        firstAvailCarTxtField.setVisible(false);
         availCarsTxtField.setVisible(false);
         availCarsLabel.setVisible(false);
         unavailCarsTxtField.setVisible(false);
@@ -620,17 +613,11 @@ public class SearchJPanel extends javax.swing.JPanel {
         minCapacityLabel.setVisible(false);
         maxCapacity.setVisible(false);
         maxCapacityLabel.setVisible(false);
-        capacityScrollPane.setVisible(false);
-        capacityList.setVisible(false);
         serialNoTxtField.setVisible(false);
     }
 
-    private void firstAvailCarTxtFieldComponentHidden(java.awt.event.ComponentEvent evt) {//GEN-FIRST:event_firstAvailCarTxtFieldComponentHidden
-        // TODO add your handling code here:
-    }//GEN-LAST:event_firstAvailCarTxtFieldComponentHidden
-
     private void searchDropdownMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_searchDropdownMouseClicked
-        // TODO add your handling code here:
+
     }//GEN-LAST:event_searchDropdownMouseClicked
 
     private void searchDropdownActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_searchDropdownActionPerformed
@@ -650,9 +637,6 @@ public class SearchJPanel extends javax.swing.JPanel {
     private javax.swing.JLabel availCarsLabel;
     private javax.swing.JTextField availCarsTxtField;
     private javax.swing.JButton backBtn;
-    private javax.swing.JList<String> capacityList;
-    private javax.swing.JScrollPane capacityScrollPane;
-    private javax.swing.JTextField firstAvailCarTxtField;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JList<String> jList1;
     private javax.swing.JScrollPane jScrollPane1;
