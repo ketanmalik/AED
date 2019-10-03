@@ -25,8 +25,8 @@ public class SearchJPanel extends javax.swing.JPanel {
      */
     private JPanel displayPanel;
     private CarFleet carFleet;
-    private List<String> tempList;
     public int flag = 0;
+    private boolean found = false;
 
     public SearchJPanel(JPanel displayPanel, CarFleet carFleet) {
         initComponents();
@@ -256,21 +256,18 @@ public class SearchJPanel extends javax.swing.JPanel {
     }//GEN-LAST:event_backBtnActionPerformed
 
     private void searchBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_searchBtnActionPerformed
-        // TODO add your handling code here:
         String searchTerm = String.valueOf(searchDropdown.getSelectedItem());
         switch (searchTerm) {
             case "First available car":
-                handleFieldsVisibility();
-                int index = carFleet.firstAvailableCar();
-                CarAttributes ca = carFleet.getCarFleet().get(index);
-                String car = ca.getManufacturer() + " " + ca.getName();
-                if (index == 100) {
-                    JOptionPane.showMessageDialog(null, "No cars available at the moment");
-                } else {
-                    firstAvailCarTxtField.setVisible(true);
-                    firstAvailCarTxtField.getParent().validate();
-                    firstAvailCarTxtField.setText(car);
+                serialNoTxtField.setEnabled(false);
+                if (flag == 1) {
+                    serialNoTxtField.setText("");
+                    flag = 0;
                 }
+                handleFieldsVisibility();
+                serialNoTxtField.setVisible(true);
+                serialNoTxtField.getParent().validate();
+                findFirstAvailCar();
                 break;
             case "Total available/unavailable cars":
                 handleFieldsVisibility();
@@ -329,6 +326,7 @@ public class SearchJPanel extends javax.swing.JPanel {
                 }
                 break;
             case "Serial number":
+                serialNoTxtField.setEnabled(true);
                 if (flag == 1) {
                     serialNoTxtField.setText("");
                     flag = 0;
@@ -342,6 +340,7 @@ public class SearchJPanel extends javax.swing.JPanel {
                 }
                 break;
             case "Model":
+                serialNoTxtField.setEnabled(true);
                 if (flag == 1) {
                     serialNoTxtField.setText("");
                     flag = 0;
@@ -372,6 +371,19 @@ public class SearchJPanel extends javax.swing.JPanel {
 
         }
     }//GEN-LAST:event_searchBtnActionPerformed
+
+    private void findFirstAvailCar() {
+        int index = carFleet.firstAvailableCar();
+        CarAttributes ca = carFleet.getCarFleet().get(index);
+        String car = ca.getManufacturer() + " " + ca.getName();
+        if (index == 100) {
+            JOptionPane.showMessageDialog(null, "No cars available at the moment");
+        } else {
+            serialNoTxtField.setVisible(true);
+            serialNoTxtField.getParent().validate();
+            serialNoTxtField.setText(car);
+        }
+    }
 
     private void findDueMaintenance() {
         DefaultListModel<String> maintList = new DefaultListModel<>();
@@ -410,15 +422,19 @@ public class SearchJPanel extends javax.swing.JPanel {
         resultDropdown.addItem("Florida");
         resultDropdown.addItem("Saint Louis");
         resultDropdown.addItem("Chicago");
-        tempList = new ArrayList<>();
-        tempList.add("Boston");
-        tempList.add("Florida");
-        tempList.add("Saint Louis");
-        tempList.add("Chicago");
         for (CarAttributes e : carFleet.getCarFleet()) {
-            if (!(tempList.contains(e.getCity()))) {
-                resultDropdown.addItem(e.getCity());
+            String nameInFleet = e.getCity();
+            for (int i = 0; i < resultDropdown.getItemCount(); i++) {
+                String nameInDropdown = resultDropdown.getItemAt(i);
+                if (nameInDropdown.equalsIgnoreCase(nameInFleet)) {
+                    found = true;
+                    break;
+                }
             }
+            if (!found) {
+                resultDropdown.addItem(nameInFleet);
+            }
+            found = false;
         }
     }
 
@@ -430,16 +446,23 @@ public class SearchJPanel extends javax.swing.JPanel {
             DefaultListModel model = new DefaultListModel<>();
             for (CarAttributes e : carFleet.getCarFleet()) {
                 if (e.getModelNo().equalsIgnoreCase(modelNo)) {
-                    model.addElement(e.getModelNo());
+                    System.out.println("Interface.SearchJPanel.findModelNumber()");
+                    model.addElement(e.getManufacturer() + " " + e.getName() + " " + e.getModelNo());
+                    found = true;
                 }
             }
-            resultList.removeAll();
-            resultList.setModel(model);
-            resultListScrollPane.setVisible(true);
-            resultListScrollPane.getParent().validate();
-            resultList.setVisible(true);
-            resultList.getParent().validate();
+            if (!found) {
+                JOptionPane.showMessageDialog(null, "No car model found for " + modelNo);
+            } else {
+                resultList.removeAll();
+                resultList.setModel(model);
+                resultListScrollPane.setVisible(true);
+                resultListScrollPane.getParent().validate();
+                resultList.setVisible(true);
+                resultList.getParent().validate();
+            }
         }
+        found = false;
     }
 
     private void findSerialNumber() {
@@ -525,19 +548,20 @@ public class SearchJPanel extends javax.swing.JPanel {
         resultDropdown.addItem(2016 + "");
         resultDropdown.addItem(2017 + "");
         resultDropdown.addItem(2019 + "");
-        tempList = new ArrayList<>();
-        tempList.add(2011 + "");
-        tempList.add(2012 + "");
-        tempList.add(2015 + "");
-        tempList.add(2016 + "");
-        tempList.add(2017 + "");
-        tempList.add(2019 + "");
         for (CarAttributes e : carFleet.getCarFleet()) {
-            if (!(tempList.contains(e.getYearOfManufacture() + ""))) {
-                resultDropdown.addItem(e.getYearOfManufacture() + "");
+            String yomInFleet = String.valueOf(e.getYearOfManufacture());
+            for (int i = 0; i < resultDropdown.getItemCount(); i++) {
+                String yomInDropdown = String.valueOf(resultDropdown.getItemAt(i));
+                if (yomInDropdown.equals(yomInFleet)) {
+                    found = true;
+                    break;
+                }
             }
+            if (!found) {
+                resultDropdown.addItem(yomInFleet);
+            }
+            found = false;
         }
-
     }
 
     private void findManufacturerResults() {
@@ -567,43 +591,22 @@ public class SearchJPanel extends javax.swing.JPanel {
         resultDropdown.addItem("GMC");
         resultDropdown.addItem("Kia");
         resultDropdown.addItem("Jeep");
-        tempList = new ArrayList<>();
-        tempList.add("Mazda");
-        tempList.add("Toyota");
-        tempList.add("Ford");
-        tempList.add("Cadillac");
-        tempList.add("Hyundai");
-        tempList.add("Nissan");
-        tempList.add("GMC");
-        tempList.add("Kia");
-        tempList.add("Jeep");
         for (CarAttributes e : carFleet.getCarFleet()) {
-            if (!(tempList.contains(e.getManufacturer()))) {
-                resultDropdown.addItem(e.getManufacturer());
+            String manufacturerInFleet = e.getManufacturer();
+            for (int i = 0; i < resultDropdown.getItemCount(); i++) {
+                String manufacturerInDropdown = resultDropdown.getItemAt(i);
+                if (manufacturerInDropdown.equalsIgnoreCase(manufacturerInFleet)) {
+                    found = true;
+                    break;
+                }
             }
+            if (!found) {
+                resultDropdown.addItem(manufacturerInFleet);
+            }
+            found = false;
         }
     }
-    private void firstAvailCarTxtFieldComponentHidden(java.awt.event.ComponentEvent evt) {//GEN-FIRST:event_firstAvailCarTxtFieldComponentHidden
-        // TODO add your handling code here:
-    }//GEN-LAST:event_firstAvailCarTxtFieldComponentHidden
 
-    private void searchDropdownMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_searchDropdownMouseClicked
-        // TODO add your handling code here:
-    }//GEN-LAST:event_searchDropdownMouseClicked
-
-    private void searchDropdownActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_searchDropdownActionPerformed
-        // TODO add your handling code here:
-        flag = 1;
-        handleFieldsVisibility();
-    }//GEN-LAST:event_searchDropdownActionPerformed
-
-    private void maxCapacityActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_maxCapacityActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_maxCapacityActionPerformed
-
-    private void serialNoTxtFieldComponentHidden(java.awt.event.ComponentEvent evt) {//GEN-FIRST:event_serialNoTxtFieldComponentHidden
-        // TODO add your handling code here:
-    }//GEN-LAST:event_serialNoTxtFieldComponentHidden
     private void handleFieldsVisibility() {
         firstAvailCarTxtField.setVisible(false);
         availCarsTxtField.setVisible(false);
@@ -621,6 +624,27 @@ public class SearchJPanel extends javax.swing.JPanel {
         capacityList.setVisible(false);
         serialNoTxtField.setVisible(false);
     }
+
+    private void firstAvailCarTxtFieldComponentHidden(java.awt.event.ComponentEvent evt) {//GEN-FIRST:event_firstAvailCarTxtFieldComponentHidden
+        // TODO add your handling code here:
+    }//GEN-LAST:event_firstAvailCarTxtFieldComponentHidden
+
+    private void searchDropdownMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_searchDropdownMouseClicked
+        // TODO add your handling code here:
+    }//GEN-LAST:event_searchDropdownMouseClicked
+
+    private void searchDropdownActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_searchDropdownActionPerformed
+        flag = 1;
+        handleFieldsVisibility();
+    }//GEN-LAST:event_searchDropdownActionPerformed
+
+    private void maxCapacityActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_maxCapacityActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_maxCapacityActionPerformed
+
+    private void serialNoTxtFieldComponentHidden(java.awt.event.ComponentEvent evt) {//GEN-FIRST:event_serialNoTxtFieldComponentHidden
+        // TODO add your handling code here:
+    }//GEN-LAST:event_serialNoTxtFieldComponentHidden
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel availCarsLabel;
