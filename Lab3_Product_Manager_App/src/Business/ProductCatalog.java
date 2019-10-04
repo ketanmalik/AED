@@ -42,6 +42,9 @@ public class ProductCatalog {
         for (Product e : productCatalog) {
             if (searchTerm.equalsIgnoreCase(e.getName())) {
                 foundProduct = e;
+                break;
+            } else {
+                foundProduct = null;
             }
         }
         return foundProduct;

@@ -65,6 +65,11 @@ public class ManageProductPanel extends javax.swing.JPanel {
         deleteBtn = new javax.swing.JButton();
 
         setBackground(new java.awt.Color(153, 153, 255));
+        addHierarchyListener(new java.awt.event.HierarchyListener() {
+            public void hierarchyChanged(java.awt.event.HierarchyEvent evt) {
+                formHierarchyChanged(evt);
+            }
+        });
 
         backBtn.setFont(new java.awt.Font("Lucida Grande", 1, 13)); // NOI18N
         backBtn.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Interface/backIcon16px.png"))); // NOI18N
@@ -149,7 +154,7 @@ public class ManageProductPanel extends javax.swing.JPanel {
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                     .addComponent(viewDetailsBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 167, javax.swing.GroupLayout.PREFERRED_SIZE)
                                     .addComponent(deleteBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 167, javax.swing.GroupLayout.PREFERRED_SIZE))))))
-                .addContainerGap(230, Short.MAX_VALUE))
+                .addContainerGap(233, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -182,17 +187,28 @@ public class ManageProductPanel extends javax.swing.JPanel {
     private void viewDetailsBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_viewDetailsBtnActionPerformed
         // TODO add your handling code here:
         int selectedRow = productCatalogTbl.getSelectedRow();
-
-
+        if (selectedRow >= 0) {
+            Product product = (Product) productCatalogTbl.getValueAt(selectedRow, 0);
+            ViewJPanel viewPanel = new ViewJPanel(displayPanel, product);
+            displayPanel.add("viewPanel", viewPanel);
+            CardLayout layout = (CardLayout) displayPanel.getLayout();
+            layout.next(displayPanel);
+        } else {
+            JOptionPane.showMessageDialog(null, "Please select a product to view details");
+        }
     }//GEN-LAST:event_viewDetailsBtnActionPerformed
 
     private void deleteBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_deleteBtnActionPerformed
-        // TODO add your handling code here:
         int selectedRow = productCatalogTbl.getSelectedRow();
         if (selectedRow >= 0) {
-            Product product = (Product) productCatalogTbl.getValueAt(selectedRow, 0);
-            productCatalog.deleteProduct(product);
-            populateTable();
+            int dialogButton = JOptionPane.YES_NO_OPTION;
+            int dialogResult = JOptionPane.showConfirmDialog(null, "Are you sure you want to delete the product?", "Warning", dialogButton);
+            if (dialogResult == JOptionPane.YES_OPTION) {
+                Product product = (Product) productCatalogTbl.getValueAt(selectedRow, 0);
+                productCatalog.deleteProduct(product);
+                populateTable();
+            }
+
         } else {
             JOptionPane.showMessageDialog(null, "Please select a product to view");
         }
@@ -205,7 +221,9 @@ public class ManageProductPanel extends javax.swing.JPanel {
             JOptionPane.showMessageDialog(null, "Please enter product name to search");
             populateTable();
         } else {
+            System.out.println(searchTerm);
             Product foundProduct = productCatalog.searchResult(searchTerm);
+            System.out.println(foundProduct);
             if (foundProduct == null) {
                 JOptionPane.showMessageDialog(null, "No product found with given name");
             } else {
@@ -217,12 +235,17 @@ public class ManageProductPanel extends javax.swing.JPanel {
                 row[1] = foundProduct.getAvailability();
                 row[2] = foundProduct.getPrice();
                 row[3] = foundProduct.getDescription();
-                
-                dtm.addRow(row);
 
+                dtm.addRow(row);
             }
         }
     }//GEN-LAST:event_submitBtnActionPerformed
+
+    private void formHierarchyChanged(java.awt.event.HierarchyEvent evt) {//GEN-FIRST:event_formHierarchyChanged
+        // TODO add your handling code here:
+        System.out.println("Interface.ManageProductPanel.formHierarchyChanged()");
+        populateTable();
+    }//GEN-LAST:event_formHierarchyChanged
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
