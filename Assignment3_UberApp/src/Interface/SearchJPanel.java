@@ -90,7 +90,7 @@ public class SearchJPanel extends javax.swing.JPanel {
         searchLabel.setFont(new java.awt.Font("Lucida Grande", 0, 15)); // NOI18N
         searchLabel.setText("Search by:");
 
-        searchDropdown.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "First available car", "Total available/unavailable cars", "Manufacturer", "Year of Manufacture", "Car capacity", "Serial number", "Model", "Available cars in a city", "Cars which are due maintenance", "Manufacturer & Due maintenance" }));
+        searchDropdown.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "First available car", "Total available/unavailable cars", "Manufacturer", "Year of Manufacture", "Available cars with given capacity", "Serial number", "Model", "Available cars in a city", "Cars which are due maintenance", "Manufacturer & Due maintenance" }));
         searchDropdown.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 searchDropdownMouseClicked(evt);
@@ -152,10 +152,11 @@ public class SearchJPanel extends javax.swing.JPanel {
                             .addComponent(unavailCarsLabel))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(unavailCarsTxtField)
+                            .addComponent(minCapacity, javax.swing.GroupLayout.DEFAULT_SIZE, 100, Short.MAX_VALUE)
                             .addComponent(maxCapacity)
-                            .addComponent(minCapacity, javax.swing.GroupLayout.DEFAULT_SIZE, 136, Short.MAX_VALUE)
-                            .addComponent(availCarsTxtField)))
+                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                                .addComponent(unavailCarsTxtField, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 90, Short.MAX_VALUE)
+                                .addComponent(availCarsTxtField, javax.swing.GroupLayout.Alignment.LEADING))))
                     .addGroup(layout.createSequentialGroup()
                         .addGap(28, 28, 28)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -177,7 +178,7 @@ public class SearchJPanel extends javax.swing.JPanel {
                     .addGroup(layout.createSequentialGroup()
                         .addGap(302, 302, 302)
                         .addComponent(resultListScrollPane, javax.swing.GroupLayout.PREFERRED_SIZE, 247, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap(257, Short.MAX_VALUE))
+                .addGap(257, 257, 257))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -281,7 +282,7 @@ public class SearchJPanel extends javax.swing.JPanel {
                     resultDropdown.setVisible(true);
                 }
                 break;
-            case "Car capacity":
+            case "Available cars with given capacity":
                 if (minCapacity.isVisible()) {
                     findAvailableCarsWithCapacity();
                 } else {
@@ -403,17 +404,17 @@ public class SearchJPanel extends javax.swing.JPanel {
         resultDropdown.removeAllItems();
         for (CarAttributes e : carFleet.getCarFleet()) {
             if (resultDropdown.getItemCount() > 0) {
-                String nameInFleet = String.valueOf(e.getYearOfManufacture());
+                String nameInFleet = e.getCity();
                 for (int i = 0; i < resultDropdown.getItemCount(); i++) {
-                    String nameInDropdown = String.valueOf(resultDropdown.getItemAt(i));
-                    if (nameInDropdown.equals(nameInFleet)) {
+                    String nameInDropdown = resultDropdown.getItemAt(i);
+                    if (nameInDropdown.equalsIgnoreCase(nameInFleet)) {
                         found = true;
                         break;
                     }
                 }
             }
             if (!found) {
-                resultDropdown.addItem(e.getName());
+                resultDropdown.addItem(e.getCity());
             }
             found = false;
         }
@@ -427,7 +428,6 @@ public class SearchJPanel extends javax.swing.JPanel {
             DefaultListModel model = new DefaultListModel<>();
             for (CarAttributes e : carFleet.getCarFleet()) {
                 if (e.getModelNo().equalsIgnoreCase(modelNo)) {
-                    System.out.println("Interface.SearchJPanel.findModelNumber()");
                     model.addElement(e.getManufacturer() + " " + e.getName() + " " + e.getModelNo());
                     found = true;
                 }
@@ -491,15 +491,23 @@ public class SearchJPanel extends javax.swing.JPanel {
                 DefaultListModel<String> capList = new DefaultListModel<>();
                 for (CarAttributes e : carFleet.getCarFleet()) {
                     if (e.isAvailability() && (e.getCapacity() >= min && e.getCapacity() <= max)) {
+                        System.out.println("Interface.SearchJPanel.findAvailableCarsWithCapacity()");
                         capList.addElement((e.getManufacturer() + " " + e.getName()));
+                        found = true;
                     }
                 }
-                resultList.removeAll();
-                resultList.setModel(capList);
-                resultListScrollPane.setVisible(true);
-                resultListScrollPane.getParent().validate();
-                resultList.setVisible(true);
-                resultList.getParent().validate();
+                if (!found) {
+                    JOptionPane.showMessageDialog(null, "No cars found with given capacity");
+
+                } else {
+                    resultList.removeAll();
+                    resultList.setModel(capList);
+                    resultListScrollPane.setVisible(true);
+                    resultListScrollPane.getParent().validate();
+                    resultList.setVisible(true);
+                    resultList.getParent().validate();
+                }
+                found = false;
             }
         } catch (NumberFormatException e) {
             JOptionPane.showMessageDialog(null, "Please enter valid value");
@@ -524,7 +532,6 @@ public class SearchJPanel extends javax.swing.JPanel {
 
     private void initializeYomDropdown() {
         resultDropdown.removeAllItems();
-        System.out.println(resultDropdown.getItemCount());
         for (CarAttributes e : carFleet.getCarFleet()) {
             if (resultDropdown.getItemCount() > 0) {
                 String yomInFleet = String.valueOf(e.getYearOfManufacture());
@@ -573,12 +580,10 @@ public class SearchJPanel extends javax.swing.JPanel {
                 resultList.setModel(multipleFilterList);
                 resultListScrollPane.setVisible(true);
                 resultList.setVisible(true);
-            }
-            else{
+            } else {
                 JOptionPane.showMessageDialog(null, "No car found in the fleet");
             }
         }
-
     }
 
     private void initializeManufacturerDropdown() {
