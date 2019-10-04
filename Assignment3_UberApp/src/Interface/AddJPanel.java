@@ -278,7 +278,6 @@ public class AddJPanel extends javax.swing.JPanel {
     }//GEN-LAST:event_backBtnActionPerformed
 
     private void confirmBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_confirmBtnActionPerformed
-        // TODO add your handling code here:
         String name = nameTxtField.getText();
         if (name == null || name.equals("")) {
             showErrorMessage("Name");
