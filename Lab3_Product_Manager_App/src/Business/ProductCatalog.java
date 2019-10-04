@@ -37,14 +37,14 @@ public class ProductCatalog {
         productCatalog.remove(product);
     }
 
-    public ArrayList<Product> searchResult(String searchTerm) {
-        ArrayList<Product> tempList = new ArrayList<Product>();
+    public Product searchResult(String searchTerm) {
+        Product foundProduct = new Product();
         for (Product e : productCatalog) {
             if (searchTerm.equalsIgnoreCase(e.getName())) {
-                tempList.add(e);
+                foundProduct = e;
             }
         }
-        return tempList;
+        return foundProduct;
     }
 
 }

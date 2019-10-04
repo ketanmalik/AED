@@ -181,6 +181,7 @@ public class ManageProductPanel extends javax.swing.JPanel {
 
     private void viewDetailsBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_viewDetailsBtnActionPerformed
         // TODO add your handling code here:
+        int selectedRow = productCatalogTbl.getSelectedRow();
 
 
     }//GEN-LAST:event_viewDetailsBtnActionPerformed
@@ -204,8 +205,20 @@ public class ManageProductPanel extends javax.swing.JPanel {
             JOptionPane.showMessageDialog(null, "Please enter product name to search");
             populateTable();
         } else {
-            ArrayList<Product> tempList = productCatalog.searchResult(searchTerm);
-            if (tempList == null) {
+            Product foundProduct = productCatalog.searchResult(searchTerm);
+            if (foundProduct == null) {
+                JOptionPane.showMessageDialog(null, "No product found with given name");
+            } else {
+                DefaultTableModel dtm = (DefaultTableModel) productCatalogTbl.getModel();
+                dtm.setRowCount(0);
+
+                Object row[] = new Object[4];
+                row[0] = foundProduct;
+                row[1] = foundProduct.getAvailability();
+                row[2] = foundProduct.getPrice();
+                row[3] = foundProduct.getDescription();
+                
+                dtm.addRow(row);
 
             }
         }
