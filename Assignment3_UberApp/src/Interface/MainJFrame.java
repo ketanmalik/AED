@@ -18,7 +18,6 @@ public class MainJFrame extends javax.swing.JFrame {
      * Creates new form MainJFrame
      */
     private CarFleet carFleet;
-
     public MainJFrame() {
         initComponents();
         this.carFleet = new CarFleet();
@@ -132,7 +131,7 @@ public class MainJFrame extends javax.swing.JFrame {
     private void searchBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_searchBtnActionPerformed
         // TODO add your handling code here:
         SearchJPanel searchPanel = new SearchJPanel(displayPanel, carFleet);
-        displayPanel.add("searchPanel",searchPanel);
+        displayPanel.add("searchPanel", searchPanel);
         CardLayout layout = (CardLayout) displayPanel.getLayout();
         layout.next(displayPanel);
     }//GEN-LAST:event_searchBtnActionPerformed

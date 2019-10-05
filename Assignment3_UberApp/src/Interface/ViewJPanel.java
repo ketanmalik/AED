@@ -8,6 +8,8 @@ package Interface;
 import Business.CarAttributes;
 import Business.CarFleet;
 import java.awt.CardLayout;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.table.DefaultTableModel;
@@ -439,6 +441,11 @@ public class ViewJPanel extends javax.swing.JPanel {
         }
         ca.setAvailability(availabilityCheckBox.isSelected());
         ca.setMaintenanceCertificate(maintenanceCheckBox.isSelected());
+        LocalDateTime dateTime = LocalDateTime.now();
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd MMMM yyyy 'at' hh:mm");
+        String dateTimeOfUpdate = dateTime.format(formatter);;
+        carFleet.setDateTimeOfUpdate(dateTimeOfUpdate);
+        System.out.println(carFleet.getDateTimeOfUpdate());
         populateTable();
         updatePage();
     }//GEN-LAST:event_confirmBtnActionPerformed
@@ -506,7 +513,7 @@ public class ViewJPanel extends javax.swing.JPanel {
             cityTxtField.setText(cs.getCity());
             availabilityCheckBox.setSelected(cs.isAvailability());
             maintenanceCheckBox.setSelected(cs.isMaintenanceCertificate());
-            if ((cs.getAvailableMin() + "").equals("0") || (cs.getAvailableMin()+"").equals("100")) {
+            if ((cs.getAvailableMin() + "").equals("0") || (cs.getAvailableMin() + "").equals("100")) {
                 availTimeTxtBox.setText("");
             } else {
                 availTimeTxtBox.setText(cs.getAvailableMin() + "");

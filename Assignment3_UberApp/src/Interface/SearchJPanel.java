@@ -90,7 +90,7 @@ public class SearchJPanel extends javax.swing.JPanel {
         searchLabel.setFont(new java.awt.Font("Lucida Grande", 0, 15)); // NOI18N
         searchLabel.setText("Search by:");
 
-        searchDropdown.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "First available car", "Total available/unavailable cars", "Manufacturer", "Year of Manufacture", "Available cars with given capacity", "Serial number", "Model", "Available cars in a city", "Cars which are due maintenance", "Manufacturer & Due maintenance" }));
+        searchDropdown.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "First available car", "Total available/unavailable cars", "Manufacturer", "Year of Manufacture", "Available cars with given capacity", "Serial number", "Model", "All manufacturers used", "Last time when catalog was updated", "Available cars in a city", "Cars which are due maintenance", "Manufacturer & Due maintenance", " " }));
         searchDropdown.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 searchDropdownMouseClicked(evt);
@@ -154,9 +154,8 @@ public class SearchJPanel extends javax.swing.JPanel {
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                             .addComponent(minCapacity, javax.swing.GroupLayout.DEFAULT_SIZE, 100, Short.MAX_VALUE)
                             .addComponent(maxCapacity)
-                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                                .addComponent(unavailCarsTxtField, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 90, Short.MAX_VALUE)
-                                .addComponent(availCarsTxtField, javax.swing.GroupLayout.Alignment.LEADING))))
+                            .addComponent(unavailCarsTxtField, javax.swing.GroupLayout.DEFAULT_SIZE, 100, Short.MAX_VALUE)
+                            .addComponent(availCarsTxtField)))
                     .addGroup(layout.createSequentialGroup()
                         .addGap(28, 28, 28)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -168,13 +167,13 @@ public class SearchJPanel extends javax.swing.JPanel {
                                 .addGap(18, 18, 18)
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                     .addGroup(layout.createSequentialGroup()
-                                        .addComponent(searchBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 109, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                        .addGap(18, 18, 18)
-                                        .addComponent(serialNoTxtField, javax.swing.GroupLayout.PREFERRED_SIZE, 135, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                    .addGroup(layout.createSequentialGroup()
                                         .addComponent(searchDropdown, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                                         .addGap(18, 18, 18)
-                                        .addComponent(resultDropdown, javax.swing.GroupLayout.PREFERRED_SIZE, 131, javax.swing.GroupLayout.PREFERRED_SIZE))))))
+                                        .addComponent(resultDropdown, javax.swing.GroupLayout.PREFERRED_SIZE, 131, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                    .addGroup(layout.createSequentialGroup()
+                                        .addComponent(searchBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 109, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addGap(18, 18, 18)
+                                        .addComponent(serialNoTxtField, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE))))))
                     .addGroup(layout.createSequentialGroup()
                         .addGap(302, 302, 302)
                         .addComponent(resultListScrollPane, javax.swing.GroupLayout.PREFERRED_SIZE, 247, javax.swing.GroupLayout.PREFERRED_SIZE)))
@@ -323,6 +322,21 @@ public class SearchJPanel extends javax.swing.JPanel {
                     serialNoTxtField.getParent().validate();
                 }
                 break;
+            case "All manufacturers used":
+                handleFieldsVisibility();
+                findAllManufacturers();
+                break;
+            case "Last time when catalog was updated":
+                serialNoTxtField.setEnabled(false);
+                if (flag == 1) {
+                    serialNoTxtField.setText("");
+                    flag = 0;
+                }
+                handleFieldsVisibility();
+                serialNoTxtField.setText(carFleet.getDateTimeOfUpdate());
+                serialNoTxtField.setVisible(true);
+                serialNoTxtField.getParent().validate();
+                break;
             case "Available cars in a city":
                 if (flag == 1) {
                     initializeCityDropdown();
@@ -367,6 +381,21 @@ public class SearchJPanel extends javax.swing.JPanel {
             serialNoTxtField.getParent().validate();
             serialNoTxtField.setText(car);
         }
+    }
+
+    private void findAllManufacturers() {
+        DefaultListModel<String> allManufacturerList = new DefaultListModel<>();
+        for (CarAttributes e : carFleet.getCarFleet()) {
+            if (!allManufacturerList.contains(e.getManufacturer())) {
+                allManufacturerList.addElement(e.getManufacturer());
+            }
+        }
+        resultList.removeAll();
+        resultList.setModel(allManufacturerList);
+        resultListScrollPane.setVisible(true);
+        resultListScrollPane.getParent().validate();
+        resultList.setVisible(true);
+        resultList.getParent().validate();
     }
 
     private void findDueMaintenance() {
@@ -593,7 +622,7 @@ public class SearchJPanel extends javax.swing.JPanel {
                 String manufacturerInFleet = String.valueOf(e.getManufacturer());
                 for (int i = 0; i < resultDropdown.getItemCount(); i++) {
                     String manufacturerInDropdown = String.valueOf(resultDropdown.getItemAt(i));
-                    if (manufacturerInDropdown.equals(manufacturerInFleet)) {
+                    if (manufacturerInDropdown.equalsIgnoreCase(manufacturerInFleet)) {
                         found = true;
                         break;
                     }

@@ -6,6 +6,7 @@
 package Business;
 
 import java.time.LocalDate;
+import java.time.LocalTime;
 import java.time.Month;
 import java.time.format.DateTimeFormatter;
 import java.util.Random;
@@ -16,9 +17,10 @@ import java.util.Random;
  */
 public class RandomDataGeneration {
 
+    Random random = new Random();
+
     public String randomDateGeneration() {
-        Random random = new Random();
-        int min = (int) LocalDate.of(2019, 1, 1).toEpochDay();
+        int min = (int) LocalDate.of(2018, 1, 1).toEpochDay();
         int max = (int) LocalDate.now().toEpochDay();
         long rand = min + random.nextInt(max - min);
 
@@ -28,19 +30,22 @@ public class RandomDataGeneration {
         return date;
     }
 
+    public String randomTimeGeneration() {
+        LocalTime t = LocalTime.of(random.nextInt(24), random.nextInt(60));
+        String time = String.valueOf(t);
+        return time;
+    }
+
     public boolean randomAvailabilityGeneration() {
-        Random random = new Random();
         return random.nextBoolean();
     }
 
     public boolean randomMaintenanceGeneration() {
-        Random random = new Random();
         return random.nextBoolean();
     }
 
     public int randomAvailMinutesGeneration(boolean availability) {
         if (availability) {
-            Random random = new Random();
             int res = random.nextInt(16);
             return (res + 1);
         } else {

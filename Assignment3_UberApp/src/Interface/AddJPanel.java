@@ -10,8 +10,11 @@ import Business.CarFleet;
 import java.awt.CardLayout;
 import java.text.SimpleDateFormat;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
+import java.time.format.DateTimeFormatterBuilder;
 import java.util.Date;
+import java.util.Locale;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 
@@ -27,7 +30,7 @@ public class AddJPanel extends javax.swing.JPanel {
     private JPanel displayPanel;
     private CarFleet carFleet;
     private LocalDate date;
-    
+
     public AddJPanel(JPanel displayPanel, CarFleet carFleet) {
         initComponents();
         this.displayPanel = displayPanel;
@@ -329,12 +332,26 @@ public class AddJPanel extends javax.swing.JPanel {
             showErrorMessage("City");
             return;
         }
-        
+
+        for (CarAttributes e : carFleet.getCarFleet()) {
+            if ((e.getSerialNo() + "").equals(serialNoTxtField.getText())) {
+                JOptionPane.showMessageDialog(null, "Car with provided serial number already exists", "Invalid Serial Number", JOptionPane.ERROR_MESSAGE);
+                return;
+            }
+        }
         CarAttributes carObj = carFleet.addCar();
         carObj.setName(name);
-        carObj.setModelNo(modelNo);
         carObj.setSerialNo(Integer.parseInt(serialNoTxtField.getText()));
-        carObj.setManufacturer(manufacturer);
+        carObj.setModelNo(modelNo);
+        for (CarAttributes e : carFleet.getCarFleet()) {
+            if (e.getManufacturer().equalsIgnoreCase(manufacturer)) {
+                System.out.println(e.getManufacturer());
+                carObj.setManufacturer(e.getManufacturer());
+                break;
+            } else {
+                carObj.setManufacturer(manufacturer);
+            }
+        }
         carObj.setYearOfManufacture(Integer.parseInt(yomTxtField.getText()));
         carObj.setCapacity(Integer.parseInt(seatingCapacityTxtField.getText()));
         carObj.setColor(color);
@@ -345,6 +362,11 @@ public class AddJPanel extends javax.swing.JPanel {
         if (availTimeTxtBox.isEnabled()) {
             carObj.setAvailableMin(Integer.parseInt(availTimeTxtBox.getText()));
         }
+        LocalDateTime dateTime = LocalDateTime.now();
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd MMMM yyyy 'at' hh:mm");
+        String dateTimeOfUpdate = dateTime.format(formatter);;
+        carFleet.setDateTimeOfUpdate(dateTimeOfUpdate);
+        System.out.println(carFleet.getDateTimeOfUpdate());
         JOptionPane.showMessageDialog(
                 null, "Car added to fleet!", "Success", JOptionPane.PLAIN_MESSAGE);
         clearFields();
@@ -363,11 +385,11 @@ public class AddJPanel extends javax.swing.JPanel {
     private void availabilityCheckBoxStateChanged(javax.swing.event.ChangeEvent evt) {//GEN-FIRST:event_availabilityCheckBoxStateChanged
         // TODO add your handling code here:
     }//GEN-LAST:event_availabilityCheckBoxStateChanged
-    
+
     private void showErrorMessage(String error) {
         JOptionPane.showMessageDialog(null, "Please enter valid " + error, "Invalid Entry", JOptionPane.ERROR_MESSAGE);
     }
-    
+
     private void clearFields() {
         nameTxtField.setText("");
         modelTxtField.setText("");

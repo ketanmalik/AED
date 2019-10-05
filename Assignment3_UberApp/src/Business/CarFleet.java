@@ -5,6 +5,7 @@
  */
 package Business;
 
+import java.time.LocalTime;
 import java.util.List;
 import java.util.ArrayList;
 import java.util.Collection;
@@ -19,6 +20,15 @@ import java.util.Date;
 public class CarFleet {
 
     public List<CarAttributes> carFleet;
+    private String dateTimeOfUpdate;
+
+    public String getDateTimeOfUpdate() {
+        return dateTimeOfUpdate;
+    }
+
+    public void setDateTimeOfUpdate(String dateTimeOfUpdate) {
+        this.dateTimeOfUpdate = dateTimeOfUpdate;
+    }
 
     public CarFleet() {
         carFleet = new ArrayList<>();
@@ -28,7 +38,7 @@ public class CarFleet {
         CarAttributes ca4 = new CarAttributes("Rav4", "AWD", 103, "Toyota", 2016, 4, "Black", "Chicago");
         CarAttributes ca5 = new CarAttributes("ATS", "AWD", 104, "Cadillac", 2017, 4, "Grey", "Boston");
         CarAttributes ca6 = new CarAttributes("Tucson", "GLS", 105, "Hyundai", 2011, 4, "White", "Chicago");
-        CarAttributes ca7 = new CarAttributes("Armada", "RWD", 106, "Nissan", 2019, 7, "Blue", "Chicago");
+        CarAttributes ca7 = new CarAttributes("Armada", "RWD", 106, "Nissan", 2017, 7, "Blue", "Chicago");
         CarAttributes ca8 = new CarAttributes("Terrain", "SLE1", 107, "GMC", 2011, 7, "Violet", "Florida");
         CarAttributes ca9 = new CarAttributes("Optima", "FWD", 108, "Kia", 2019, 4, "Silver", "Saint Louis");
         CarAttributes ca10 = new CarAttributes("Cherokee", "4WD", 109, "Jeep", 2017, 4, "Silver", "Boston");
@@ -44,6 +54,9 @@ public class CarFleet {
         carFleet.add(ca9);
         carFleet.add(ca10);
 
+        RandomDataGeneration random = new RandomDataGeneration();
+        this.dateTimeOfUpdate = random.randomDateGeneration() + " at "+ random.randomTimeGeneration();
+        System.out.println(dateTimeOfUpdate);
     }
 
     public List<CarAttributes> getCarFleet() {
