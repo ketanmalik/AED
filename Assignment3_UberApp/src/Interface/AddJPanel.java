@@ -323,7 +323,7 @@ public class AddJPanel extends javax.swing.JPanel {
             try {
                 Integer.parseInt(availTimeTxtBox.getText());
             } catch (NumberFormatException e) {
-                showErrorMessage("time");
+                showErrorMessage("availability time");
                 return;
             }
         }
