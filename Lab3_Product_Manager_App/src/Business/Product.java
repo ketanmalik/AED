@@ -50,7 +50,6 @@ public class Product {
 
     @Override
     public String toString() {
-        System.out.println("Business.Product.toString()");
         return this.name;
     }
 

@@ -106,6 +106,19 @@ public class ManageProductPanel extends javax.swing.JPanel {
 
         jLabel1.setText("Search By Name:");
 
+        searchTxtField.addInputMethodListener(new java.awt.event.InputMethodListener() {
+            public void inputMethodTextChanged(java.awt.event.InputMethodEvent evt) {
+                searchTxtFieldInputMethodTextChanged(evt);
+            }
+            public void caretPositionChanged(java.awt.event.InputMethodEvent evt) {
+            }
+        });
+        searchTxtField.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                searchTxtFieldActionPerformed(evt);
+            }
+        });
+
         viewDetailsBtn.setFont(new java.awt.Font("Lucida Grande", 1, 13)); // NOI18N
         viewDetailsBtn.setText("View Details");
         viewDetailsBtn.addActionListener(new java.awt.event.ActionListener() {
@@ -221,9 +234,7 @@ public class ManageProductPanel extends javax.swing.JPanel {
             JOptionPane.showMessageDialog(null, "Please enter product name to search");
             populateTable();
         } else {
-            System.out.println(searchTerm);
             Product foundProduct = productCatalog.searchResult(searchTerm);
-            System.out.println(foundProduct);
             if (foundProduct == null) {
                 JOptionPane.showMessageDialog(null, "No product found with given name");
             } else {
@@ -243,9 +254,16 @@ public class ManageProductPanel extends javax.swing.JPanel {
 
     private void formHierarchyChanged(java.awt.event.HierarchyEvent evt) {//GEN-FIRST:event_formHierarchyChanged
         // TODO add your handling code here:
-        System.out.println("Interface.ManageProductPanel.formHierarchyChanged()");
         populateTable();
     }//GEN-LAST:event_formHierarchyChanged
+
+    private void searchTxtFieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_searchTxtFieldActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_searchTxtFieldActionPerformed
+
+    private void searchTxtFieldInputMethodTextChanged(java.awt.event.InputMethodEvent evt) {//GEN-FIRST:event_searchTxtFieldInputMethodTextChanged
+        // TODO add your handling code here:
+    }//GEN-LAST:event_searchTxtFieldInputMethodTextChanged
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

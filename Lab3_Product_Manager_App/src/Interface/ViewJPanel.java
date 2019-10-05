@@ -189,7 +189,6 @@ public class ViewJPanel extends javax.swing.JPanel {
         product.setAvailability(Integer.parseInt(availabilityTxtField.getText()));
         product.setPrice(Double.parseDouble(priceTxtField.getText()));
         product.setDescription(descriptionTxtField.getText());
-        JOptionPane.showMessageDialog(null, "Product updated in catalog", "Product Created", JOptionPane.PLAIN_MESSAGE);
         saveBtn.setEnabled(false);
         updateBtn.setEnabled(true);
         enableFields(false);
@@ -199,7 +198,6 @@ public class ViewJPanel extends javax.swing.JPanel {
         saveBtn.setEnabled(true);
         updateBtn.setEnabled(false);
         enableFields(true);
-        System.out.println("Interface.ViewJPanel.updateBtnActionPerformed()");
     }//GEN-LAST:event_updateBtnActionPerformed
 
     private void enableFields(boolean b) {

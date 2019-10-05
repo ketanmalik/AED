@@ -66,7 +66,7 @@ public class CreatePanel extends javax.swing.JPanel {
 
         jLabel2.setText("Product Name:*");
 
-        jLabel3.setText("Availability:*");
+        jLabel3.setText("Availability (in numbers):*");
 
         jLabel4.setText("Price:*");
 
@@ -108,7 +108,7 @@ public class CreatePanel extends javax.swing.JPanel {
                     .addGroup(layout.createSequentialGroup()
                         .addGap(328, 328, 328)
                         .addComponent(createProductBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 167, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap(441, Short.MAX_VALUE))
+                .addContainerGap(376, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
