@@ -181,7 +181,7 @@
     <Component class="javax.swing.JComboBox" name="searchDropdown">
       <Properties>
         <Property name="model" type="javax.swing.ComboBoxModel" editor="org.netbeans.modules.form.editors2.ComboBoxModelEditor">
-          <StringArray count="13">
+          <StringArray count="12">
             <StringItem index="0" value="First available car"/>
             <StringItem index="1" value="Total available/unavailable cars"/>
             <StringItem index="2" value="Manufacturer"/>
@@ -194,7 +194,6 @@
             <StringItem index="9" value="Available cars in a city"/>
             <StringItem index="10" value="Cars which are due maintenance"/>
             <StringItem index="11" value="Manufacturer &amp; Due maintenance"/>
-            <StringItem index="12" value=" "/>
           </StringArray>
         </Property>
       </Properties>

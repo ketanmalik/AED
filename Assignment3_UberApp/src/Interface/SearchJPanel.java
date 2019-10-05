@@ -90,7 +90,7 @@ public class SearchJPanel extends javax.swing.JPanel {
         searchLabel.setFont(new java.awt.Font("Lucida Grande", 0, 15)); // NOI18N
         searchLabel.setText("Search by:");
 
-        searchDropdown.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "First available car", "Total available/unavailable cars", "Manufacturer", "Year of Manufacture", "Available cars with given capacity", "Serial number", "Model", "All manufacturers used", "Last time when catalog was updated", "Available cars in a city", "Cars which are due maintenance", "Manufacturer & Due maintenance", " " }));
+        searchDropdown.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "First available car", "Total available/unavailable cars", "Manufacturer", "Year of Manufacture", "Available cars with given capacity", "Serial number", "Model", "All manufacturers used", "Last time when catalog was updated", "Available cars in a city", "Cars which are due maintenance", "Manufacturer & Due maintenance" }));
         searchDropdown.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 searchDropdownMouseClicked(evt);
