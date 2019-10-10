@@ -24,6 +24,7 @@ public class AdminMainScreen extends javax.swing.JPanel {
      */
     private JPanel panelRight;
     private Admin admin;
+
     public AdminMainScreen(JPanel panelRight, Admin admin) {
         initComponents();
         this.panelRight = panelRight;
@@ -105,25 +106,34 @@ public class AdminMainScreen extends javax.swing.JPanel {
 
     private void btnCreateActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCreateActionPerformed
         // TODO add your handling code here:
-        CardLayout layout = (CardLayout)panelRight.getLayout();
+        CardLayout layout = (CardLayout) panelRight.getLayout();
         panelRight.add(new AdminCreateScreen(panelRight, admin));
         layout.next(panelRight);
     }//GEN-LAST:event_btnCreateActionPerformed
 
-
-    public void populate(){
-        DefaultTableModel dtm = (DefaultTableModel)tableSup.getModel();
+    public void populate() {
+        DefaultTableModel dtm = (DefaultTableModel) tableSup.getModel();
         dtm.setRowCount(0);
-        for(User u : admin.getSuppDir().getSupplierList()){
-            Supplier s = (Supplier)u;
+        for (User u : admin.getSuppDir().getSupplierList()) {
+            Supplier s = (Supplier) u;
             Object[] row = new Object[dtm.getColumnCount()];
-            row[0]=s;
-            row[1]=s.getDirectory().getProductList().size();
+            row[0] = s;
+            row[1] = s.getDirectory().getProductList().size();
             dtm.addRow(row);
         }
 
+        DefaultTableModel dtm1 = (DefaultTableModel) tableCust.getModel();
+        dtm1.setRowCount(0);
+        for (User u : admin.getCustDir().getCustomerList()) {
+            Customer c = (Customer) u;
+            Object row[] = new Object[dtm.getColumnCount()];
+            row[0] = c;
+            row[1] = c.getDirectory().getCustomerList().size();
+            dtm1.addRow(row);
+        }
+
     }
-    
+
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnCreate;
     private javax.swing.JScrollPane jScrollPane1;

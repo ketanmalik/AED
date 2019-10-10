@@ -81,6 +81,11 @@ public class AdminCreateScreen extends javax.swing.JPanel {
         });
 
         radioSupplier.setText("Supplier");
+        radioSupplier.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                radioSupplierActionPerformed(evt);
+            }
+        });
 
         btnBack.setText("< BACK");
         btnBack.addActionListener(new java.awt.event.ActionListener() {
@@ -153,7 +158,21 @@ public class AdminCreateScreen extends javax.swing.JPanel {
         if (username == null || username.equals("")) {
             txtUser.setBorder(BorderFactory.createLineBorder(Color.RED));
             jLabel1.setForeground(Color.red);
-            JOptionPane.showMessageDialog(null, "Username cannot be empty");
+            JOptionPane.showMessageDialog(null, "Username field cannot be empty");
+            return;
+        }
+        if (p1 == null || p1.equals("")) {
+            txtPword.setBorder(BorderFactory.createLineBorder(Color.RED));
+            jLabel2.setForeground(Color.red);
+            JOptionPane.showMessageDialog(null, "Password field cannot be empty");
+            return;
+        }
+        if (p2 == null || p2.equals("") || !(p1.equals(p2))) {
+            txtPword.setBorder(BorderFactory.createLineBorder(Color.RED));
+            txtRePword.setBorder(BorderFactory.createLineBorder(Color.RED));
+            jLabel2.setForeground(Color.red);
+            jLabel3.setForeground(Color.red);
+            JOptionPane.showMessageDialog(null, "Passwords do not match. Please enter correct password ");
             return;
         }
         if (!usernamePatternCorrect()) {
@@ -162,9 +181,18 @@ public class AdminCreateScreen extends javax.swing.JPanel {
             JOptionPane.showMessageDialog(null, "Username should be in the form of xxx_xxxx@xxx.xxx");
             return;
         }
+        if(!radioCustomer.isSelected() && !radioSupplier.isSelected()){
+            JOptionPane.showMessageDialog(null, "Please select a role");
+            return;
+        }
         if (radioSupplier.isSelected()) {
             admin.getSuppDir().getSupplierList().add(new Supplier(p1, username));
             JOptionPane.showMessageDialog(null, "Supplier created successfully");
+            toMainScreen();
+        }
+        if (radioCustomer.isSelected()) {
+            admin.getCustDir().getCustomerList().add(new Customer(p1, username));
+            JOptionPane.showMessageDialog(null, "Customer created successfully");
             toMainScreen();
         }
     }
@@ -177,6 +205,8 @@ public class AdminCreateScreen extends javax.swing.JPanel {
 
     private void radioCustomerActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_radioCustomerActionPerformed
         // TODO add your handling code here:
+        radioSupplier.setSelected(false);
+        radioCustomer.setSelected(true);
     }//GEN-LAST:event_radioCustomerActionPerformed
 
     private void toMainScreen() {
@@ -197,6 +227,12 @@ public class AdminCreateScreen extends javax.swing.JPanel {
         panelRight.remove(this);
         layout.previous(panelRight);
     }//GEN-LAST:event_btnBackActionPerformed
+
+    private void radioSupplierActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_radioSupplierActionPerformed
+        // TODO add your handling code here:
+        radioSupplier.setSelected(true);
+        radioCustomer.setSelected(false);
+    }//GEN-LAST:event_radioSupplierActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
