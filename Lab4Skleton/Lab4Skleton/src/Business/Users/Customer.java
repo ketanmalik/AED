@@ -17,9 +17,20 @@ public class Customer extends User implements Comparable<Customer> {
 
     private CustomerDirectory directory;
 
-    public Customer(String password, String userName) {
+    private Date date;
+
+    public Customer(String password, String userName, Date date) {
         super(password, userName, "CUSTOMER");
+        this.date = date;
         directory = new CustomerDirectory();
+    }
+
+    public Date getDate() {
+        return date;
+    }
+
+    public void setDate(Date date) {
+        this.date = date;
     }
 
     public CustomerDirectory getDirectory() {

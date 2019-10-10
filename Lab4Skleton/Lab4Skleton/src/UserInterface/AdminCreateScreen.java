@@ -191,7 +191,7 @@ public class AdminCreateScreen extends javax.swing.JPanel {
             toMainScreen();
         }
         if (radioCustomer.isSelected()) {
-            admin.getCustDir().getCustomerList().add(new Customer(p1, username));
+            admin.getCustDir().getCustomerList().add(new Customer(p1, username, new Date()));
             JOptionPane.showMessageDialog(null, "Customer created successfully");
             toMainScreen();
         }
