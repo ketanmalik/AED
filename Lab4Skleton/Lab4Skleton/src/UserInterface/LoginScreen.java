@@ -9,7 +9,9 @@ import Business.Abstract.User;
 import Business.Users.Customer;
 import Business.Users.Supplier;
 import java.awt.CardLayout;
+import java.awt.Color;
 import java.util.List;
+import javax.swing.BorderFactory;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 
@@ -64,18 +66,17 @@ public class LoginScreen extends javax.swing.JPanel {
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(txtPword)
-                    .addComponent(comboUser, 0, 166, Short.MAX_VALUE))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-            .addGroup(layout.createSequentialGroup()
-                .addGap(150, 150, 150)
-                .addComponent(btnSubmit)
-                .addContainerGap(171, Short.MAX_VALUE))
-            .addGroup(layout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(txtTitle)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(150, 150, 150)
+                        .addComponent(btnSubmit))
+                    .addGroup(layout.createSequentialGroup()
+                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                .addComponent(txtPword)
+                                .addComponent(comboUser, 0, 166, Short.MAX_VALUE))
+                            .addComponent(txtTitle))))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
@@ -95,16 +96,42 @@ public class LoginScreen extends javax.swing.JPanel {
 
     private void btnSubmitActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSubmitActionPerformed
         // TODO add your handling code here:
+
+        if (txtPword == null || txtPword.equals("")) {
+            txtPword.setBorder(BorderFactory.createLineBorder(Color.RED));
+            JOptionPane.showMessageDialog(null, "Please enter password");
+            return;
+        }
         User u = (User) comboUser.getSelectedItem();
+        System.out.println(u);
         if (u != null) {
-            Supplier s = (Supplier) u;
-            if (s.verify(txtPword.getText())) {
-                grantAccessTo(u);
-            }
-            else{
-                JOptionPane.showMessageDialog(null, "Please enter valid password");
+            if (role.equalsIgnoreCase("supplier")) {
+                Supplier s = (Supplier) u;
+                if (s.verify(txtPword.getText())) {
+                    grantAccessTo(u);
+                } else {
+                    JOptionPane.showMessageDialog(null, "Please enter valid password");
+                }
+            } else {
+                Customer c = (Customer) u;
+                if (c.verify(txtPword.getText())) {
+                    grantAccessTo(u);
+                } else {
+                    JOptionPane.showMessageDialog(null, "Please enter valid password");
+                }
             }
         }
+//        if (role.equalsIgnoreCase("supplier")) {
+//            if (u != null) {
+//                Supplier s = (Supplier) u;
+//                if (s.verify(txtPword.getText())) {
+//                    grantAccessTo(u);
+//                } else {
+//                    JOptionPane.showMessageDialog(null, "Please enter valid password");
+//                }
+//            }
+//        }
+
     }//GEN-LAST:event_btnSubmitActionPerformed
 
     private void grantAccessTo(User u) {
@@ -121,6 +148,9 @@ public class LoginScreen extends javax.swing.JPanel {
         comboUser.removeAllItems();
         if (role.equalsIgnoreCase("supplier")) {
             txtTitle.setText("Supplier Login Screen");
+        }
+        if (role.equalsIgnoreCase("customer")) {
+            txtTitle.setText("Customer Login Screen");
         }
         for (User u : list) {
             comboUser.addItem(u);
