@@ -59,6 +59,7 @@ public class AdminCreateScreen extends javax.swing.JPanel {
         radioCustomer = new javax.swing.JRadioButton();
         radioSupplier = new javax.swing.JRadioButton();
         btnBack = new javax.swing.JButton();
+        jLabel4 = new javax.swing.JLabel();
 
         btnCreate.setText("Create");
         btnCreate.addActionListener(new java.awt.event.ActionListener() {
@@ -94,6 +95,8 @@ public class AdminCreateScreen extends javax.swing.JPanel {
             }
         });
 
+        jLabel4.setText("(Atleast 6 digits, 1 small letter, 1 capital letter, 1 special character from $, *, #, &)");
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
         layout.setHorizontalGroup(
@@ -116,11 +119,12 @@ public class AdminCreateScreen extends javax.swing.JPanel {
                                 .addGap(35, 35, 35)
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                     .addComponent(radioSupplier)
-                                    .addComponent(radioCustomer)))))
+                                    .addComponent(radioCustomer)))
+                            .addComponent(jLabel4)))
                     .addGroup(layout.createSequentialGroup()
                         .addGap(17, 17, 17)
                         .addComponent(btnBack)))
-                .addContainerGap(76, Short.MAX_VALUE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -135,7 +139,9 @@ public class AdminCreateScreen extends javax.swing.JPanel {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(txtPword, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel2))
-                .addGap(18, 18, 18)
+                .addGap(2, 2, 2)
+                .addComponent(jLabel4)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(txtRePword, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel3))
@@ -145,7 +151,7 @@ public class AdminCreateScreen extends javax.swing.JPanel {
                 .addComponent(radioSupplier)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(btnCreate)
-                .addContainerGap(47, Short.MAX_VALUE))
+                .addContainerGap(128, Short.MAX_VALUE))
         );
     }// </editor-fold>//GEN-END:initComponents
 
@@ -181,7 +187,11 @@ public class AdminCreateScreen extends javax.swing.JPanel {
             JOptionPane.showMessageDialog(null, "Username should be in the form of xxx_xxxx@xxx.xxx");
             return;
         }
-        if(!radioCustomer.isSelected() && !radioSupplier.isSelected()){
+        if (PasswordPatternInvalid()) {
+            JOptionPane.showMessageDialog(null, "Password format is not valid");
+            return;
+        }
+        if (!radioCustomer.isSelected() && !radioSupplier.isSelected()) {
             JOptionPane.showMessageDialog(null, "Please select a role");
             return;
         }
@@ -203,6 +213,11 @@ public class AdminCreateScreen extends javax.swing.JPanel {
         return m.matches();
     }//GEN-LAST:event_btnCreateActionPerformed
 
+    boolean PasswordPatternInvalid() {
+        Pattern p = Pattern.compile("^(.{0,5}|[^A-Z]*|[^a-z]*|[^0-9]*|[^$*#&]*)$");
+        Matcher m = p.matcher(txtPword.getText());
+        return m.matches();
+    }
     private void radioCustomerActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_radioCustomerActionPerformed
         // TODO add your handling code here:
         radioSupplier.setSelected(false);
@@ -241,6 +256,7 @@ public class AdminCreateScreen extends javax.swing.JPanel {
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
+    private javax.swing.JLabel jLabel4;
     private javax.swing.JRadioButton radioCustomer;
     private javax.swing.JRadioButton radioSupplier;
     private javax.swing.JTextField txtPword;
