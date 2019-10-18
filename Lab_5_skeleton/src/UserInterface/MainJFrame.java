@@ -142,6 +142,12 @@ public class MainJFrame extends javax.swing.JFrame {
                 break;
             }
         }
+        if (!flag) {
+            JOptionPane.showMessageDialog(null, "User does not exist. Please enter valid username and password");
+            userNameJTextField.setText("");
+            passwordField.setText("");
+            return;
+        }
         loginJButton.setEnabled(false);
         logoutJButton.setEnabled(true);
         userNameJTextField.setEnabled(false);
