@@ -19,26 +19,28 @@ public abstract class Organization {
     private UserAccountDirectory userAccountDirectory;
     private int organizationID;
     private static int counter;
-    
-    public enum Type{
+
+    public enum Type {
         Admin("Admin Organization") {
 //            //@Override
 //            public Organization createOrganization() {
 //                return new AdminOrganization();
 //            }
-        }, Doctor("Doctor Organization"){
+        }, Doctor("Doctor Organization") {
 //            public Organization createOrganization() {
 //                return new DoctorOrganization();
 //            }
-        }, Lab("Lab Organization"){
+        }, Lab("Lab Organization") {
 //            public Organization createOrganization() {
 //                return new LabOrganization();
 //            }
         };
         private String value;
+
         private Type(String value) {
             this.value = value;
         }
+
         public String getValue() {
             return value;
         }
@@ -56,7 +58,7 @@ public abstract class Organization {
     }
 
     public abstract ArrayList<String> getSupportedRole();
-    
+
     public UserAccountDirectory getUserAccountDirectory() {
         return userAccountDirectory;
     }
@@ -68,7 +70,7 @@ public abstract class Organization {
     public EmployeeDirectory getEmployeeDirectory() {
         return employeeDirectory;
     }
-    
+
     public String getName() {
         return name;
     }
@@ -81,6 +83,5 @@ public abstract class Organization {
     public String toString() {
         return name;
     }
-    
-    
+
 }
