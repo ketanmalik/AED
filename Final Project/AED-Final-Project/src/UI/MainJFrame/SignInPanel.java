@@ -112,7 +112,7 @@ public class SignInPanel extends javax.swing.JPanel {
 
         UserAccount userFound = ecoSystem.getUaDirectory().authenticateUser(username, password);
         if (userFound != null) {
-            EcoSysAdminPanel ecoSysAdminPanel = new EcoSysAdminPanel(displayPanel, ecoSystem);
+            EcoSysAdminPanel ecoSysAdminPanel = new EcoSysAdminPanel(displayPanel, ecoSystem, userFound);
             displayPanel.add("ecoSysAdminPanel", ecoSysAdminPanel);
             CardLayout layout = (CardLayout) displayPanel.getLayout();
             layout.next(displayPanel);

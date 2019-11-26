@@ -7,10 +7,7 @@ package Business.EcoSystem;
 
 import Business.Network.Network;
 import Business.UserAccount.UserAccount;
-import java.text.SimpleDateFormat;
-import java.util.Calendar;
-import java.util.Date;
-import java.util.GregorianCalendar;
+import Business.util.DateUtil;
 
 /**
  *
@@ -37,25 +34,13 @@ public class ConfigureASystem {
 
         //2. Creating new Network under EcoSystem Admin
         Network network = new Network();
-        network.setName("Network - 1");
+        network.setName("Network-1");
         network.setLocation("Boston");
         network.setCreatedBy(ecoSysAdmin);
-        network.setCreatedOn(getDate("11/26/2019"));
-        network.setLastUpdatedOn(getDate("11/26/2019"));
+        network.setCreatedOn(DateUtil.getStringToDate("11/25/2019"));
+        network.setLastUpdatedOn(DateUtil.getStringToDate("11/25/2019"));
         system.getNetworkList().add(network);
 
         return system;
-    }
-
-    public static Date getDate(String dateString) {
-        SimpleDateFormat sdf = new SimpleDateFormat("MM/dd/yyyy");
-        try {
-            Date date = sdf.parse(dateString);
-            System.out.println(date);
-            return date;
-        } catch (Exception e) {
-
-        }
-        return null;
     }
 }
