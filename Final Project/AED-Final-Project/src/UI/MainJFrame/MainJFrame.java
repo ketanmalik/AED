@@ -11,7 +11,6 @@ import Business.UserAccount.UserAccount;
 import UI.EcoSysAdmin.ManageEnterprisePanel;
 import UI.EcoSysAdmin.ManageNetworkPanel;
 import java.awt.CardLayout;
-import java.awt.Toolkit;
 import java.awt.event.*;
 import javax.swing.Timer;
 
@@ -31,10 +30,6 @@ public class MainJFrame extends javax.swing.JFrame {
     public MainJFrame() {
         initComponents();
         ecoSystem = dB4OUtil.retrieveSystem();
-//        Toolkit tk = Toolkit.getDefaultToolkit();
-//        int x = (int) tk.getScreenSize().getWidth();
-//        int y = (int) tk.getScreenSize().getHeight();
-//        setSize(x, y);
         showButtons(false);
         initializeSignInPanel();
     }

@@ -11,6 +11,9 @@ import Business.Network.Network;
 import Business.UserAccount.UserAccount;
 import UI.MainJFrame.MainJFrame;
 import java.awt.Color;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.table.DefaultTableModel;
 
@@ -26,8 +29,9 @@ public class ManageEnterprisePanel extends javax.swing.JPanel {
     private JPanel displayPanel;
     private EcoSystem ecoSystem;
     private UserAccount currentUser;
+    private Enterprise enterpriseToUpdate = null;
     private String mode;
-
+    
     public ManageEnterprisePanel(JPanel displayPanel, EcoSystem ecoSystem, UserAccount currentUser) {
         initComponents();
         this.displayPanel = displayPanel;
@@ -35,29 +39,38 @@ public class ManageEnterprisePanel extends javax.swing.JPanel {
         this.currentUser = currentUser;
         modifyButtons();
         populateTable();
+        populateDropdowns();
+        enableFields(false);
     }
-
+    
+    private void enableFields(boolean bool) {
+        networkDropdown.setEnabled(bool);
+        typeDropdown.setEnabled(bool);
+        nameTxtField.setEnabled(bool);
+        confirmBtn.setEnabled(bool);
+    }
+    
     private void modifyButtons() {
         MainJFrame.manageNetworkBtn.setOpaque(false);
         MainJFrame.manageNetworkBtn.setContentAreaFilled(false);
         MainJFrame.manageNetworkBtn.setBorderPainted(false);
         MainJFrame.manageNetworkBtn.setForeground(Color.white);
-
+        
         MainJFrame.manageEnterpriseBtn.setOpaque(false);
         MainJFrame.manageEnterpriseBtn.setContentAreaFilled(false);
         MainJFrame.manageEnterpriseBtn.setBorderPainted(false);
         MainJFrame.manageEnterpriseBtn.setForeground(Color.black);
-
+        
         MainJFrame.manageAdminBtn.setOpaque(false);
         MainJFrame.manageAdminBtn.setContentAreaFilled(false);
         MainJFrame.manageAdminBtn.setBorderPainted(false);
         MainJFrame.manageAdminBtn.setForeground(Color.white);
-
+        
         MainJFrame.logoutBtn.setOpaque(false);
         MainJFrame.logoutBtn.setContentAreaFilled(false);
         MainJFrame.logoutBtn.setBorderPainted(false);
     }
-
+    
     private void populateTable() {
         DefaultTableModel dtm = (DefaultTableModel) enterpriseTbl.getModel();
         dtm.setRowCount(0);
@@ -67,7 +80,7 @@ public class ManageEnterprisePanel extends javax.swing.JPanel {
                 row[0] = e;
                 row[1] = e.getNetwork().getName();
                 row[2] = e.getType();
-
+                
                 dtm.addRow(row);
             }
         }
@@ -87,8 +100,14 @@ public class ManageEnterprisePanel extends javax.swing.JPanel {
         enterpriseTbl = new javax.swing.JTable();
         viewBtn = new javax.swing.JButton();
         updateBtn = new javax.swing.JButton();
-        deleteBtn = new javax.swing.JButton();
         jLabel1 = new javax.swing.JLabel();
+        jLabel2 = new javax.swing.JLabel();
+        jLabel3 = new javax.swing.JLabel();
+        jLabel4 = new javax.swing.JLabel();
+        nameTxtField = new javax.swing.JTextField();
+        confirmBtn = new javax.swing.JButton();
+        networkDropdown = new javax.swing.JComboBox<>();
+        typeDropdown = new javax.swing.JComboBox<>();
 
         setBackground(new java.awt.Color(0, 153, 153));
 
@@ -132,32 +151,56 @@ public class ManageEnterprisePanel extends javax.swing.JPanel {
             }
         });
 
-        deleteBtn.setText("Delete");
-        deleteBtn.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                deleteBtnActionPerformed(evt);
-            }
-        });
-
         jLabel1.setForeground(new java.awt.Color(255, 255, 255));
         jLabel1.setText("All Connected Enterprises:");
+
+        jLabel2.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel2.setText("Network:");
+
+        jLabel3.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel3.setText("Type:");
+
+        jLabel4.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel4.setText("Name:");
+
+        confirmBtn.setText("Confirm");
+        confirmBtn.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                confirmBtnActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(22, 22, 22)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jLabel1)
                     .addGroup(layout.createSequentialGroup()
-                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 464, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(23, 23, 23)
+                        .addGap(22, 22, 22)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(updateBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(deleteBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(viewBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(addBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                            .addComponent(jLabel1)
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 464, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(23, 23, 23)
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(updateBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(viewBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(addBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)))))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(168, 168, 168)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(confirmBtn)
+                            .addGroup(layout.createSequentialGroup()
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(jLabel2, javax.swing.GroupLayout.Alignment.TRAILING)
+                                    .addComponent(jLabel3, javax.swing.GroupLayout.Alignment.TRAILING)
+                                    .addComponent(jLabel4, javax.swing.GroupLayout.Alignment.TRAILING))
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                    .addComponent(nameTxtField)
+                                    .addComponent(networkDropdown, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                    .addComponent(typeDropdown, 0, 180, Short.MAX_VALUE))))))
                 .addContainerGap(391, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
@@ -173,97 +216,146 @@ public class ManageEnterprisePanel extends javax.swing.JPanel {
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addComponent(viewBtn)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(updateBtn)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(deleteBtn)))
-                .addContainerGap(564, Short.MAX_VALUE))
+                        .addComponent(updateBtn)))
+                .addGap(68, 68, 68)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel2)
+                    .addComponent(networkDropdown, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(15, 15, 15)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel3)
+                    .addComponent(typeDropdown, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(18, 18, 18)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel4)
+                    .addComponent(nameTxtField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(32, 32, 32)
+                .addComponent(confirmBtn)
+                .addContainerGap(336, Short.MAX_VALUE))
         );
     }// </editor-fold>//GEN-END:initComponents
 
+    private boolean isUnique(String str) {
+        boolean unique = true;
+        for (Network n : ecoSystem.getNetworkDirectory().getNetworkList()) {
+            for (Enterprise e : n.getEnterpriseDirectory().getEnterpriseList()) {
+                if (e.getName().equalsIgnoreCase(str)) {
+                    unique = false;
+                    return unique;
+                }
+            }
+            
+        }
+        return unique;
+    }
+    
+    private void populateDropdowns() {
+        networkDropdown.removeAllItems();
+        typeDropdown.removeAllItems();
+        
+        for (Network n : ecoSystem.getNetworkDirectory().getNetworkList()) {
+            networkDropdown.addItem(n.toString());
+            for (Enterprise e : n.getEnterpriseDirectory().getEnterpriseList()) {
+                typeDropdown.addItem(e.getType());
+            }
+        }
+    }
+    
+    private boolean validateStr(String str) {
+        Pattern p = Pattern.compile("[a-zA-Z]+");
+        Matcher m = p.matcher(str);
+        return m.matches();
+    }
     private void addBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addBtnActionPerformed
         mode = "add";
-//        enableFields(true);
-//        enterpriseDropdown.setEnabled(false);
-//        clearFields();
-//        createdByTxtField.setText(currentUser.getUsername());
-//        createdByTxtField.setEnabled(false);
-//        createdOnTxtField.setText(DateUtil.getDateToString(new Date()));
-//        createdOnTxtField.setEnabled(false);
-//        lastUpdatedTxtField.setText(DateUtil.getDateToString(new Date()));
-//        lastUpdatedTxtField.setEnabled(false);
+        enableFields(true);
     }//GEN-LAST:event_addBtnActionPerformed
 
     private void viewBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_viewBtnActionPerformed
-//        int selectedRow = networksTbl.getSelectedRow();
-//        if (selectedRow >= 0) {
-//            labelEnterprise.setVisible(false);
-//            enableFields(false);
-//            enterpriseDropdown.setEnabled(true);
-//            Network selectedNetwork = (Network) networksTbl.getValueAt(selectedRow, 0);
-//            nameTxtField.setText(selectedNetwork.getName());
-//            locationTxtField.setText(selectedNetwork.getLocation());
-//            createdByTxtField.setText(selectedNetwork.getCreatedBy().getUsername());
-//            createdOnTxtField.setText(DateUtil.getDateToString(selectedNetwork.getCreatedOn()));
-//            lastUpdatedTxtField.setText(DateUtil.getDateToString(selectedNetwork.getLastUpdatedOn()));
-//            if (selectedNetwork.getEnterpriseDirectory().getEnterpriseList().size() != 0) {
-//                for (Enterprise e : selectedNetwork.getEnterpriseDirectory().getEnterpriseList()) {
-//                    enterpriseDropdown.addItem(e.getName());
-//                }
-//            }
-//        } else {
-//            JOptionPane.showMessageDialog(null, "Please select a network to view details");
-//        }
+        int selectedRow = enterpriseTbl.getSelectedRow();
+        if (selectedRow >= 0) {
+            enableFields(false);
+            Enterprise e = (Enterprise) enterpriseTbl.getValueAt(selectedRow, 0);
+            networkDropdown.setSelectedItem(e.getNetwork().getName());
+            typeDropdown.setSelectedItem(e.getType());
+            nameTxtField.setText(e.getName());
+        } else {
+            JOptionPane.showMessageDialog(null, "Please select an enterprise to view");
+        }
     }//GEN-LAST:event_viewBtnActionPerformed
 
     private void updateBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_updateBtnActionPerformed
-//        int selectedRow = networksTbl.getSelectedRow();
-//        if (selectedRow >= 0) {
-//            mode = "update";
-//            labelEnterprise.setText("(Please go to 'Manage Enterprise' option to update enterprise details in this network)");
-//            labelEnterprise.setVisible(true);
-//            enableFields(true);
-//            enterpriseDropdown.setEnabled(false);
-//            createdByTxtField.setEnabled(false);
-//            createdOnTxtField.setEnabled(false);
-//            lastUpdatedTxtField.setEnabled(false);
-//            Network selectedNetwork = (Network) networksTbl.getValueAt(selectedRow, 0);
-//            networkToUpdate = selectedNetwork;
-//            nameTxtField.setText(selectedNetwork.getName());
-//            locationTxtField.setText(selectedNetwork.getLocation());
-//            createdByTxtField.setText(selectedNetwork.getCreatedBy().getUsername());
-//            createdOnTxtField.setText(DateUtil.getDateToString(selectedNetwork.getCreatedOn()));
-//            lastUpdatedTxtField.setText(DateUtil.getDateToString(selectedNetwork.getLastUpdatedOn()));
-//            if (selectedNetwork.getEnterpriseDirectory().getEnterpriseList().size() != 0) {
-//                for (Enterprise e : selectedNetwork.getEnterpriseDirectory().getEnterpriseList()) {
-//                    enterpriseDropdown.addItem(e.getName());
-//                }
-//            }
-//        } else {
-//            JOptionPane.showMessageDialog(null, "Please select a network to update details");
-//        }
+        int selectedRow = enterpriseTbl.getSelectedRow();
+        if (selectedRow >= 0) {
+            mode = "update";
+            enableFields(false);
+            enterpriseToUpdate = (Enterprise) enterpriseTbl.getValueAt(selectedRow, 0);
+            nameTxtField.setEnabled(true);
+            confirmBtn.setEnabled(true);
+            
+        } else {
+            JOptionPane.showMessageDialog(null, "Please select an enterprise to update");
+        }
     }//GEN-LAST:event_updateBtnActionPerformed
 
-    private void deleteBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_deleteBtnActionPerformed
-//        int selectedRow = networksTbl.getSelectedRow();
-//        if (selectedRow >= 0) {
-//            ecoSystem.getNetworkDirectory().getNetworkList().remove(networksTbl.getValueAt(selectedRow, 0));
-//            populateTable();
-//            clearFields();
-//            enableFields(false);
-//            JOptionPane.showMessageDialog(null, "Network deleted from Ecosystem", "Success", JOptionPane.PLAIN_MESSAGE);
-//        } else {
-//            JOptionPane.showMessageDialog(null, "Please select a network to delete");
-//
-//        }
-    }//GEN-LAST:event_deleteBtnActionPerformed
+    private void confirmBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_confirmBtnActionPerformed
+        String name = nameTxtField.getText();
+        if (name.equals("") || name == null || !validateStr(name)) {
+            JOptionPane.showMessageDialog(null, "Please enter a valid enterprise name to continue", "Invalid Name", JOptionPane.ERROR_MESSAGE);
+            return;
+        }
+        
+        if (mode.equals("add")) {
+            if (!isUnique(name)) {
+                JOptionPane.showMessageDialog(null, "An enterprise with name '" + name + "' already exists", "Duplicate Enterprise", JOptionPane.ERROR_MESSAGE);
+                return;
+            }
+            String s = String.valueOf(networkDropdown.getSelectedItem());
+            String type = String.valueOf(typeDropdown.getSelectedItem());
+            Network temp = null;
+            for (Network n : ecoSystem.getNetworkDirectory().getNetworkList()) {
+                if (n.getName().equalsIgnoreCase(s)) {
+                    temp = n;
+                    break;
+                }
+            }
+            Enterprise newEnterprise = new Enterprise();
+            newEnterprise.setName(name);
+            newEnterprise.setType(type);
+            newEnterprise.setNetwork(temp);
+            temp.getEnterpriseDirectory().getEnterpriseList().add(newEnterprise);
+            populateTable();
+            nameTxtField.setText("");
+            enableFields(false);
+            JOptionPane.showMessageDialog(null, "New enterprise added to network", "Success", JOptionPane.PLAIN_MESSAGE);
+        }
+        
+        if (mode.equals("update")) {
+            if (name.equalsIgnoreCase(enterpriseToUpdate.getName())) {
+                JOptionPane.showMessageDialog(null, "Please make some changes to update details", "No changes made", JOptionPane.ERROR_MESSAGE);
+                return;
+            }
+            enterpriseToUpdate.setName(name);
+            populateTable();
+            enableFields(false);
+            nameTxtField.setText("");
+            JOptionPane.showMessageDialog(null, "Enterprise details updated in the Network", "Success", JOptionPane.PLAIN_MESSAGE);
+        }
+    }//GEN-LAST:event_confirmBtnActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton addBtn;
-    private javax.swing.JButton deleteBtn;
+    private javax.swing.JButton confirmBtn;
     private javax.swing.JTable enterpriseTbl;
     private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel2;
+    private javax.swing.JLabel jLabel3;
+    private javax.swing.JLabel jLabel4;
     private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JTextField nameTxtField;
+    private javax.swing.JComboBox<String> networkDropdown;
+    private javax.swing.JComboBox<String> typeDropdown;
     private javax.swing.JButton updateBtn;
     private javax.swing.JButton viewBtn;
     // End of variables declaration//GEN-END:variables
