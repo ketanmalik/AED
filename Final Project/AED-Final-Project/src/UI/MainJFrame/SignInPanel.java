@@ -7,9 +7,8 @@ package UI.MainJFrame;
 
 import Business.EcoSystem.EcoSystem;
 import Business.UserAccount.UserAccount;
-import UI.EcoSysAdmin.EcoSysAdminPanel;
+import UI.EcoSysAdmin.ManageNetworkPanel;
 import java.awt.CardLayout;
-import java.awt.Color;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 
@@ -112,12 +111,12 @@ public class SignInPanel extends javax.swing.JPanel {
 
         UserAccount userFound = ecoSystem.getUaDirectory().authenticateUser(username, password);
         if (userFound != null) {
-            EcoSysAdminPanel ecoSysAdminPanel = new EcoSysAdminPanel(displayPanel, ecoSystem, userFound);
-            displayPanel.add("ecoSysAdminPanel", ecoSysAdminPanel);
+            MainJFrame.setCurrentUser(userFound);
+            ManageNetworkPanel manageNetworkPanel = new ManageNetworkPanel(displayPanel, ecoSystem, userFound);
+            displayPanel.add("manageNetworkPanel", manageNetworkPanel);
             CardLayout layout = (CardLayout) displayPanel.getLayout();
             layout.next(displayPanel);
             MainJFrame.showButtons(true);
-
         } else {
             JOptionPane.showMessageDialog(null, "Please enter valid credentials", "Invalid Credentials", JOptionPane.ERROR_MESSAGE);
         }

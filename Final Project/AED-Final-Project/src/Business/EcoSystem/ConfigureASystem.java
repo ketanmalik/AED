@@ -5,6 +5,7 @@
  */
 package Business.EcoSystem;
 
+import Business.EnterpriseDirectory.Enterprise;
 import Business.Network.Network;
 import Business.UserAccount.UserAccount;
 import Business.util.DateUtil;
@@ -32,15 +33,21 @@ public class ConfigureASystem {
         ecoSysAdmin.setPassword("a");
         ecoSysAdmin.setRole("ecoSysAdmin");
 
-        //2. Creating new Network under EcoSystem Admin
+        // 2. Creating Network-1 under EcoSystem Admin
         Network network = new Network();
         network.setName("Network-1");
         network.setLocation("Boston");
         network.setCreatedBy(ecoSysAdmin);
         network.setCreatedOn(DateUtil.getStringToDate("11/25/2019"));
         network.setLastUpdatedOn(DateUtil.getStringToDate("11/25/2019"));
-        system.getNetworkList().add(network);
 
+        // 3. Creating Compound Pharmacy Enterprise under Network-1
+        Enterprise compoundEnterprise = new Enterprise();
+        compoundEnterprise.setName("Compound Enterprise");
+        compoundEnterprise.setType("Pharmaceutical");
+        compoundEnterprise.setNetwork(network);
+        network.getEnterpriseDirectory().getEnterpriseList().add(compoundEnterprise);
+        system.getNetworkDirectory().getNetworkList().add(network);
         return system;
     }
 }

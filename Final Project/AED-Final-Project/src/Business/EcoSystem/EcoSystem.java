@@ -5,10 +5,8 @@
  */
 package Business.EcoSystem;
 
-import Business.Network.Network;
+import Business.Network.NetworkDirectory;
 import Business.UserAccount.UserAccountDirectory;
-import java.util.ArrayList;
-import java.util.List;
 
 /**
  *
@@ -17,11 +15,11 @@ import java.util.List;
 public class EcoSystem {
 
     private static EcoSystem ecoSystemObj = null;
-    private List<Network> networkList;
+    private NetworkDirectory networkDirectory;
     private UserAccountDirectory uaDirectory;
 
     private EcoSystem() {
-        networkList = new ArrayList<>();
+        networkDirectory = new NetworkDirectory();
         uaDirectory = new UserAccountDirectory();
     }
 
@@ -32,12 +30,12 @@ public class EcoSystem {
         return ecoSystemObj;
     }
 
-    public List<Network> getNetworkList() {
-        return networkList;
+    public NetworkDirectory getNetworkDirectory() {
+        return networkDirectory;
     }
 
-    public void setNetworkList(List<Network> networkList) {
-        this.networkList = networkList;
+    public void setNetworkDirectory(NetworkDirectory networkDirectory) {
+        this.networkDirectory = networkDirectory;
     }
 
     public UserAccountDirectory getUaDirectory() {

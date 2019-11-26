@@ -23,18 +23,18 @@ import javax.swing.table.DefaultTableModel;
  *
  * @author ketanmalik
  */
-public class EcoSysAdminPanel extends javax.swing.JPanel {
+public class ManageNetworkPanel extends javax.swing.JPanel {
 
     /**
-     * Creates new form EcoSysAdminPanel
+     * Creates new form ManageNetworkPanel
      */
     private JPanel displayPanel;
     private EcoSystem ecoSystem;
     private UserAccount currentUser;
     private static Network networkToUpdate = null;
     private static String mode;
-    
-    public EcoSysAdminPanel(JPanel displayPanel, EcoSystem ecoSystem, UserAccount currentUser) {
+
+    public ManageNetworkPanel(JPanel displayPanel, EcoSystem ecoSystem, UserAccount currentUser) {
         initComponents();
         this.displayPanel = displayPanel;
         this.ecoSystem = ecoSystem;
@@ -45,39 +45,41 @@ public class EcoSysAdminPanel extends javax.swing.JPanel {
         clearFields();
         labelEnterprise.setVisible(false);
     }
-    
+
     private void modifyButtons() {
         MainJFrame.manageNetworkBtn.setOpaque(false);
         MainJFrame.manageNetworkBtn.setContentAreaFilled(false);
         MainJFrame.manageNetworkBtn.setBorderPainted(false);
         MainJFrame.manageNetworkBtn.setForeground(Color.black);
-        
+
         MainJFrame.manageEnterpriseBtn.setOpaque(false);
         MainJFrame.manageEnterpriseBtn.setContentAreaFilled(false);
         MainJFrame.manageEnterpriseBtn.setBorderPainted(false);
-        
+        MainJFrame.manageEnterpriseBtn.setForeground(Color.white);
+
         MainJFrame.manageAdminBtn.setOpaque(false);
         MainJFrame.manageAdminBtn.setContentAreaFilled(false);
         MainJFrame.manageAdminBtn.setBorderPainted(false);
-        
+        MainJFrame.manageAdminBtn.setForeground(Color.white);
+
         MainJFrame.logoutBtn.setOpaque(false);
         MainJFrame.logoutBtn.setContentAreaFilled(false);
         MainJFrame.logoutBtn.setBorderPainted(false);
     }
-    
+
     private void populateTable() {
         DefaultTableModel dtm = (DefaultTableModel) networksTbl.getModel();
         dtm.setRowCount(0);
-        for (Network n : ecoSystem.getNetworkList()) {
+        for (Network n : ecoSystem.getNetworkDirectory().getNetworkList()) {
             Object[] row = new Object[3];
             row[0] = n;
             row[1] = n.getLocation();
             row[2] = n.getEnterpriseDirectory().getEnterpriseList().size();
-            
+
             dtm.addRow(row);
         }
     }
-    
+
     private void enableFields(boolean bool) {
         nameTxtField.setEnabled(bool);
         locationTxtField.setEnabled(bool);
@@ -87,7 +89,7 @@ public class EcoSysAdminPanel extends javax.swing.JPanel {
         lastUpdatedTxtField.setEnabled(bool);
         confirmBtn.setEnabled(bool);
     }
-    
+
     private void clearFields() {
         nameTxtField.setText("");
         locationTxtField.setText("");
@@ -139,7 +141,7 @@ public class EcoSysAdminPanel extends javax.swing.JPanel {
 
             },
             new String [] {
-                "Name", "Location", "No. of Enterprises"
+                "Network Name", "Network Location", "No. of Enterprises"
             }
         ) {
             boolean[] canEdit = new boolean [] {
@@ -320,14 +322,14 @@ public class EcoSysAdminPanel extends javax.swing.JPanel {
     private void deleteBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_deleteBtnActionPerformed
         int selectedRow = networksTbl.getSelectedRow();
         if (selectedRow >= 0) {
-            ecoSystem.getNetworkList().remove(networksTbl.getValueAt(selectedRow, 0));
+            ecoSystem.getNetworkDirectory().getNetworkList().remove(networksTbl.getValueAt(selectedRow, 0));
             populateTable();
             clearFields();
             enableFields(false);
             JOptionPane.showMessageDialog(null, "Network deleted from Ecosystem", "Success", JOptionPane.PLAIN_MESSAGE);
         } else {
             JOptionPane.showMessageDialog(null, "Please select a network to delete");
-            
+
         }
     }//GEN-LAST:event_deleteBtnActionPerformed
 
@@ -424,14 +426,14 @@ public class EcoSysAdminPanel extends javax.swing.JPanel {
             newNetwork.setCreatedBy(currentUser);
             newNetwork.setCreatedOn(DateUtil.getStringToDate(createdOnTxtField.getText()));
             newNetwork.setLastUpdatedOn(DateUtil.getStringToDate(lastUpdatedTxtField.getText()));
-            
-            ecoSystem.getNetworkList().add(newNetwork);
+
+            ecoSystem.getNetworkDirectory().getNetworkList().add(newNetwork);
             populateTable();
             clearFields();
             enableFields(false);
             JOptionPane.showMessageDialog(null, "New network added in the Ecosystem. Please add Enterprises to this network", "Success", JOptionPane.PLAIN_MESSAGE);
         }
-        
+
         if (mode == "update") {
             if (name.equalsIgnoreCase(networkToUpdate.getName()) && location.equalsIgnoreCase(networkToUpdate.getLocation())) {
                 JOptionPane.showMessageDialog(null, "Please make some changes to update details", "No changes made", JOptionPane.ERROR_MESSAGE);
@@ -446,20 +448,20 @@ public class EcoSysAdminPanel extends javax.swing.JPanel {
             JOptionPane.showMessageDialog(null, "Network details updated in the Ecosystem", "Success", JOptionPane.PLAIN_MESSAGE);
         }
     }//GEN-LAST:event_confirmBtnActionPerformed
-    
+
     private boolean validateFields(String str) {
         Pattern p = Pattern.compile("^[\\w]+[-\\w]*");
         Matcher m = p.matcher(str);
         return m.matches();
     }
-    
+
     private void invalidFieldsMessage(String msg) {
         JOptionPane.showMessageDialog(null, "Please enter valid " + msg + " to continue", "Invalid Entry", JOptionPane.ERROR_MESSAGE);
     }
-    
+
     private boolean isUnique(String str) {
         boolean unique = true;
-        for (Network n : ecoSystem.getNetworkList()) {
+        for (Network n : ecoSystem.getNetworkDirectory().getNetworkList()) {
             if (n.getName().equalsIgnoreCase(str)) {
                 unique = false;
                 return unique;
