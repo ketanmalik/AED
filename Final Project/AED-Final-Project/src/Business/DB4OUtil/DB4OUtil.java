@@ -69,10 +69,10 @@ public class DB4OUtil {
         ObjectSet<EcoSystem> systems = conn.query(EcoSystem.class); // Change to the object you want to save
         EcoSystem system;
         if (systems.size() == 0) {
-            System.out.println("new Ecosystem");
+            System.out.println("Business.DB4OUtil.DB4OUtil.retrieveSystem()");
             system = ConfigureASystem.configure();  // If there's no System in the record, create a new one
         } else {
-            System.out.println("old Ecosystem");
+            System.out.println("old");
             system = systems.get(systems.size() - 1);
         }
         conn.close();

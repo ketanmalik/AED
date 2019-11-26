@@ -5,6 +5,8 @@
  */
 package Business.EnterpriseDirectory;
 
+import Business.Network.Network;
+
 /**
  *
  * @author ketanmalik
@@ -12,6 +14,8 @@ package Business.EnterpriseDirectory;
 public class Enterprise {
 
     private String name;
+    private String type;
+    private Network network;
 
     public String getName() {
         return name;
@@ -19,5 +23,26 @@ public class Enterprise {
 
     public void setName(String name) {
         this.name = name;
+    }
+
+    public String getType() {
+        return type;
+    }
+
+    public void setType(String type) {
+        this.type = type;
+    }
+
+    public Network getNetwork() {
+        return network;
+    }
+
+    public void setNetwork(Network network) {
+        this.network = network;
+    }
+
+    @Override
+    public String toString() {
+        return this.name;
     }
 }

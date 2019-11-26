@@ -7,8 +7,10 @@ package UI.MainJFrame;
 
 import Business.DB4OUtil.DB4OUtil;
 import Business.EcoSystem.EcoSystem;
+import Business.UserAccount.UserAccount;
+import UI.EcoSysAdmin.ManageEnterprisePanel;
+import UI.EcoSysAdmin.ManageNetworkPanel;
 import java.awt.CardLayout;
-import java.awt.Toolkit;
 import java.awt.event.*;
 import javax.swing.Timer;
 
@@ -23,14 +25,11 @@ public class MainJFrame extends javax.swing.JFrame {
      */
     private EcoSystem ecoSystem;
     private DB4OUtil dB4OUtil = DB4OUtil.getInstance();
+    private static UserAccount currentUser = null;
 
     public MainJFrame() {
         initComponents();
         ecoSystem = dB4OUtil.retrieveSystem();
-//        Toolkit tk = Toolkit.getDefaultToolkit();
-//        int x = (int) tk.getScreenSize().getWidth();
-//        int y = (int) tk.getScreenSize().getHeight();
-//        setSize(x, y);
         showButtons(false);
         initializeSignInPanel();
     }
@@ -86,18 +85,38 @@ public class MainJFrame extends javax.swing.JFrame {
         manageNetworkBtn.setFont(new java.awt.Font("Lucida Grande", 0, 18)); // NOI18N
         manageNetworkBtn.setForeground(new java.awt.Color(255, 255, 255));
         manageNetworkBtn.setText("Manage Network");
+        manageNetworkBtn.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                manageNetworkBtnActionPerformed(evt);
+            }
+        });
 
         manageEnterpriseBtn.setFont(new java.awt.Font("Lucida Grande", 0, 18)); // NOI18N
         manageEnterpriseBtn.setForeground(new java.awt.Color(255, 255, 255));
         manageEnterpriseBtn.setText("Manage Enterprise");
+        manageEnterpriseBtn.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                manageEnterpriseBtnActionPerformed(evt);
+            }
+        });
 
         manageAdminBtn.setFont(new java.awt.Font("Lucida Grande", 0, 18)); // NOI18N
         manageAdminBtn.setForeground(new java.awt.Color(255, 255, 255));
         manageAdminBtn.setText("Manage Enterprise Admin");
+        manageAdminBtn.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                manageAdminBtnActionPerformed(evt);
+            }
+        });
 
         logoutBtn.setFont(new java.awt.Font("Lucida Grande", 0, 18)); // NOI18N
         logoutBtn.setForeground(new java.awt.Color(255, 255, 255));
         logoutBtn.setText("Logout");
+        logoutBtn.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                logoutBtnActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout controlPanelLayout = new javax.swing.GroupLayout(controlPanel);
         controlPanel.setLayout(controlPanelLayout);
@@ -145,6 +164,45 @@ public class MainJFrame extends javax.swing.JFrame {
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
+
+    private void logoutBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_logoutBtnActionPerformed
+        displayPanel.removeAll();
+        showButtons(false);
+        signInPanel();
+//        dB4OUtil.storeSystem(ecoSystem);
+    }//GEN-LAST:event_logoutBtnActionPerformed
+
+    private void manageNetworkBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_manageNetworkBtnActionPerformed
+        if (currentUser.getRole().equals("ecoSysAdmin")) {
+            ManageNetworkPanel manageNetworkPanel = new ManageNetworkPanel(displayPanel, ecoSystem, currentUser);
+            displayPanel.add("manageNetworkPanel", manageNetworkPanel);
+            CardLayout layout = (CardLayout) displayPanel.getLayout();
+            layout.next(displayPanel);
+        }
+    }//GEN-LAST:event_manageNetworkBtnActionPerformed
+
+    private void manageEnterpriseBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_manageEnterpriseBtnActionPerformed
+        if (currentUser.getRole().equals("ecoSysAdmin")) {
+            ManageEnterprisePanel manageEnterprisePanel = new ManageEnterprisePanel(displayPanel, ecoSystem, currentUser);
+            CardLayout layout = (CardLayout) displayPanel.getLayout();
+            displayPanel.add("manageNetworkPanel", manageEnterprisePanel);
+            layout.next(displayPanel);
+        }
+    }//GEN-LAST:event_manageEnterpriseBtnActionPerformed
+
+    private void manageAdminBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_manageAdminBtnActionPerformed
+        if (currentUser.getRole().equals("ecoSysAdmin")) {
+
+        }
+    }//GEN-LAST:event_manageAdminBtnActionPerformed
+
+    public static UserAccount getCurrentUser() {
+        return currentUser;
+    }
+
+    public static void setCurrentUser(UserAccount currentUser) {
+        MainJFrame.currentUser = currentUser;
+    }
 
     /**
      * @param args the command line arguments
