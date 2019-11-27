@@ -109,7 +109,7 @@ public class SignInPanel extends javax.swing.JPanel {
         char[] passwordCharArray = passwordField.getPassword();
         String password = String.valueOf(passwordCharArray);
 
-        UserAccount userFound = ecoSystem.getUaDirectory().authenticateUser(username, password);
+        UserAccount userFound = ecoSystem.getUserAccountDirectory().authenticateUser(username, password);
         if (userFound != null) {
             MainJFrame.setCurrentUser(userFound);
             ManageNetworkPanel manageNetworkPanel = new ManageNetworkPanel(displayPanel, ecoSystem, userFound);

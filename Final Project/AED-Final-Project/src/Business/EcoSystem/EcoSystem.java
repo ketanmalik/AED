@@ -5,22 +5,22 @@
  */
 package Business.EcoSystem;
 
+import Business.Network.Network;
 import Business.Network.NetworkDirectory;
-import Business.UserAccount.UserAccountDirectory;
+import Business.Organization.Organization;
 
 /**
  *
  * @author ketanmalik
  */
-public class EcoSystem {
+public class EcoSystem extends Organization {
 
     private static EcoSystem ecoSystemObj = null;
     private NetworkDirectory networkDirectory;
-    private UserAccountDirectory uaDirectory;
 
     private EcoSystem() {
+        super("Ecosystem");
         networkDirectory = new NetworkDirectory();
-        uaDirectory = new UserAccountDirectory();
     }
 
     public static EcoSystem getInstance() {
@@ -38,11 +38,9 @@ public class EcoSystem {
         this.networkDirectory = networkDirectory;
     }
 
-    public UserAccountDirectory getUaDirectory() {
-        return uaDirectory;
-    }
-
-    public void setUaDirectory(UserAccountDirectory uaDirectory) {
-        this.uaDirectory = uaDirectory;
+    public Network addNetwork() {
+        Network network = new Network();
+        networkDirectory.getNetworkList().add(network);
+        return network;
     }
 }

@@ -27,4 +27,10 @@ public class EnterpriseDirectory {
     public void setEnterpriseList(List<Enterprise> enterpriseList) {
         this.enterpriseList = enterpriseList;
     }
+
+    public Enterprise createEnterprise(String name) {
+        Enterprise enterprise = new Enterprise(name);
+        enterpriseList.add(enterprise);
+        return enterprise;
+    }
 }

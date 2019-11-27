@@ -5,6 +5,7 @@
  */
 package Business.UserAccount;
 
+import Business.Employee.Employee;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -28,8 +29,12 @@ public class UserAccountDirectory {
         this.userAccountList = userAccountList;
     }
 
-    public UserAccount createUserAccount() {
+    public UserAccount createUserAccount(String username, String password, Employee employee, String role) {
         UserAccount userAccount = new UserAccount();
+        userAccount.setUsername(username);
+        userAccount.setPassword(password);
+        userAccount.setEmployee(employee);
+        userAccount.setRole(role);
         userAccountList.add(userAccount);
         return userAccount;
     }
@@ -43,7 +48,5 @@ public class UserAccountDirectory {
             }
         }
         return userFound;
-
     }
-
 }
