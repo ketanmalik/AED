@@ -5,6 +5,7 @@
  */
 package Business.EcoSystem;
 
+import Business.Employee.Employee;
 import Business.EnterpriseDirectory.Enterprise;
 import Business.Network.Network;
 import Business.UserAccount.UserAccount;
@@ -20,35 +21,47 @@ public class ConfigureASystem {
 
         EcoSystem system = EcoSystem.getInstance();
 
-        // 1. Creating EcoSystem Admin Account
-        UserAccount ecoSysAdmin = system.getUaDirectory().createUserAccount();
-        ecoSysAdmin.setUsername("a");
-        ecoSysAdmin.setPassword("a");
-        ecoSysAdmin.setRole("ecoSysAdmin");
+        // 1. Creating EcoSystem Admin Employee & User Account
+        Employee employee = system.getEmployeeDirectory().createEmployee("sysAdmin");
+        UserAccount sysAdmin = system.getUserAccountDirectory().createUserAccount("a", "a", employee, "sysAdmin");
 
-        // 2. Creating Boston under EcoSystem Admin
-        Network network = new Network();
+        // 2. Creating Boston Network under EcoSystem Admin
+        Network network = system.addNetwork();
         network.setName("Boston");
         network.setLocation("MA, USA");
-        network.setCreatedBy(ecoSysAdmin);
+        network.setCreatedBy(sysAdmin);
         network.setCreatedOn(DateUtil.getStringToDate("11/25/2019"));
         network.setLastUpdatedOn(DateUtil.getStringToDate("11/25/2019"));
 
         // 3. Creating Compound Pharmacy Enterprise under Boston
-        Enterprise compoundEnterprise = new Enterprise();
-        compoundEnterprise.setName("Compound Pharmacy");
+        Enterprise compoundEnterprise = null;
+        for (Network n : system.getNetworkDirectory().getNetworkList()) {
+            if (n.getName().equals("Boston")) {
+                compoundEnterprise = n.getEnterpriseDirectory().createEnterprise("Compound Pharmacy");
+                break;
+            }
+        }
         compoundEnterprise.setType("Pharmaceutical");
-        compoundEnterprise.setNetwork(network);
-        network.getEnterpriseDirectory().getEnterpriseList().add(compoundEnterprise);
 
         // 4. Creating Marketing Enterprise under Boston
-        Enterprise marketingEnterprise = new Enterprise();
-        marketingEnterprise.setName("Marketing");
+        Enterprise marketingEnterprise = null;
+        for (Network n : system.getNetworkDirectory().getNetworkList()) {
+            if (n.getName().equals("Boston")) {
+                marketingEnterprise = n.getEnterpriseDirectory().createEnterprise("Marketing");
+                break;
+            }
+        }
         marketingEnterprise.setType("Management");
-        marketingEnterprise.setNetwork(network);
-        network.getEnterpriseDirectory().getEnterpriseList().add(marketingEnterprise);
 
-        system.getNetworkDirectory().getNetworkList().add(network);
+        // 5. Creating CP Admin Employee & User Account
+        Employee cpEmployee = compoundEnterprise.getEmployeeDirectory().createEmployee("CP Admin");
+        UserAccount cpAdmin = compoundEnterprise.getUserAccountDirectory().createUserAccount("cpAdmin", "cpAdmin", cpEmployee, "entAdmin");
+
+        // 6. Creating mktAdmin for Marketing
+        Employee mktEmployee = marketingEnterprise.getEmployeeDirectory().createEmployee("MKT Admin");
+        UserAccount mktAdmin = marketingEnterprise.getUserAccountDirectory().createUserAccount("mktAdmin", "mktAdmin", mktEmployee, "mktAdmin");
+
+ 
         return system;
     }
 }

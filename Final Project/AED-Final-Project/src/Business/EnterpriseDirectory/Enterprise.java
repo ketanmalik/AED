@@ -5,24 +5,21 @@
  */
 package Business.EnterpriseDirectory;
 
-import Business.Network.Network;
+import Business.Organization.Organization;
+import Business.Organization.OrganizationDirectory;
 
 /**
  *
  * @author ketanmalik
  */
-public class Enterprise {
+public class Enterprise extends Organization {
 
-    private String name;
     private String type;
-    private Network network;
+    private OrganizationDirectory organizationDirectory;
 
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
+    public Enterprise(String name) {
+        super(name);
+        organizationDirectory = new OrganizationDirectory();
     }
 
     public String getType() {
@@ -33,16 +30,16 @@ public class Enterprise {
         this.type = type;
     }
 
-    public Network getNetwork() {
-        return network;
+    public OrganizationDirectory getOrganizationDirectory() {
+        return organizationDirectory;
     }
 
-    public void setNetwork(Network network) {
-        this.network = network;
+    public void setOrganizationDirectory(OrganizationDirectory organizationDirectory) {
+        this.organizationDirectory = organizationDirectory;
     }
 
     @Override
     public String toString() {
-        return this.name;
+        return this.getName();
     }
 }

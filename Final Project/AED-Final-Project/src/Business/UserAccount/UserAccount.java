@@ -5,6 +5,8 @@
  */
 package Business.UserAccount;
 
+import Business.Employee.Employee;
+
 /**
  *
  * @author ketanmalik
@@ -13,6 +15,7 @@ public class UserAccount {
 
     private String username;
     private String password;
+    private Employee employee;
     private String role;
 
     public String getUsername() {
@@ -37,5 +40,18 @@ public class UserAccount {
 
     public void setRole(String role) {
         this.role = role;
+    }
+
+    public Employee getEmployee() {
+        return employee;
+    }
+
+    public void setEmployee(Employee employee) {
+        this.employee = employee;
+    }
+
+    @Override
+    public String toString() {
+        return this.username;
     }
 }
