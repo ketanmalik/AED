@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package UI.CPAdmin;
+package UI.EntpAdmin;
 
 import Business.EcoSystem.EcoSystem;
 import Business.EnterpriseDirectory.Enterprise;
@@ -16,10 +16,10 @@ import javax.swing.JPanel;
  *
  * @author ketanmalik
  */
-public class CPAdminWorkArea extends javax.swing.JPanel {
+public class EntpAdminWorkArea extends javax.swing.JPanel {
 
     /**
-     * Creates new form CPAdminWorkArea
+     * Creates new form EntpAdminWorkArea
      */
     private JPanel displayPanel;
     private UserAccount userAccount;
@@ -27,7 +27,7 @@ public class CPAdminWorkArea extends javax.swing.JPanel {
     private Organization organization;
     private EcoSystem ecoSystem;
 
-    public CPAdminWorkArea(JPanel displayPanel, UserAccount userAccount, Enterprise enterprise, Organization organization, EcoSystem ecoSystem) {
+    public EntpAdminWorkArea(JPanel displayPanel, UserAccount userAccount, Enterprise enterprise, Organization organization, EcoSystem ecoSystem) {
         initComponents();
         this.displayPanel = displayPanel;
         this.userAccount = userAccount;

@@ -7,6 +7,9 @@ package UI.EcoSysAdmin;
 
 import Business.EcoSystem.EcoSystem;
 import Business.EnterpriseDirectory.Enterprise;
+import Business.EnterpriseDirectory.Enterprise.EnterpriseType;
+import static Business.EnterpriseDirectory.Enterprise.EnterpriseType.Management;
+import static Business.EnterpriseDirectory.Enterprise.EnterpriseType.Pharmaceutical;
 import Business.Network.Network;
 import Business.UserAccount.UserAccount;
 import UI.MainJFrame.MainJFrame;
@@ -79,7 +82,7 @@ public class ManageEnterprisePanel extends javax.swing.JPanel {
                 Object[] row = new Object[3];
                 row[0] = e;
                 row[1] = n;
-                row[2] = e.getType();
+                row[2] = e.getEnterpriseType();
 
                 dtm.addRow(row);
             }
@@ -254,9 +257,10 @@ public class ManageEnterprisePanel extends javax.swing.JPanel {
 
         for (Network n : ecoSystem.getNetworkDirectory().getNetworkList()) {
             networkDropdown.addItem(n.toString());
-            for (Enterprise e : n.getEnterpriseDirectory().getEnterpriseList()) {
-                typeDropdown.addItem(e.getType());
-            }
+        }
+
+        for (Enterprise.EnterpriseType type : Enterprise.EnterpriseType.values()) {
+            typeDropdown.addItem(type.toString());
         }
     }
 
@@ -277,7 +281,7 @@ public class ManageEnterprisePanel extends javax.swing.JPanel {
             Enterprise e = (Enterprise) enterpriseTbl.getValueAt(selectedRow, 0);
             Network n = (Network) enterpriseTbl.getValueAt(selectedRow, 1);
             networkDropdown.setSelectedItem(n.getName());
-            typeDropdown.setSelectedItem(e.getType());
+            typeDropdown.setSelectedItem(e.getEnterpriseType().getValue());
             nameTxtField.setText(e.getName());
         } else {
             JOptionPane.showMessageDialog(null, "Please select an enterprise to view");
@@ -294,7 +298,7 @@ public class ManageEnterprisePanel extends javax.swing.JPanel {
             nameTxtField.setEnabled(true);
             confirmBtn.setEnabled(true);
             nameTxtField.setText(enterpriseToUpdate.getName());
-            typeDropdown.setSelectedItem(enterpriseToUpdate.getType());
+            typeDropdown.setSelectedItem(enterpriseToUpdate.getEnterpriseType());
             networkDropdown.setSelectedItem(network.getName());
 
         } else {
@@ -315,7 +319,8 @@ public class ManageEnterprisePanel extends javax.swing.JPanel {
                 return;
             }
             String s = String.valueOf(networkDropdown.getSelectedItem());
-            String type = String.valueOf(typeDropdown.getSelectedItem());
+            String t = String.valueOf(typeDropdown.getSelectedItem());
+            EnterpriseType enterpriseType = t.equals("Compound Pharmacy") ? Pharmaceutical : Management;
             Network temp = null;
             for (Network n : ecoSystem.getNetworkDirectory().getNetworkList()) {
                 if (n.getName().equalsIgnoreCase(s)) {
@@ -324,8 +329,7 @@ public class ManageEnterprisePanel extends javax.swing.JPanel {
                 }
             }
 
-            Enterprise newEnterprise = temp.getEnterpriseDirectory().createEnterprise(name);
-            newEnterprise.setType(type);
+            temp.getEnterpriseDirectory().createEnterprise(name, enterpriseType);
             populateTable();
             nameTxtField.setText("");
             enableFields(false);

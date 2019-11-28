@@ -28,9 +28,16 @@ public class EnterpriseDirectory {
         this.enterpriseList = enterpriseList;
     }
 
-    public Enterprise createEnterprise(String name) {
-        Enterprise enterprise = new Enterprise(name);
-        enterpriseList.add(enterprise);
+    public Enterprise createEnterprise(String name, Enterprise.EnterpriseType type) {
+        Enterprise enterprise = null;
+        if (type == Enterprise.EnterpriseType.Pharmaceutical) {
+            enterprise = new CompoundPharmacyEnterprise(name);
+            enterpriseList.add(enterprise);
+        }
+        if (type == Enterprise.EnterpriseType.Management) {
+            enterprise = new MarketingEnterprise(name);
+            enterpriseList.add(enterprise);
+        }
         return enterprise;
     }
 }

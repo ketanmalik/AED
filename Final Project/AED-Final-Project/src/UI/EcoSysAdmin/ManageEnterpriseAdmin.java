@@ -6,8 +6,10 @@
 package UI.EcoSysAdmin;
 
 import Business.EcoSystem.EcoSystem;
+import Business.Employee.Employee;
 import Business.EnterpriseDirectory.Enterprise;
 import Business.Network.Network;
+import Business.Role.EntpAdmin;
 import Business.UserAccount.UserAccount;
 import UI.MainJFrame.MainJFrame;
 import java.awt.Color;
@@ -47,10 +49,10 @@ public class ManageEnterpriseAdmin extends javax.swing.JPanel {
             for (Enterprise e : n.getEnterpriseDirectory().getEnterpriseList()) {
                 for (UserAccount u : e.getUserAccountDirectory().getUserAccountList()) {
                     Object[] row = new Object[4];
-                    row[0] = e;
-                    row[1] = n;
-                    row[2] = u.getEmployee();
-                    row[3] = u;
+                    row[0] = e.getName();
+                    row[1] = n.getName();
+                    row[2] = u.getEmployee().getName();
+                    row[3] = u.getUsername();
 
                     dtm.addRow(row);
                 }
@@ -59,14 +61,8 @@ public class ManageEnterpriseAdmin extends javax.swing.JPanel {
     }
 
     private void populateDropdowns() {
-        networkDropdown.removeAllItems();
-        enterpriseDropdown.removeAllItems();
-
-        for (Network n : ecoSystem.getNetworkDirectory().getNetworkList()) {
-            networkDropdown.addItem(n.toString());
-            for (Enterprise e : n.getEnterpriseDirectory().getEnterpriseList()) {
-                enterpriseDropdown.addItem(e.getType());
-            }
+        for (Network network : ecoSystem.getNetworkDirectory().getNetworkList()) {
+            networkDropdown.addItem(network.toString());
         }
     }
 
@@ -140,7 +136,6 @@ public class ManageEnterpriseAdmin extends javax.swing.JPanel {
         jScrollPane1 = new javax.swing.JScrollPane();
         enterpriseAdminTbl = new javax.swing.JTable();
         addBtn = new javax.swing.JButton();
-        viewBtn = new javax.swing.JButton();
         jLabel2 = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
         jLabel4 = new javax.swing.JLabel();
@@ -190,13 +185,6 @@ public class ManageEnterpriseAdmin extends javax.swing.JPanel {
             }
         });
 
-        viewBtn.setText("View");
-        viewBtn.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                viewBtnActionPerformed(evt);
-            }
-        });
-
         jLabel2.setForeground(new java.awt.Color(255, 255, 255));
         jLabel2.setText("Network:");
 
@@ -211,6 +199,12 @@ public class ManageEnterpriseAdmin extends javax.swing.JPanel {
 
         jLabel6.setForeground(new java.awt.Color(255, 255, 255));
         jLabel6.setText("Name:");
+
+        networkDropdown.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                networkDropdownActionPerformed(evt);
+            }
+        });
 
         confirmBtn.setText("Confirm");
         confirmBtn.addActionListener(new java.awt.event.ActionListener() {
@@ -232,9 +226,7 @@ public class ManageEnterpriseAdmin extends javax.swing.JPanel {
                             .addGroup(layout.createSequentialGroup()
                                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 464, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addGap(23, 23, 23)
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(viewBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(addBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                                .addComponent(addBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE))
                             .addGroup(layout.createSequentialGroup()
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                                     .addGroup(layout.createSequentialGroup()
@@ -269,10 +261,7 @@ public class ManageEnterpriseAdmin extends javax.swing.JPanel {
                 .addComponent(jLabel1)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addComponent(addBtn)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(viewBtn))
+                    .addComponent(addBtn)
                     .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 175, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(45, 45, 45)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
@@ -301,20 +290,18 @@ public class ManageEnterpriseAdmin extends javax.swing.JPanel {
         clearFields();
     }//GEN-LAST:event_addBtnActionPerformed
 
-    private void viewBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_viewBtnActionPerformed
-
-    }//GEN-LAST:event_viewBtnActionPerformed
-
     private void confirmBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_confirmBtnActionPerformed
         String name = nameTxtField.getText();
         String username = usernameTxtField.getText();
-        char[] passArray = passwordTxtField.getPassword();
-        String password = passArray.toString();
+        String password = String.valueOf(passwordTxtField.getPassword());
+        System.out.println(password);
+        String identifier = enterpriseDropdown.getSelectedItem().equals("Compound Pharmacy") ? "cpAdmin" : "mktAdmin";
 
         if (!authenticateUsername(username)) {
             JOptionPane.showMessageDialog(null, "Username already exists. Please provide a different username", "Duplicate username", JOptionPane.ERROR_MESSAGE);
             return;
         }
+
         Enterprise tempEntp = null;
         for (Network n : ecoSystem.getNetworkDirectory().getNetworkList()) {
             for (Enterprise e : n.getEnterpriseDirectory().getEnterpriseList()) {
@@ -324,10 +311,32 @@ public class ManageEnterpriseAdmin extends javax.swing.JPanel {
                 }
             }
         }
-
-
+        Employee emp = tempEntp.getEmployeeDirectory().createEmployee(name);
+        tempEntp.getUserAccountDirectory().createUserAccount(name, username, password, emp, new EntpAdmin(), identifier);
+        populateTable();
+        clearFields();
+        enableFields(false);
     }//GEN-LAST:event_confirmBtnActionPerformed
 
+    private void networkDropdownActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_networkDropdownActionPerformed
+        Network network = null;
+        for (Network n : ecoSystem.getNetworkDirectory().getNetworkList()) {
+            if (n.getName().equals(networkDropdown.getSelectedItem())) {
+                network = n;
+            }
+        }
+        if (network != null) {
+            populateEnterpriseDropdown(network);
+        }
+    }//GEN-LAST:event_networkDropdownActionPerformed
+
+    private void populateEnterpriseDropdown(Network network) {
+        enterpriseDropdown.removeAllItems();
+
+        for (Enterprise enterprise : network.getEnterpriseDirectory().getEnterpriseList()) {
+            enterpriseDropdown.addItem(enterprise.toString());
+        }
+    }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton addBtn;
@@ -345,6 +354,5 @@ public class ManageEnterpriseAdmin extends javax.swing.JPanel {
     private javax.swing.JComboBox<String> networkDropdown;
     private javax.swing.JPasswordField passwordTxtField;
     private javax.swing.JTextField usernameTxtField;
-    private javax.swing.JButton viewBtn;
     // End of variables declaration//GEN-END:variables
 }

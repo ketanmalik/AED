@@ -27,4 +27,19 @@ public class OrganizationDirectory {
     public void setOrganizationList(List<Organization> organizationList) {
         this.organizationList = organizationList;
     }
+
+    public Organization createOrganization(Organization.Type type) {
+        Organization organization = null;
+        if (type.getValue().equals(Organization.Type.ADMIN.getValue())) {
+            organizationList.add(organization);
+        } else if (type.getValue().equals(Organization.Type.MANUFACTURE.getValue())) {
+            organization = new ManufactureOrganization();
+            organizationList.add(organization);
+        } else if (type.getValue().equals(Organization.Type.INSPECTION.getValue())) {
+            organizationList.add(organization);
+        } else if (type.getValue().equals(Organization.Type.DELIVERY.getValue())) {
+            organizationList.add(organization);
+        }
+        return organization;
+    }
 }
