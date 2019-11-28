@@ -6,6 +6,7 @@
 package Business.UserAccount;
 
 import Business.Employee.Employee;
+import Business.Role.Role;
 
 /**
  *
@@ -13,10 +14,20 @@ import Business.Employee.Employee;
  */
 public class UserAccount {
 
+    private String name;
     private String username;
     private String password;
     private Employee employee;
-    private String role;
+    private String identifier;
+    private Role role;
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
 
     public String getUsername() {
         return username;
@@ -34,11 +45,11 @@ public class UserAccount {
         this.password = password;
     }
 
-    public String getRole() {
+    public Role getRole() {
         return role;
     }
 
-    public void setRole(String role) {
+    public void setRole(Role role) {
         this.role = role;
     }
 
@@ -48,6 +59,14 @@ public class UserAccount {
 
     public void setEmployee(Employee employee) {
         this.employee = employee;
+    }
+
+    public String getIdentifier() {
+        return identifier;
+    }
+
+    public void setIdentifier(String identifier) {
+        this.identifier = identifier;
     }
 
     @Override

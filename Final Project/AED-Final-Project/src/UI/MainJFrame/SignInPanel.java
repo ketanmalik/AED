@@ -6,6 +6,9 @@
 package UI.MainJFrame;
 
 import Business.EcoSystem.EcoSystem;
+import Business.EnterpriseDirectory.Enterprise;
+import Business.Network.Network;
+import Business.Organization.Organization;
 import Business.UserAccount.UserAccount;
 import UI.EcoSysAdmin.ManageNetworkPanel;
 import java.awt.CardLayout;
@@ -23,6 +26,9 @@ public class SignInPanel extends javax.swing.JPanel {
      */
     private JPanel displayPanel;
     private EcoSystem ecoSystem;
+    private UserAccount userFound = null;
+    private Enterprise inEnterprise = null;
+    private Organization inOrganization = null;
 
     public SignInPanel(JPanel displayPanel, EcoSystem ecoSystem) {
         initComponents();
@@ -112,7 +118,7 @@ public class SignInPanel extends javax.swing.JPanel {
         char[] passwordCharArray = passwordField.getPassword();
         String password = String.valueOf(passwordCharArray);
 
-        UserAccount userFound = ecoSystem.getUserAccountDirectory().authenticateUser(username, password);
+        userFound = ecoSystem.getUserAccountDirectory().authenticateUser(username, password);
         if (userFound != null) {
             MainJFrame.setCurrentUser(userFound);
             ManageNetworkPanel manageNetworkPanel = new ManageNetworkPanel(displayPanel, ecoSystem, userFound);
@@ -120,8 +126,40 @@ public class SignInPanel extends javax.swing.JPanel {
             CardLayout layout = (CardLayout) displayPanel.getLayout();
             layout.next(displayPanel);
             MainJFrame.showButtons(true);
+            return;
         } else {
+            for (Network n : ecoSystem.getNetworkDirectory().getNetworkList()) {
+                for (Enterprise e : n.getEnterpriseDirectory().getEnterpriseList()) {
+                    userFound = e.getUserAccountDirectory().authenticateUser(username, password);
+                    if (userFound == null) {
+                        for (Organization o : e.getOrganizationDirectory().getOrganizationList()) {
+                            userFound = o.getUserAccountDirectory().authenticateUser(username, password);
+                            if (userFound != null) {
+                                inEnterprise = e;
+                                inOrganization = o;
+                                break;
+                            }
+                        }
+                    } else {
+                        inEnterprise = e;
+                        break;
+                    }
+                    if (inOrganization != null) {
+                        break;
+                    }
+                }
+                if (inEnterprise != null) {
+                    break;
+                }
+            }
+        }
+        if (userFound == null) {
             JOptionPane.showMessageDialog(null, "Please enter valid credentials", "Invalid Credentials", JOptionPane.ERROR_MESSAGE);
+        } else {
+            MainJFrame.setCurrentUser(userFound);
+            CardLayout layout = (CardLayout) displayPanel.getLayout();
+            displayPanel.add("workArea", userFound.getRole().createWorkArea(displayPanel, userFound, inEnterprise, inOrganization, ecoSystem));
+            layout.next(displayPanel);
         }
     }//GEN-LAST:event_signInBtnActionPerformed
 
