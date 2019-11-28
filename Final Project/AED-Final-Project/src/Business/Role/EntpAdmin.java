@@ -9,18 +9,18 @@ import Business.EcoSystem.EcoSystem;
 import Business.EnterpriseDirectory.Enterprise;
 import Business.Organization.Organization;
 import Business.UserAccount.UserAccount;
-import UI.CPAdmin.CPAdminWorkArea;
+import UI.EntpAdmin.EntpAdminWorkArea;
 import javax.swing.JPanel;
 
 /**
  *
  * @author ketanmalik
  */
-public class CPAdmin extends Role {
+public class EntpAdmin extends Role {
 
     @Override
     public JPanel createWorkArea(JPanel displayPanel, UserAccount userAccount, Enterprise enterprise, Organization organization, EcoSystem ecoSystem) {
-        return new CPAdminWorkArea(displayPanel, userAccount, enterprise, organization, ecoSystem);
+        return new EntpAdminWorkArea(displayPanel, userAccount, enterprise, organization, ecoSystem);
     }
 
 }

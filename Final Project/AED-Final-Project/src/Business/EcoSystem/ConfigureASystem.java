@@ -8,8 +8,11 @@ package Business.EcoSystem;
 import Business.Employee.Employee;
 import Business.EnterpriseDirectory.Enterprise;
 import Business.Network.Network;
-import Business.Role.CPAdmin;
-import Business.Role.MktAdmin;
+import static Business.Organization.Organization.Type.DELIVERY;
+import static Business.Organization.Organization.Type.INSPECTION;
+import static Business.Organization.Organization.Type.MANUFACTURE;
+import static Business.Organization.Organization.Type.RESEARCH;
+import Business.Role.EntpAdmin;
 import Business.Role.SysAdminRole;
 import Business.UserAccount.UserAccount;
 import Business.util.DateUtil;
@@ -26,7 +29,6 @@ public class ConfigureASystem {
 
         // 1. Creating EcoSystem Admin Employee & User Account
         Employee employee = system.getEmployeeDirectory().createEmployee("Ecosystem Admin");
-//        UserAccount sysAdmin = system.getUserAccountDirectory().createUserAccount("a", "a", employee, "sysAdmin");
         UserAccount sysAdmin = system.getUserAccountDirectory().createUserAccount(employee.getName(), "a", "a", employee, new SysAdminRole(), "sysAdmin");
 
         // 2. Creating Boston Network under EcoSystem Admin
@@ -41,32 +43,51 @@ public class ConfigureASystem {
         Enterprise compoundEnterprise = null;
         for (Network n : system.getNetworkDirectory().getNetworkList()) {
             if (n.getName().equals("Boston")) {
-                compoundEnterprise = n.getEnterpriseDirectory().createEnterprise("Compound Pharmacy");
+                compoundEnterprise = n.getEnterpriseDirectory().createEnterprise("Compound Pharmacy", Enterprise.EnterpriseType.Pharmaceutical);
                 break;
             }
         }
-        compoundEnterprise.setType("Pharmaceutical");
 
         // 4. Creating Marketing Enterprise under Boston
         Enterprise marketingEnterprise = null;
         for (Network n : system.getNetworkDirectory().getNetworkList()) {
             if (n.getName().equals("Boston")) {
-                marketingEnterprise = n.getEnterpriseDirectory().createEnterprise("Marketing");
+                marketingEnterprise = n.getEnterpriseDirectory().createEnterprise("Marketing", Enterprise.EnterpriseType.Management);
                 break;
             }
         }
-        marketingEnterprise.setType("Management");
 
         // 5. Creating CP Admin Employee & User Account
         Employee cpEmployee = compoundEnterprise.getEmployeeDirectory().createEmployee("Compound Pharmacy Admin");
-//        UserAccount cpAdmin = compoundEnterprise.getUserAccountDirectory().createUserAccount("cpAdmin", "cpAdmin", cpEmployee, "entAdmin");
-        UserAccount cpAdmin = compoundEnterprise.getUserAccountDirectory().createUserAccount(cpEmployee.getName(), "cp", "cp", cpEmployee, new CPAdmin(), "cpAdmin");
+        UserAccount cpAdmin = compoundEnterprise.getUserAccountDirectory().createUserAccount(cpEmployee.getName(), "cp", "cp", cpEmployee, new EntpAdmin(), "cpAdmin");
 
         // 6. Creating mktAdmin for Marketing
         Employee mktEmployee = marketingEnterprise.getEmployeeDirectory().createEmployee("Marketing Admin");
-//        UserAccount mktAdmin = marketingEnterprise.getUserAccountDirectory().createUserAccount("mktAdmin", "mktAdmin", mktEmployee, "mktAdmin");
-        UserAccount mktAdmin = marketingEnterprise.getUserAccountDirectory().createUserAccount(mktEmployee.getName(), "mk", "mk", mktEmployee, new MktAdmin(), "mktAdmin");
+        UserAccount mktAdmin = marketingEnterprise.getUserAccountDirectory().createUserAccount(mktEmployee.getName(), "mk", "mk", mktEmployee, new EntpAdmin(), "mktAdmin");
 
+        // 7. Creating Organizations under CP Enterprise
+        for (Network n : system.getNetworkDirectory().getNetworkList()) {
+            for (Enterprise e : n.getEnterpriseDirectory().getEnterpriseList()) {
+                if (e.getName().equalsIgnoreCase("compound pharmacy")) {
+                    e.getOrganizationDirectory().createOrganization(MANUFACTURE);
+//                    e.getOrganizationDirectory().createOrganization(RESEARCH);
+//                    e.getOrganizationDirectory().createOrganization(INSPECTION);
+//                    e.getOrganizationDirectory().createOrganization(DELIVERY);
+                    break;
+                }
+            }
+        }
+//        for (Network n : system.getNetworkDirectory().getNetworkList()) {
+//            for (Enterprise e : n.getEnterpriseDirectory().getEnterpriseList()) {
+//                if (e.getName().equalsIgnoreCase("marketing")) {
+//                    e.getOrganizationDirectory().createOrganization(MANUFACTURE);
+//                    e.getOrganizationDirectory().createOrganization(RESEARCH);
+//                    e.getOrganizationDirectory().createOrganization(INSPECTION);
+//                    e.getOrganizationDirectory().createOrganization(DELIVERY);
+//                    break;
+//                }
+//            }
+//        }
         return system;
     }
 }
