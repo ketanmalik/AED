@@ -174,7 +174,7 @@ public class MainJFrame extends javax.swing.JFrame {
     }//GEN-LAST:event_logoutBtnActionPerformed
 
     private void manageNetworkBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_manageNetworkBtnActionPerformed
-        if (currentUser.getRole().equals("sysAdmin")) {
+        if (currentUser.getIdentifier().equals("sysAdmin")) {
             ManageNetworkPanel manageNetworkPanel = new ManageNetworkPanel(displayPanel, ecoSystem, currentUser);
             displayPanel.add("manageNetworkPanel", manageNetworkPanel);
             CardLayout layout = (CardLayout) displayPanel.getLayout();
@@ -183,7 +183,7 @@ public class MainJFrame extends javax.swing.JFrame {
     }//GEN-LAST:event_manageNetworkBtnActionPerformed
 
     private void manageEnterpriseBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_manageEnterpriseBtnActionPerformed
-        if (currentUser.getRole().equals("sysAdmin")) {
+        if (currentUser.getIdentifier().equals("sysAdmin")) {
             ManageEnterprisePanel manageEnterprisePanel = new ManageEnterprisePanel(displayPanel, ecoSystem, currentUser);
             CardLayout layout = (CardLayout) displayPanel.getLayout();
             displayPanel.add("manageNetworkPanel", manageEnterprisePanel);
@@ -192,7 +192,7 @@ public class MainJFrame extends javax.swing.JFrame {
     }//GEN-LAST:event_manageEnterpriseBtnActionPerformed
 
     private void manageAdminBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_manageAdminBtnActionPerformed
-        if (currentUser.getRole().equals("sysAdmin")) {
+        if (currentUser.getIdentifier().equals("sysAdmin")) {
             ManageEnterpriseAdmin manageEnterpriseAdmin = new ManageEnterpriseAdmin(displayPanel, ecoSystem, currentUser);
             CardLayout layout = (CardLayout) displayPanel.getLayout();
             displayPanel.add("manageEnterpriseAdmin", manageEnterpriseAdmin);
