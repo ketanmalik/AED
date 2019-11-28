@@ -30,14 +30,26 @@ public class OrganizationDirectory {
 
     public Organization createOrganization(Organization.Type type) {
         Organization organization = null;
-        if (type.getValue().equals(Organization.Type.ADMIN.getValue())) {
-            organizationList.add(organization);
-        } else if (type.getValue().equals(Organization.Type.MANUFACTURE.getValue())) {
+        if (type.getValue().equals(Organization.Type.Manufacture.getValue())) {
             organization = new ManufactureOrganization();
             organizationList.add(organization);
-        } else if (type.getValue().equals(Organization.Type.INSPECTION.getValue())) {
+        } else if (type.getValue().equals(Organization.Type.Research.getValue())) {
+            organization = new ResearchOrganization();
             organizationList.add(organization);
-        } else if (type.getValue().equals(Organization.Type.DELIVERY.getValue())) {
+        } else if (type.getValue().equals(Organization.Type.Inspection.getValue())) {
+            organization = new InspectionOrganization();
+            organizationList.add(organization);
+        } else if (type.getValue().equals(Organization.Type.Delivery.getValue())) {
+            organization = new DeliveryOrganization();
+            organizationList.add(organization);
+        } else if (type.getValue().equals(Organization.Type.Advertising.getValue())) {
+            organization = new AdvertisingOrganization();
+            organizationList.add(organization);
+        } else if (type.getValue().equals(Organization.Type.Doctor.getValue())) {
+            organization = new DoctorOrganization();
+            organizationList.add(organization);
+        } else if (type.getValue().equals(Organization.Type.Patient.getValue())) {
+            organization = new PatientOrganization();
             organizationList.add(organization);
         }
         return organization;

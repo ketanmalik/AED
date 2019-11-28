@@ -47,16 +47,19 @@ public class ManageNetworkPanel extends javax.swing.JPanel {
     }
 
     private void modifyButtons() {
+        MainJFrame.manageNetworkBtn.setText("Manage Network");
         MainJFrame.manageNetworkBtn.setOpaque(false);
         MainJFrame.manageNetworkBtn.setContentAreaFilled(false);
         MainJFrame.manageNetworkBtn.setBorderPainted(false);
         MainJFrame.manageNetworkBtn.setForeground(Color.black);
 
+        MainJFrame.manageEnterpriseBtn.setText("Manage Enterprise");
         MainJFrame.manageEnterpriseBtn.setOpaque(false);
         MainJFrame.manageEnterpriseBtn.setContentAreaFilled(false);
         MainJFrame.manageEnterpriseBtn.setBorderPainted(false);
         MainJFrame.manageEnterpriseBtn.setForeground(Color.white);
 
+        MainJFrame.manageAdminBtn.setText("Manage Enterprise Admin");
         MainJFrame.manageAdminBtn.setOpaque(false);
         MainJFrame.manageAdminBtn.setContentAreaFilled(false);
         MainJFrame.manageAdminBtn.setBorderPainted(false);

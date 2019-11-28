@@ -11,6 +11,7 @@ import Business.UserAccount.UserAccount;
 import UI.EcoSysAdmin.ManageEnterpriseAdmin;
 import UI.EcoSysAdmin.ManageEnterprisePanel;
 import UI.EcoSysAdmin.ManageNetworkPanel;
+import UI.CPEntpAdmin.ManageCPOrganizationJPanel;
 import java.awt.CardLayout;
 import java.awt.event.*;
 import javax.swing.Timer;
@@ -31,6 +32,9 @@ public class MainJFrame extends javax.swing.JFrame {
     public MainJFrame() {
         initComponents();
         ecoSystem = dB4OUtil.retrieveSystem();
+        MainJFrame.logoutBtn.setOpaque(false);
+        MainJFrame.logoutBtn.setContentAreaFilled(false);
+        MainJFrame.logoutBtn.setBorderPainted(false);
         showButtons(false);
         initializeSignInPanel();
     }
@@ -112,7 +116,7 @@ public class MainJFrame extends javax.swing.JFrame {
 
         logoutBtn.setFont(new java.awt.Font("Lucida Grande", 0, 18)); // NOI18N
         logoutBtn.setForeground(new java.awt.Color(255, 255, 255));
-        logoutBtn.setText("Logout");
+        logoutBtn.setText("Sign Out");
         logoutBtn.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 logoutBtnActionPerformed(evt);
@@ -130,7 +134,7 @@ public class MainJFrame extends javax.swing.JFrame {
                 .addComponent(manageEnterpriseBtn)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(manageAdminBtn)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 260, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 246, Short.MAX_VALUE)
                 .addComponent(logoutBtn)
                 .addContainerGap())
         );
@@ -156,7 +160,7 @@ public class MainJFrame extends javax.swing.JFrame {
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(splitPane, javax.swing.GroupLayout.DEFAULT_SIZE, 1000, Short.MAX_VALUE)
+            .addComponent(splitPane)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -179,6 +183,10 @@ public class MainJFrame extends javax.swing.JFrame {
             displayPanel.add("manageNetworkPanel", manageNetworkPanel);
             CardLayout layout = (CardLayout) displayPanel.getLayout();
             layout.next(displayPanel);
+        } else if (currentUser.getIdentifier().equalsIgnoreCase("cpadmin")) {
+
+        } else if (currentUser.getIdentifier().equalsIgnoreCase("mktadmin")) {
+
         }
     }//GEN-LAST:event_manageNetworkBtnActionPerformed
 
@@ -188,6 +196,10 @@ public class MainJFrame extends javax.swing.JFrame {
             CardLayout layout = (CardLayout) displayPanel.getLayout();
             displayPanel.add("manageNetworkPanel", manageEnterprisePanel);
             layout.next(displayPanel);
+        } else if (currentUser.getIdentifier().equalsIgnoreCase("cpadmin")) {
+
+        } else if (currentUser.getIdentifier().equalsIgnoreCase("mktadmin")) {
+
         }
     }//GEN-LAST:event_manageEnterpriseBtnActionPerformed
 
@@ -197,6 +209,9 @@ public class MainJFrame extends javax.swing.JFrame {
             CardLayout layout = (CardLayout) displayPanel.getLayout();
             displayPanel.add("manageEnterpriseAdmin", manageEnterpriseAdmin);
             layout.next(displayPanel);
+        } else if (currentUser.getIdentifier().equalsIgnoreCase("cpadmin")) {
+
+        } else if (currentUser.getIdentifier().equalsIgnoreCase("mktadmin")) {
         }
     }//GEN-LAST:event_manageAdminBtnActionPerformed
 

@@ -8,11 +8,15 @@ package Business.EcoSystem;
 import Business.Employee.Employee;
 import Business.EnterpriseDirectory.Enterprise;
 import Business.Network.Network;
-import static Business.Organization.Organization.Type.DELIVERY;
-import static Business.Organization.Organization.Type.INSPECTION;
-import static Business.Organization.Organization.Type.MANUFACTURE;
-import static Business.Organization.Organization.Type.RESEARCH;
-import Business.Role.EntpAdmin;
+import static Business.Organization.Organization.Type.Delivery;
+import static Business.Organization.Organization.Type.Inspection;
+import static Business.Organization.Organization.Type.Manufacture;
+import static Business.Organization.Organization.Type.Research;
+import static Business.Organization.Organization.Type.Advertising;
+import static Business.Organization.Organization.Type.Doctor;
+import static Business.Organization.Organization.Type.Patient;
+import Business.Role.CPEntpAdmin;
+import Business.Role.MktEntpAdmin;
 import Business.Role.SysAdminRole;
 import Business.UserAccount.UserAccount;
 import Business.util.DateUtil;
@@ -59,35 +63,37 @@ public class ConfigureASystem {
 
         // 5. Creating CP Admin Employee & User Account
         Employee cpEmployee = compoundEnterprise.getEmployeeDirectory().createEmployee("Compound Pharmacy Admin");
-        UserAccount cpAdmin = compoundEnterprise.getUserAccountDirectory().createUserAccount(cpEmployee.getName(), "cp", "cp", cpEmployee, new EntpAdmin(), "cpAdmin");
+        UserAccount cpAdmin = compoundEnterprise.getUserAccountDirectory().createUserAccount(cpEmployee.getName(), "cp", "cp", cpEmployee, new CPEntpAdmin(), "cpAdmin");
 
         // 6. Creating mktAdmin for Marketing
         Employee mktEmployee = marketingEnterprise.getEmployeeDirectory().createEmployee("Marketing Admin");
-        UserAccount mktAdmin = marketingEnterprise.getUserAccountDirectory().createUserAccount(mktEmployee.getName(), "mk", "mk", mktEmployee, new EntpAdmin(), "mktAdmin");
+        UserAccount mktAdmin = marketingEnterprise.getUserAccountDirectory().createUserAccount(mktEmployee.getName(), "mk", "mk", mktEmployee, new MktEntpAdmin(), "mktAdmin");
 
         // 7. Creating Organizations under CP Enterprise
         for (Network n : system.getNetworkDirectory().getNetworkList()) {
             for (Enterprise e : n.getEnterpriseDirectory().getEnterpriseList()) {
                 if (e.getName().equalsIgnoreCase("compound pharmacy")) {
-                    e.getOrganizationDirectory().createOrganization(MANUFACTURE);
-//                    e.getOrganizationDirectory().createOrganization(RESEARCH);
-//                    e.getOrganizationDirectory().createOrganization(INSPECTION);
-//                    e.getOrganizationDirectory().createOrganization(DELIVERY);
+                    e.getOrganizationDirectory().createOrganization(Manufacture);
+                    e.getOrganizationDirectory().createOrganization(Research);
+                    e.getOrganizationDirectory().createOrganization(Inspection);
+                    e.getOrganizationDirectory().createOrganization(Delivery);
                     break;
                 }
             }
         }
-//        for (Network n : system.getNetworkDirectory().getNetworkList()) {
-//            for (Enterprise e : n.getEnterpriseDirectory().getEnterpriseList()) {
-//                if (e.getName().equalsIgnoreCase("marketing")) {
-//                    e.getOrganizationDirectory().createOrganization(MANUFACTURE);
-//                    e.getOrganizationDirectory().createOrganization(RESEARCH);
-//                    e.getOrganizationDirectory().createOrganization(INSPECTION);
-//                    e.getOrganizationDirectory().createOrganization(DELIVERY);
-//                    break;
-//                }
-//            }
-//        }
+
+        // 8. Creating Organizations under MKT Enterprise
+        for (Network n : system.getNetworkDirectory().getNetworkList()) {
+            for (Enterprise e : n.getEnterpriseDirectory().getEnterpriseList()) {
+                if (e.getName().equalsIgnoreCase("marketing")) {
+                    e.getOrganizationDirectory().createOrganization(Advertising);
+                    e.getOrganizationDirectory().createOrganization(Doctor);
+                    e.getOrganizationDirectory().createOrganization(Patient);
+
+                    break;
+                }
+            }
+        }
         return system;
     }
 }

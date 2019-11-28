@@ -23,7 +23,14 @@ public abstract class Organization {
     private static int count = 1;
 
     public enum Type {
-        ADMIN("Admin Organization"), MANUFACTURE("Manufacturing Organization"), RESEARCH("Research Organization"), INSPECTION("Inspection Organization"), DELIVERY("Delivery Organization");
+        Admin("Admin Organization"),
+        Manufacture("Manufacturing Organization"),
+        Research("Research Organization"),
+        Inspection("Inspection Organization"),
+        Delivery("Delivery Organization"),
+        Advertising("Advertising Organization"),
+        Doctor("Doctor Organization"),
+        Patient("Patient Organization");
         private String value;
 
         private Type(String value) {

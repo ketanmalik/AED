@@ -9,7 +9,7 @@ import Business.EcoSystem.EcoSystem;
 import Business.Employee.Employee;
 import Business.EnterpriseDirectory.Enterprise;
 import Business.Network.Network;
-import Business.Role.EntpAdmin;
+import Business.Role.CPEntpAdmin;
 import Business.UserAccount.UserAccount;
 import UI.MainJFrame.MainJFrame;
 import java.awt.Color;
@@ -312,7 +312,7 @@ public class ManageEnterpriseAdmin extends javax.swing.JPanel {
             }
         }
         Employee emp = tempEntp.getEmployeeDirectory().createEmployee(name);
-        tempEntp.getUserAccountDirectory().createUserAccount(name, username, password, emp, new EntpAdmin(), identifier);
+        tempEntp.getUserAccountDirectory().createUserAccount(name, username, password, emp, new CPEntpAdmin(), identifier);
         populateTable();
         clearFields();
         enableFields(false);
