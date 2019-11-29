@@ -5,7 +5,7 @@
  */
 package Business.Organization;
 
-import Business.Role.ManufacturerRole;
+import Business.Role.AdvertisingSupervisorRole;
 import Business.Role.Role;
 import java.util.ArrayList;
 
@@ -13,16 +13,16 @@ import java.util.ArrayList;
  *
  * @author ketanmalik
  */
-public class ManufactureOrganization extends Organization {
+public class AdvertisingOrganization extends Organization {
 
-    public ManufactureOrganization() {
-        super(Organization.Type.Manufacture.getValue());
+    public AdvertisingOrganization() {
+        super(Organization.Type.Advertising.getValue());
     }
 
     @Override
     public ArrayList<Role> getSupportedRole() {
         ArrayList<Role> roles = new ArrayList();
-        roles.add(new ManufacturerRole());
+        roles.add(new AdvertisingSupervisorRole());
         return roles;
     }
 }

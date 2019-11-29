@@ -8,6 +8,7 @@ package Business.Organization;
 import Business.Employee.EmployeeDirectory;
 import Business.Role.Role;
 import Business.UserAccount.UserAccountDirectory;
+import Business.WorkQueue.WorkQueue;
 import java.util.ArrayList;
 
 /**
@@ -17,13 +18,22 @@ import java.util.ArrayList;
 public abstract class Organization {
 
     private String name;
+    private WorkQueue workQueue;
     private EmployeeDirectory employeeDirectory;
     private UserAccountDirectory userAccountDirectory;
     private int organizationId;
     private static int count = 1;
+    private Type orgType;
 
     public enum Type {
-        ADMIN("Admin Organization"), MANUFACTURE("Manufacturing Organization"), RESEARCH("Research Organization"), INSPECTION("Inspection Organization"), DELIVERY("Delivery Organization");
+        Admin("Admin Organization"),
+        Manufacture("Manufacturing Organization"),
+        Research("Research Organization"),
+        Inspection("Inspection Organization"),
+        Delivery("Delivery Organization"),
+        Advertising("Advertising Organization"),
+        Doctor("Doctor Organization"),
+        Patient("Patient Organization");
         private String value;
 
         private Type(String value) {
@@ -39,6 +49,7 @@ public abstract class Organization {
         this.name = name;
         employeeDirectory = new EmployeeDirectory();
         userAccountDirectory = new UserAccountDirectory();
+        workQueue = new WorkQueue();
         organizationId = count;
         count++;
     }
@@ -63,5 +74,26 @@ public abstract class Organization {
 
     public int getOrganizationId() {
         return organizationId;
+    }
+
+    public Type getOrgType() {
+        return orgType;
+    }
+
+    public void setOrgType(Type orgType) {
+        this.orgType = orgType;
+    }
+
+    public WorkQueue getWorkQueue() {
+        return workQueue;
+    }
+
+    public void setWorkQueue(WorkQueue workQueue) {
+        this.workQueue = workQueue;
+    }
+
+    @Override
+    public String toString() {
+        return this.name;
     }
 }

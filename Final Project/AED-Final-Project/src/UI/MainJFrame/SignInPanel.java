@@ -29,6 +29,9 @@ public class SignInPanel extends javax.swing.JPanel {
     private UserAccount userFound = null;
     private Enterprise inEnterprise = null;
     private Organization inOrganization = null;
+    private static int i = 0;
+
+    ;
 
     public SignInPanel(JPanel displayPanel, EcoSystem ecoSystem) {
         initComponents();
@@ -132,7 +135,6 @@ public class SignInPanel extends javax.swing.JPanel {
                 for (Enterprise e : n.getEnterpriseDirectory().getEnterpriseList()) {
                     userFound = e.getUserAccountDirectory().authenticateUser(username, password);
                     if (userFound == null) {
-                        System.out.println("UI.MainJFrame.SignInPanel.signInBtnActionPerformed()");
                         for (Organization o : e.getOrganizationDirectory().getOrganizationList()) {
                             userFound = o.getUserAccountDirectory().authenticateUser(username, password);
                             if (userFound != null) {
@@ -157,10 +159,15 @@ public class SignInPanel extends javax.swing.JPanel {
         if (userFound == null) {
             JOptionPane.showMessageDialog(null, "Please enter valid credentials", "Invalid Credentials", JOptionPane.ERROR_MESSAGE);
         } else {
+            MainJFrame.logoutBtn.setVisible(true);
             MainJFrame.setCurrentUser(userFound);
+            if (i == 1) {
+                System.out.println("UI.MainJFrame.SignInPanel.signInBtnActionPerformed()");
+            }
             CardLayout layout = (CardLayout) displayPanel.getLayout();
             displayPanel.add("workArea", userFound.getRole().createWorkArea(displayPanel, userFound, inEnterprise, inOrganization, ecoSystem));
             layout.next(displayPanel);
+            i++;
         }
     }//GEN-LAST:event_signInBtnActionPerformed
 

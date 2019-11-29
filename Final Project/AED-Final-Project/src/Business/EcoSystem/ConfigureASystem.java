@@ -7,12 +7,17 @@ package Business.EcoSystem;
 
 import Business.Employee.Employee;
 import Business.EnterpriseDirectory.Enterprise;
+import Business.MedicineList.Medicine;
 import Business.Network.Network;
-import static Business.Organization.Organization.Type.DELIVERY;
-import static Business.Organization.Organization.Type.INSPECTION;
-import static Business.Organization.Organization.Type.MANUFACTURE;
-import static Business.Organization.Organization.Type.RESEARCH;
-import Business.Role.EntpAdmin;
+import Business.Organization.Organization;
+import static Business.Organization.Organization.Type.Delivery;
+import static Business.Organization.Organization.Type.Inspection;
+import static Business.Organization.Organization.Type.Manufacture;
+import static Business.Organization.Organization.Type.Research;
+import static Business.Organization.Organization.Type.Advertising;
+import static Business.Organization.Organization.Type.Doctor;
+import static Business.Organization.Organization.Type.Patient;
+import Business.Role.CPEntpAdmin;
 import Business.Role.SysAdminRole;
 import Business.UserAccount.UserAccount;
 import Business.util.DateUtil;
@@ -59,35 +64,77 @@ public class ConfigureASystem {
 
         // 5. Creating CP Admin Employee & User Account
         Employee cpEmployee = compoundEnterprise.getEmployeeDirectory().createEmployee("Compound Pharmacy Admin");
-        UserAccount cpAdmin = compoundEnterprise.getUserAccountDirectory().createUserAccount(cpEmployee.getName(), "cp", "cp", cpEmployee, new EntpAdmin(), "cpAdmin");
+        UserAccount cpAdmin = compoundEnterprise.getUserAccountDirectory().createUserAccount(cpEmployee.getName(), "cp", "cp", cpEmployee, new CPEntpAdmin(), "cpAdmin");
 
         // 6. Creating mktAdmin for Marketing
         Employee mktEmployee = marketingEnterprise.getEmployeeDirectory().createEmployee("Marketing Admin");
-        UserAccount mktAdmin = marketingEnterprise.getUserAccountDirectory().createUserAccount(mktEmployee.getName(), "mk", "mk", mktEmployee, new EntpAdmin(), "mktAdmin");
+        UserAccount mktAdmin = marketingEnterprise.getUserAccountDirectory().createUserAccount(mktEmployee.getName(), "mk", "mk", mktEmployee, new CPEntpAdmin(), "mktAdmin");
 
         // 7. Creating Organizations under CP Enterprise
         for (Network n : system.getNetworkDirectory().getNetworkList()) {
             for (Enterprise e : n.getEnterpriseDirectory().getEnterpriseList()) {
                 if (e.getName().equalsIgnoreCase("compound pharmacy")) {
-                    e.getOrganizationDirectory().createOrganization(MANUFACTURE);
-//                    e.getOrganizationDirectory().createOrganization(RESEARCH);
-//                    e.getOrganizationDirectory().createOrganization(INSPECTION);
-//                    e.getOrganizationDirectory().createOrganization(DELIVERY);
+                    e.getOrganizationDirectory().createOrganization(Manufacture);
+                    e.getOrganizationDirectory().createOrganization(Research);
+                    e.getOrganizationDirectory().createOrganization(Inspection);
+                    e.getOrganizationDirectory().createOrganization(Delivery);
                     break;
                 }
             }
         }
-//        for (Network n : system.getNetworkDirectory().getNetworkList()) {
-//            for (Enterprise e : n.getEnterpriseDirectory().getEnterpriseList()) {
-//                if (e.getName().equalsIgnoreCase("marketing")) {
-//                    e.getOrganizationDirectory().createOrganization(MANUFACTURE);
-//                    e.getOrganizationDirectory().createOrganization(RESEARCH);
-//                    e.getOrganizationDirectory().createOrganization(INSPECTION);
-//                    e.getOrganizationDirectory().createOrganization(DELIVERY);
-//                    break;
-//                }
-//            }
-//        }
+
+        // 8. Creating Organizations under MKT Enterprise
+        for (Network n : system.getNetworkDirectory().getNetworkList()) {
+            for (Enterprise e : n.getEnterpriseDirectory().getEnterpriseList()) {
+                if (e.getName().equalsIgnoreCase("marketing")) {
+                    e.getOrganizationDirectory().createOrganization(Advertising);
+                    e.getOrganizationDirectory().createOrganization(Doctor);
+                    e.getOrganizationDirectory().createOrganization(Patient);
+
+                    break;
+                }
+            }
+        }
+
+        // 9. Create Employees & User Accounts under CP & MKT Enterprise for all organizations
+        Employee tempEmp = null;
+        for (Network n : system.getNetworkDirectory().getNetworkList()) {
+            for (Enterprise e : n.getEnterpriseDirectory().getEnterpriseList()) {
+                for (Organization o : e.getOrganizationDirectory().getOrganizationList()) {
+                    if (o.getName().equals("Manufacturing Organization")) {
+                        tempEmp = o.getEmployeeDirectory().createEmployee("Manufacturer-1");
+                        o.getUserAccountDirectory().createUserAccount(tempEmp.getName(), "cm", "cm", tempEmp, o.getSupportedRole().get(0), "cm");
+                    } else if (o.getName().equals("Research Organization")) {
+                        tempEmp = o.getEmployeeDirectory().createEmployee("Researcher-1");
+                        o.getUserAccountDirectory().createUserAccount(tempEmp.getName(), "cr", "cr", tempEmp, o.getSupportedRole().get(0), "cr");
+                    } else if (o.getName().equals("Inspection Organization")) {
+                        tempEmp = o.getEmployeeDirectory().createEmployee("Inspector-1");
+                        o.getUserAccountDirectory().createUserAccount(tempEmp.getName(), "ci", "ci", tempEmp, o.getSupportedRole().get(0), "ci");
+                    } else if (o.getName().equals("Delivery Organization")) {
+                        tempEmp = o.getEmployeeDirectory().createEmployee("Delivery-Manager-1");
+                        o.getUserAccountDirectory().createUserAccount(tempEmp.getName(), "cd", "cd", tempEmp, o.getSupportedRole().get(0), "cd");
+                    } else if (o.getName().equals("Advertising Organization")) {
+                        tempEmp = o.getEmployeeDirectory().createEmployee("Advertising-Supervisor-1");
+                        o.getUserAccountDirectory().createUserAccount(tempEmp.getName(), "ma", "ma", tempEmp, o.getSupportedRole().get(0), "ma");
+                    } else if (o.getName().equals("Doctor Organization")) {
+                        tempEmp = o.getEmployeeDirectory().createEmployee("Doctor-HR-1");
+                        o.getUserAccountDirectory().createUserAccount(tempEmp.getName(), "md", "md", tempEmp, o.getSupportedRole().get(0), "md");
+                        System.out.println("role:" + o.getSupportedRole().get(0));
+                    } else if (o.getName().equals("Patient Organization")) {
+                        tempEmp = o.getEmployeeDirectory().createEmployee("Patient-HR-1");
+                        o.getUserAccountDirectory().createUserAccount(tempEmp.getName(), "mp", "mp", tempEmp, o.getSupportedRole().get(0), "mp");
+                    }
+                }
+            }
+        }
+
+        // 10. Create Medicine List
+        system.getMedicineList().add(new Medicine("Albendazole", "200mg", "Anti-worm Medication", 0.3, 1.1, 30));
+        system.getMedicineList().add(new Medicine("Bosentan", "125mg", "Pulmonary artery hypertension", 1.5, 5, 25));
+        system.getMedicineList().add(new Medicine("Sidenafil", "20mg", "Pulmonary arterial hypertension for kids", 1, 1.7, 20));
+        system.getMedicineList().add(new Medicine("Syprine", "250mg", "Wilson's deisease", 177.6, 222, 10));
+
         return system;
     }
+
 }
