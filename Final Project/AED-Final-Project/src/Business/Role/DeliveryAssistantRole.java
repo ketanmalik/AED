@@ -22,4 +22,9 @@ public class DeliveryAssistantRole extends Role {
     public JPanel createWorkArea(JPanel displayPanel, UserAccount userAccount, Enterprise enterprise, Organization organization, EcoSystem ecoSystem) {
         return new DeliveryAssistantJPanel(displayPanel, userAccount, enterprise, organization, ecoSystem);
     }
+
+    @Override
+    public String toString() {
+        return "DeliveryAssistantRole";
+    }
 }

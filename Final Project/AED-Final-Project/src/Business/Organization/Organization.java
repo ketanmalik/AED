@@ -21,6 +21,7 @@ public abstract class Organization {
     private UserAccountDirectory userAccountDirectory;
     private int organizationId;
     private static int count = 1;
+    private Type orgType;
 
     public enum Type {
         Admin("Admin Organization"),
@@ -70,5 +71,18 @@ public abstract class Organization {
 
     public int getOrganizationId() {
         return organizationId;
+    }
+
+    public Type getOrgType() {
+        return orgType;
+    }
+
+    public void setOrgType(Type orgType) {
+        this.orgType = orgType;
+    }
+
+    @Override
+    public String toString() {
+        return this.name;
     }
 }
