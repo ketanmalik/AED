@@ -9,7 +9,7 @@ import Business.EcoSystem.EcoSystem;
 import Business.EnterpriseDirectory.Enterprise;
 import Business.Organization.Organization;
 import Business.UserAccount.UserAccount;
-import UI.DoctorRole.DoctorWorkAreaJPanel;
+import UI.MktDoctorRole.DoctorWorkAreaJPanel;
 import javax.swing.JPanel;
 
 /**

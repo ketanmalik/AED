@@ -23,6 +23,7 @@ public class WorkRequest {
     private Date requestDate;
     private Date resolveDate;
     private String message;
+    private String progress;
 
     public WorkRequest() {
         requestDate = new Date();
@@ -90,5 +91,18 @@ public class WorkRequest {
 
     public void setResolveDate(Date resolveDate) {
         this.resolveDate = resolveDate;
+    }
+
+    public String getProgress() {
+        return progress;
+    }
+
+    public void setProgress(String progress) {
+        this.progress = progress;
+    }
+
+    @Override
+    public String toString() {
+        return this.id;
     }
 }

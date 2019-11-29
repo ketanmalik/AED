@@ -9,7 +9,7 @@ import Business.EcoSystem.EcoSystem;
 import Business.EnterpriseDirectory.Enterprise;
 import Business.Organization.Organization;
 import Business.UserAccount.UserAccount;
-import UI.CPOrganizations.ManufacturerJPanel;
+import UI.CPManufacturerRole.ManufacturerWorkAreaJPanel;
 import javax.swing.JPanel;
 
 /**
@@ -20,7 +20,7 @@ public class ManufacturerRole extends Role {
 
     @Override
     public JPanel createWorkArea(JPanel displayPanel, UserAccount userAccount, Enterprise enterprise, Organization organization, EcoSystem ecoSystem) {
-        return new ManufacturerJPanel(displayPanel, userAccount, enterprise, organization, ecoSystem);
+        return new ManufacturerWorkAreaJPanel(displayPanel, userAccount, enterprise, organization, ecoSystem);
     }
     
     @Override
