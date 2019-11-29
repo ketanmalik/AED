@@ -10,6 +10,8 @@ import Business.Employee.Employee;
 import Business.EnterpriseDirectory.Enterprise;
 import Business.Organization.Organization;
 import Business.Organization.Organization.Type;
+import Business.Role.AddDoctorsRole;
+import Business.Role.AddPatientsRole;
 import Business.Role.AdvertisingSupervisorRole;
 import Business.Role.DeliveryAssistantRole;
 import Business.Role.InspectorRole;
@@ -429,6 +431,7 @@ public class CPEntpAdminWorkArea extends javax.swing.JPanel {
             Organization org = null;
             Employee emp = null;
             Role role = getRole(r);
+            System.out.println("r: " + role);
             for (Organization o : enterprise.getOrganizationDirectory().getOrganizationList()) {
                 if (type.getValue().equals(o.getOrgType().getValue())) {
                     org = o;
@@ -464,11 +467,11 @@ public class CPEntpAdminWorkArea extends javax.swing.JPanel {
         } else if (r.equalsIgnoreCase("AdvertisingSupervisorRole")) {
             role = new AdvertisingSupervisorRole();
             identifier = "ma";
-        } else if (r.equalsIgnoreCase("AddDoctorRole")) {
-            role = new AdvertisingSupervisorRole();
+        } else if (r.equalsIgnoreCase("DoctorsHRRole")) {
+            role = new AddDoctorsRole();
             identifier = "md";
-        } else if (r.equalsIgnoreCase("AddPatientRole")) {
-            role = new AdvertisingSupervisorRole();
+        } else if (r.equalsIgnoreCase("PatientsHRRole")) {
+            role = new AddPatientsRole();
             identifier = "mp";
         }
         return role;
@@ -493,6 +496,7 @@ public class CPEntpAdminWorkArea extends javax.swing.JPanel {
         }
         return type;
     }
+
     private void employeesManageBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_employeesManageBtnActionPerformed
         orgPassLabel.setVisible(false);
         orgPassTxtField.setVisible(false);

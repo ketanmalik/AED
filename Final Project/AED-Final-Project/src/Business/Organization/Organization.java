@@ -8,6 +8,7 @@ package Business.Organization;
 import Business.Employee.EmployeeDirectory;
 import Business.Role.Role;
 import Business.UserAccount.UserAccountDirectory;
+import Business.WorkQueue.WorkQueue;
 import java.util.ArrayList;
 
 /**
@@ -17,6 +18,7 @@ import java.util.ArrayList;
 public abstract class Organization {
 
     private String name;
+    private WorkQueue workQueue;
     private EmployeeDirectory employeeDirectory;
     private UserAccountDirectory userAccountDirectory;
     private int organizationId;
@@ -47,6 +49,7 @@ public abstract class Organization {
         this.name = name;
         employeeDirectory = new EmployeeDirectory();
         userAccountDirectory = new UserAccountDirectory();
+        workQueue = new WorkQueue();
         organizationId = count;
         count++;
     }
@@ -79,6 +82,14 @@ public abstract class Organization {
 
     public void setOrgType(Type orgType) {
         this.orgType = orgType;
+    }
+
+    public WorkQueue getWorkQueue() {
+        return workQueue;
+    }
+
+    public void setWorkQueue(WorkQueue workQueue) {
+        this.workQueue = workQueue;
     }
 
     @Override

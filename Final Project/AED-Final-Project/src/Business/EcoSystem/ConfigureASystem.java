@@ -7,6 +7,7 @@ package Business.EcoSystem;
 
 import Business.Employee.Employee;
 import Business.EnterpriseDirectory.Enterprise;
+import Business.MedicineList.Medicine;
 import Business.Network.Network;
 import Business.Organization.Organization;
 import static Business.Organization.Organization.Type.Delivery;
@@ -118,6 +119,7 @@ public class ConfigureASystem {
                     } else if (o.getName().equals("Doctor Organization")) {
                         tempEmp = o.getEmployeeDirectory().createEmployee("Doctor-HR-1");
                         o.getUserAccountDirectory().createUserAccount(tempEmp.getName(), "md", "md", tempEmp, o.getSupportedRole().get(0), "md");
+                        System.out.println("role:" + o.getSupportedRole().get(0));
                     } else if (o.getName().equals("Patient Organization")) {
                         tempEmp = o.getEmployeeDirectory().createEmployee("Patient-HR-1");
                         o.getUserAccountDirectory().createUserAccount(tempEmp.getName(), "mp", "mp", tempEmp, o.getSupportedRole().get(0), "mp");
@@ -126,6 +128,13 @@ public class ConfigureASystem {
             }
         }
 
+        // 10. Create Medicine List
+        system.getMedicineList().add(new Medicine("Albendazole", "200mg", "Anti-worm Medication", 0.3, 1.1, 30));
+        system.getMedicineList().add(new Medicine("Bosentan", "125mg", "Pulmonary artery hypertension", 1.5, 5, 25));
+        system.getMedicineList().add(new Medicine("Sidenafil", "20mg", "Pulmonary arterial hypertension for kids", 1, 1.7, 20));
+        system.getMedicineList().add(new Medicine("Syprine", "250mg", "Wilson's deisease", 177.6, 222, 10));
+
         return system;
     }
+
 }

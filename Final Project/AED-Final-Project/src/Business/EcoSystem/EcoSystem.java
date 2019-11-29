@@ -5,12 +5,14 @@
  */
 package Business.EcoSystem;
 
+import Business.MedicineList.Medicine;
 import Business.Network.Network;
 import Business.Network.NetworkDirectory;
 import Business.Organization.Organization;
 import Business.Role.Role;
 import Business.Role.SysAdminRole;
 import java.util.ArrayList;
+import java.util.List;
 
 /**
  *
@@ -20,10 +22,12 @@ public class EcoSystem extends Organization {
 
     private static EcoSystem ecoSystemObj = null;
     private NetworkDirectory networkDirectory;
+    private List<Medicine> medicineList;
 
     private EcoSystem() {
         super("Ecosystem");
         networkDirectory = new NetworkDirectory();
+        medicineList = new ArrayList<>();
     }
 
     @Override
@@ -42,6 +46,10 @@ public class EcoSystem extends Organization {
 
     public NetworkDirectory getNetworkDirectory() {
         return networkDirectory;
+    }
+
+    public List<Medicine> getMedicineList() {
+        return medicineList;
     }
 
     public void setNetworkDirectory(NetworkDirectory networkDirectory) {

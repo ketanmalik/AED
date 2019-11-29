@@ -7,6 +7,7 @@ package Business.UserAccount;
 
 import Business.Employee.Employee;
 import Business.Role.Role;
+import Business.WorkQueue.WorkQueue;
 
 /**
  *
@@ -20,6 +21,11 @@ public class UserAccount {
     private Employee employee;
     private String identifier;
     private Role role;
+    private WorkQueue workQueue;
+
+    public UserAccount() {
+        workQueue = new WorkQueue();
+    }
 
     public String getName() {
         return name;
@@ -67,6 +73,10 @@ public class UserAccount {
 
     public void setIdentifier(String identifier) {
         this.identifier = identifier;
+    }
+
+    public WorkQueue getWorkQueue() {
+        return workQueue;
     }
 
     @Override

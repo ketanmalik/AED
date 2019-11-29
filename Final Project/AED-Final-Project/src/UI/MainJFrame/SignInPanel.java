@@ -29,6 +29,9 @@ public class SignInPanel extends javax.swing.JPanel {
     private UserAccount userFound = null;
     private Enterprise inEnterprise = null;
     private Organization inOrganization = null;
+    private static int i = 0;
+
+    ;
 
     public SignInPanel(JPanel displayPanel, EcoSystem ecoSystem) {
         initComponents();
@@ -158,9 +161,13 @@ public class SignInPanel extends javax.swing.JPanel {
         } else {
             MainJFrame.logoutBtn.setVisible(true);
             MainJFrame.setCurrentUser(userFound);
+            if (i == 1) {
+                System.out.println("UI.MainJFrame.SignInPanel.signInBtnActionPerformed()");
+            }
             CardLayout layout = (CardLayout) displayPanel.getLayout();
             displayPanel.add("workArea", userFound.getRole().createWorkArea(displayPanel, userFound, inEnterprise, inOrganization, ecoSystem));
             layout.next(displayPanel);
+            i++;
         }
     }//GEN-LAST:event_signInBtnActionPerformed
 
