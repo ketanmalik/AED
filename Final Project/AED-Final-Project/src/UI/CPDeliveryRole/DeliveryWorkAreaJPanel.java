@@ -3,11 +3,11 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package UI.CPManufacturerRole;
+package UI.CPDeliveryRole;
 
 import Business.EcoSystem.EcoSystem;
 import Business.EnterpriseDirectory.Enterprise;
-import Business.Organization.ManufactureOrganization;
+import Business.Organization.DeliveryOrganization;
 import Business.Organization.Organization;
 import Business.UserAccount.UserAccount;
 import Business.WorkQueue.WorkRequest;
@@ -20,23 +20,23 @@ import javax.swing.table.DefaultTableModel;
  *
  * @author ketanmalik
  */
-public class ManufacturerWorkAreaJPanel extends javax.swing.JPanel {
+public class DeliveryWorkAreaJPanel extends javax.swing.JPanel {
 
     /**
-     * Creates new form ManufacturerWorkArea
+     * Creates new form DeliveryWorkAreaJPanel
      */
     private JPanel displayPanel;
     private UserAccount userAccount;
     private Enterprise enterprise;
-    private ManufactureOrganization manufactureOrganization;
+    private DeliveryOrganization deliveryOrganization;
     private EcoSystem ecoSystem;
 
-    public ManufacturerWorkAreaJPanel(JPanel displayPanel, UserAccount userAccount, Enterprise enterprise, Organization organization, EcoSystem ecoSystem) {
+    public DeliveryWorkAreaJPanel(JPanel displayPanel, UserAccount userAccount, Enterprise enterprise, Organization organization, EcoSystem ecoSystem) {
         initComponents();
         this.displayPanel = displayPanel;
         this.userAccount = userAccount;
         this.enterprise = enterprise;
-        this.manufactureOrganization = (ManufactureOrganization) organization;
+        this.deliveryOrganization = (DeliveryOrganization) organization;
         this.ecoSystem = ecoSystem;
         setLabel();
         populateTables();
@@ -44,30 +44,7 @@ public class ManufacturerWorkAreaJPanel extends javax.swing.JPanel {
 
     private void setLabel() {
         titleLabel.setText("Welcome " + userAccount.getName());
-        enterpriseLabel.setText("Organization:" + " " + manufactureOrganization.getName());
-    }
-
-    public void populateTables() {
-        DefaultTableModel dtm = (DefaultTableModel) openRequestTbl.getModel();
-        DefaultTableModel dtm1 = (DefaultTableModel) closedRequestTbl.getModel();
-
-        dtm.setRowCount(0);
-        dtm1.setRowCount(0);
-        for (WorkRequest request : manufactureOrganization.getWorkQueue().getWorkRequestList()) {
-
-            Object[] row = new Object[4];
-            row[0] = request;
-            row[1] = request.getMedicine();
-            row[2] = request.getSender();
-            row[3] = request.getReceiver();
-
-            if (request.getStatus().equalsIgnoreCase("Sent for inspection")) {
-                dtm1.addRow(row);
-            } else {
-                dtm.addRow(row);
-
-            }
-        }
+        enterpriseLabel.setText("Organization:" + " " + deliveryOrganization.getName());
     }
 
     /**
@@ -79,20 +56,24 @@ public class ManufacturerWorkAreaJPanel extends javax.swing.JPanel {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        jLabel2 = new javax.swing.JLabel();
         enterpriseLabel = new javax.swing.JLabel();
         titleLabel = new javax.swing.JLabel();
-        jLabel1 = new javax.swing.JLabel();
-        jLabel2 = new javax.swing.JLabel();
         jScrollPane1 = new javax.swing.JScrollPane();
         openRequestTbl = new javax.swing.JTable();
-        assignToMeBtn = new javax.swing.JButton();
-        processBtn = new javax.swing.JButton();
         jScrollPane2 = new javax.swing.JScrollPane();
         closedRequestTbl = new javax.swing.JTable();
-        jLabel3 = new javax.swing.JLabel();
+        assignToMeBtn = new javax.swing.JButton();
         jLabel4 = new javax.swing.JLabel();
+        jLabel3 = new javax.swing.JLabel();
+        processBtn = new javax.swing.JButton();
+        jLabel1 = new javax.swing.JLabel();
 
         setBackground(new java.awt.Color(0, 153, 153));
+
+        jLabel2.setFont(new java.awt.Font("Lucida Grande", 0, 14)); // NOI18N
+        jLabel2.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel2.setText("it gets ready for pickup and marketing once the request is processed by you");
 
         enterpriseLabel.setFont(new java.awt.Font("Lucida Grande", 0, 18)); // NOI18N
         enterpriseLabel.setForeground(new java.awt.Color(255, 255, 255));
@@ -101,14 +82,6 @@ public class ManufacturerWorkAreaJPanel extends javax.swing.JPanel {
         titleLabel.setFont(new java.awt.Font("Lucida Grande", 1, 18)); // NOI18N
         titleLabel.setForeground(new java.awt.Color(255, 255, 255));
         titleLabel.setText("Welcome Name");
-
-        jLabel1.setFont(new java.awt.Font("Lucida Grande", 0, 14)); // NOI18N
-        jLabel1.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel1.setText("As a Manufacturer, you can assign the manufacturing work request to yourseld and");
-
-        jLabel2.setFont(new java.awt.Font("Lucida Grande", 0, 14)); // NOI18N
-        jLabel2.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel2.setText("it gets ready for inspection once the request is processed by you");
 
         openRequestTbl.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -120,20 +93,6 @@ public class ManufacturerWorkAreaJPanel extends javax.swing.JPanel {
         ));
         jScrollPane1.setViewportView(openRequestTbl);
 
-        assignToMeBtn.setText("Assign to me");
-        assignToMeBtn.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                assignToMeBtnActionPerformed(evt);
-            }
-        });
-
-        processBtn.setText("Process");
-        processBtn.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                processBtnActionPerformed(evt);
-            }
-        });
-
         closedRequestTbl.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
 
@@ -144,11 +103,29 @@ public class ManufacturerWorkAreaJPanel extends javax.swing.JPanel {
         ));
         jScrollPane2.setViewportView(closedRequestTbl);
 
-        jLabel3.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel3.setText("Closed Request:");
+        assignToMeBtn.setText("Assign to me");
+        assignToMeBtn.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                assignToMeBtnActionPerformed(evt);
+            }
+        });
 
         jLabel4.setForeground(new java.awt.Color(255, 255, 255));
         jLabel4.setText("Open Requests:");
+
+        jLabel3.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel3.setText("Closed Request:");
+
+        processBtn.setText("Process");
+        processBtn.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                processBtnActionPerformed(evt);
+            }
+        });
+
+        jLabel1.setFont(new java.awt.Font("Lucida Grande", 0, 14)); // NOI18N
+        jLabel1.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel1.setText("As a Delivery person, you can assign the delivery work request to yourseld and");
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
@@ -198,7 +175,7 @@ public class ManufacturerWorkAreaJPanel extends javax.swing.JPanel {
                         .addComponent(assignToMeBtn)
                         .addGap(18, 18, 18)
                         .addComponent(processBtn)))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 77, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 86, Short.MAX_VALUE)
                 .addComponent(jLabel3)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 170, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -206,26 +183,28 @@ public class ManufacturerWorkAreaJPanel extends javax.swing.JPanel {
         );
     }// </editor-fold>//GEN-END:initComponents
 
-    private void processBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_processBtnActionPerformed
-        // TODO add your handling code here:
-        int selectedRow = openRequestTbl.getSelectedRow();
-        if (selectedRow >= 0) {
-            WorkRequest request = (WorkRequest) openRequestTbl.getValueAt(selectedRow, 0);
-            if (request.getReceiver() == null || !(request.getReceiver().getName().equalsIgnoreCase(userAccount.getName()))) {
-                JOptionPane.showMessageDialog(null, "The request has not been assigned to you", "Unauthorized Process", JOptionPane.ERROR_MESSAGE);
-                return;
+    public void populateTables() {
+        DefaultTableModel dtm = (DefaultTableModel) openRequestTbl.getModel();
+        DefaultTableModel dtm1 = (DefaultTableModel) closedRequestTbl.getModel();
+
+        dtm.setRowCount(0);
+        dtm1.setRowCount(0);
+        for (WorkRequest request : deliveryOrganization.getWorkQueue().getWorkRequestList()) {
+
+            Object[] row = new Object[4];
+            row[0] = request;
+            row[1] = request.getMedicine();
+            row[2] = request.getSender();
+            row[3] = request.getReceiver();
+
+            if (request.getStatus().equalsIgnoreCase("Order Complete")) {
+                dtm1.addRow(row);
             } else {
-                request.setStatus("Manufacturing In Process");
-                ProcessJPanel process = new ProcessJPanel(displayPanel, userAccount, enterprise, manufactureOrganization, ecoSystem, request);
-                CardLayout layout = (CardLayout) displayPanel.getLayout();
-                displayPanel.add("process", process);
-                layout.next(displayPanel);
+                dtm.addRow(row);
+
             }
-        } else {
-            JOptionPane.showMessageDialog(null, "Please select a request to process");
-            return;
         }
-    }//GEN-LAST:event_processBtnActionPerformed
+    }
 
     private void assignToMeBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_assignToMeBtnActionPerformed
         int selectedRow = openRequestTbl.getSelectedRow();
@@ -233,7 +212,7 @@ public class ManufacturerWorkAreaJPanel extends javax.swing.JPanel {
             WorkRequest request = (WorkRequest) openRequestTbl.getValueAt(selectedRow, 0);
             if (request.getReceiver() == null) {
                 request.setReceiver(userAccount);
-                request.setStatus("Ready for Manufacturing");
+                request.setStatus("Delivery Process Started");
                 populateTables();
             } else {
                 JOptionPane.showMessageDialog(null, "The request has already been assigned to " + request.getReceiver(), "Multiple Assignment", JOptionPane.ERROR_MESSAGE);
@@ -244,6 +223,27 @@ public class ManufacturerWorkAreaJPanel extends javax.swing.JPanel {
             return;
         }
     }//GEN-LAST:event_assignToMeBtnActionPerformed
+
+    private void processBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_processBtnActionPerformed
+        // TODO add your handling code here:
+        int selectedRow = openRequestTbl.getSelectedRow();
+        if (selectedRow >= 0) {
+            WorkRequest request = (WorkRequest) openRequestTbl.getValueAt(selectedRow, 0);
+            if (request.getReceiver() == null || !(request.getReceiver().getName().equalsIgnoreCase(userAccount.getName()))) {
+                JOptionPane.showMessageDialog(null, "The request has not been assigned to you", "Unauthorized Process", JOptionPane.ERROR_MESSAGE);
+                return;
+            } else {
+                request.setStatus("Inspection In Process");
+                DeliveryProcessJPanel process = new DeliveryProcessJPanel(displayPanel, userAccount, enterprise, deliveryOrganization, ecoSystem, request);
+                CardLayout layout = (CardLayout) displayPanel.getLayout();
+                displayPanel.add("process", process);
+                layout.next(displayPanel);
+            }
+        } else {
+            JOptionPane.showMessageDialog(null, "Please select a request to process");
+            return;
+        }
+    }//GEN-LAST:event_processBtnActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

@@ -252,6 +252,7 @@ public class ManufactureWRJPanel extends javax.swing.JPanel {
         request.setMessage(message);
         request.setPrice(price);
         request.setQuantity(quantity);
+        request.setOriginator(userAccount);
 
         Organization org = null;
         for (Network n : ecoSystem.getNetworkDirectory().getNetworkList()) {

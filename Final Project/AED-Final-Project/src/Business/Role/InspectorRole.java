@@ -9,7 +9,7 @@ import Business.EcoSystem.EcoSystem;
 import Business.EnterpriseDirectory.Enterprise;
 import Business.Organization.Organization;
 import Business.UserAccount.UserAccount;
-import UI.CPOrganizations.InspectorJPanel;
+import UI.CPInspectorRole.InspectorWorkAreaJPanel;
 import javax.swing.JPanel;
 
 /**
@@ -20,7 +20,7 @@ public class InspectorRole extends Role {
 
     @Override
     public JPanel createWorkArea(JPanel displayPanel, UserAccount userAccount, Enterprise enterprise, Organization organization, EcoSystem ecoSystem) {
-        return new InspectorJPanel(displayPanel, userAccount, enterprise, organization, ecoSystem);
+        return new InspectorWorkAreaJPanel(displayPanel, userAccount, enterprise, organization, ecoSystem);
     }
         @Override
     public String toString(){

@@ -3,43 +3,42 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package UI.CPManufacturerRole;
+package UI.CPDeliveryRole;
 
 import Business.EcoSystem.EcoSystem;
 import Business.EnterpriseDirectory.Enterprise;
-import Business.Organization.InspectionOrganization;
-import Business.Organization.ManufactureOrganization;
+import Business.Organization.DeliveryOrganization;
 import Business.Organization.Organization;
 import Business.UserAccount.UserAccount;
 import Business.WorkQueue.WorkRequest;
 import java.awt.CardLayout;
-import javax.swing.JPanel;
 import java.awt.Component;
 import javax.swing.JOptionPane;
+import javax.swing.JPanel;
 
 /**
  *
  * @author ketanmalik
  */
-public class ProcessJPanel extends javax.swing.JPanel {
+public class DeliveryProcessJPanel extends javax.swing.JPanel {
 
     /**
-     * Creates new form ProcessJPanel
+     * Creates new form DeliveryProcessJPanel
      */
     private JPanel displayPanel;
     private UserAccount userAccount;
     private Enterprise enterprise;
-    private ManufactureOrganization manufactureOrganization;
+    private DeliveryOrganization deliveryOrganization;
     private EcoSystem ecoSystem;
     private WorkRequest request;
     private static int id = 1;
 
-    public ProcessJPanel(JPanel displayPanel, UserAccount userAccount, Enterprise enterprise, Organization organization, EcoSystem ecoSystem, WorkRequest request) {
+    public DeliveryProcessJPanel(JPanel displayPanel, UserAccount userAccount, Enterprise enterprise, Organization organization, EcoSystem ecoSystem, WorkRequest request) {
         initComponents();
         this.displayPanel = displayPanel;
         this.userAccount = userAccount;
         this.enterprise = enterprise;
-        this.manufactureOrganization = (ManufactureOrganization) organization;
+        this.deliveryOrganization = (DeliveryOrganization) organization;
         this.ecoSystem = ecoSystem;
         this.request = request;
     }
@@ -53,27 +52,27 @@ public class ProcessJPanel extends javax.swing.JPanel {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        backBtn = new javax.swing.JButton();
-        jLabel1 = new javax.swing.JLabel();
-        notesTxtField = new javax.swing.JTextField();
         completeBtn = new javax.swing.JButton();
+        notesTxtField = new javax.swing.JTextField();
+        jLabel1 = new javax.swing.JLabel();
+        backBtn = new javax.swing.JButton();
 
         setBackground(new java.awt.Color(0, 153, 153));
-
-        backBtn.setText("Back");
-        backBtn.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                backBtnActionPerformed(evt);
-            }
-        });
-
-        jLabel1.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel1.setText("Notes to Inspection Team:");
 
         completeBtn.setText("Complete Process");
         completeBtn.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 completeBtnActionPerformed(evt);
+            }
+        });
+
+        jLabel1.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel1.setText("Code for Pickup:");
+
+        backBtn.setText("Back");
+        backBtn.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                backBtnActionPerformed(evt);
             }
         });
 
@@ -94,7 +93,7 @@ public class ProcessJPanel extends javax.swing.JPanel {
                     .addGroup(layout.createSequentialGroup()
                         .addGap(407, 407, 407)
                         .addComponent(completeBtn)))
-                .addContainerGap(447, Short.MAX_VALUE))
+                .addContainerGap(451, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -111,49 +110,49 @@ public class ProcessJPanel extends javax.swing.JPanel {
         );
     }// </editor-fold>//GEN-END:initComponents
 
-    private void backBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_backBtnActionPerformed
-        displayPanel.remove(this);
-        Component[] componentArray = displayPanel.getComponents();
-        Component component = componentArray[componentArray.length - 1];
-        ManufacturerWorkAreaJPanel mwjp = (ManufacturerWorkAreaJPanel) component;
-        mwjp.populateTables();
-        CardLayout layout = (CardLayout) displayPanel.getLayout();
-        layout.previous(displayPanel);
-    }//GEN-LAST:event_backBtnActionPerformed
-
     private void completeBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_completeBtnActionPerformed
-        int input = JOptionPane.showOptionDialog(null, "Are you you want to send " + request.getId() + " order for inspection?", "Process Confirmation", JOptionPane.OK_OPTION, JOptionPane.INFORMATION_MESSAGE, null, null, null);
+        int input = JOptionPane.showOptionDialog(null, "Are you you want to send " + request.getId() + " order for pickup?", "Process Confirmation", JOptionPane.OK_OPTION, JOptionPane.INFORMATION_MESSAGE, null, null, null);
 
         if (input == JOptionPane.OK_OPTION) {
             String progress = (notesTxtField.getText() == null || notesTxtField.getText().equals("")) ? "" : notesTxtField.getText();
             request.setProgress(progress);
-            request.setStatus("Sent for inspection");
+            request.setStatus("Order Complete");
             request.setSender(userAccount);
             request.setReceiver(null);
-            sendToInspection();
-            JOptionPane.showMessageDialog(null, "Your request has been sent to inspection team");
+            sendToDelivery();
+            JOptionPane.showMessageDialog(null, "The order is now ready for pickup");
             displayPanel.remove(this);
             Component[] componentArray = displayPanel.getComponents();
             Component component = componentArray[componentArray.length - 1];
-            ManufacturerWorkAreaJPanel mwjp = (ManufacturerWorkAreaJPanel) component;
-            mwjp.populateTables();
+            DeliveryWorkAreaJPanel dwjp = (DeliveryWorkAreaJPanel) component;
+            dwjp.populateTables();
             CardLayout layout = (CardLayout) displayPanel.getLayout();
             layout.previous(displayPanel);
         }
     }//GEN-LAST:event_completeBtnActionPerformed
-    private void sendToInspection() {
-        Organization org = null;
-        for (Organization o : enterprise.getOrganizationDirectory().getOrganizationList()) {
-            if (o instanceof InspectionOrganization) {
-                org = o;
-                break;
-            }
-        }
-        if (org != null) {
-            org.getWorkQueue().getWorkRequestList().add(request);
-            userAccount.getWorkQueue().getWorkRequestList().add(request);
-            System.out.println("UI.CPManufacturerRole.ProcessJPanel.sendToInspection()");
-        }
+
+    private void backBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_backBtnActionPerformed
+        displayPanel.remove(this);
+        Component[] componentArray = displayPanel.getComponents();
+        Component component = componentArray[componentArray.length - 1];
+        DeliveryWorkAreaJPanel dwjp = (DeliveryWorkAreaJPanel) component;
+        dwjp.populateTables();
+        CardLayout layout = (CardLayout) displayPanel.getLayout();
+        layout.previous(displayPanel);
+    }//GEN-LAST:event_backBtnActionPerformed
+
+    private void sendToDelivery() {
+//        Organization org = null;
+//        for (Organization o : enterprise.getOrganizationDirectory().getOrganizationList()) {
+//            if (o instanceof DeliveryOrganization) {
+//                org = o;
+//                break;
+//            }
+//        }
+//        if (org != null) {
+//            org.getWorkQueue().getWorkRequestList().add(request);
+//            userAccount.getWorkQueue().getWorkRequestList().add(request);
+//        }
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
