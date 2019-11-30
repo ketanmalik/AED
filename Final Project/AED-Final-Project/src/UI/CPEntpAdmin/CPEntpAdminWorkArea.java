@@ -431,7 +431,6 @@ public class CPEntpAdminWorkArea extends javax.swing.JPanel {
             Organization org = null;
             Employee emp = null;
             Role role = getRole(r);
-            System.out.println("r: " + role);
             for (Organization o : enterprise.getOrganizationDirectory().getOrganizationList()) {
                 if (type.getValue().equals(o.getOrgType().getValue())) {
                     org = o;

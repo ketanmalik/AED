@@ -197,7 +197,7 @@ public class DeliveryWorkAreaJPanel extends javax.swing.JPanel {
             row[2] = request.getSender();
             row[3] = request.getReceiver();
 
-            if (request.getStatus().equalsIgnoreCase("Order Complete")) {
+            if (request.getStatus().equalsIgnoreCase("Available for pickup")) {
                 dtm1.addRow(row);
             } else {
                 dtm.addRow(row);

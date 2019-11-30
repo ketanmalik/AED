@@ -25,6 +25,7 @@ public class WorkRequest {
     private String message;
     private String progress;
     private UserAccount originator;
+    private int code;
 
     public WorkRequest() {
         requestDate = new Date();
@@ -108,6 +109,14 @@ public class WorkRequest {
 
     public void setOriginator(UserAccount originator) {
         this.originator = originator;
+    }
+
+    public int getCode() {
+        return code;
+    }
+
+    public void setCode(int code) {
+        this.code = code;
     }
 
     @Override
