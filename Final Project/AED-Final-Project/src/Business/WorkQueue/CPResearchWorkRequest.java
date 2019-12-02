@@ -11,18 +11,9 @@ package Business.WorkQueue;
  */
 public class CPResearchWorkRequest extends WorkRequest {
 
-    private String medicineType;
     private String result;
     private String activeIngredient;
     private String state;
-
-    public String getMedicineType() {
-        return medicineType;
-    }
-
-    public void setMedicineType(String medicineType) {
-        this.medicineType = medicineType;
-    }
 
     public String getResult() {
         return result;

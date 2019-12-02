@@ -7,6 +7,9 @@ package UI.CPInspectorRole;
 
 import Business.EcoSystem.EcoSystem;
 import Business.EnterpriseDirectory.Enterprise;
+import Business.EnterpriseDirectory.MarketingEnterprise;
+import Business.Network.Network;
+import Business.Organization.AdvertisingOrganization;
 import Business.Organization.DeliveryOrganization;
 import Business.Organization.InspectionOrganization;
 import Business.Organization.Organization;
@@ -122,24 +125,46 @@ public class InspectorProcessJPanel extends javax.swing.JPanel {
     }//GEN-LAST:event_backBtnActionPerformed
 
     private void completeBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_completeBtnActionPerformed
-        int input = JOptionPane.showOptionDialog(null, "Are you you want to send " + request.getId() + " order for delivery?", "Process Confirmation", JOptionPane.OK_OPTION, JOptionPane.INFORMATION_MESSAGE, null, null, null);
+        if (request.getMedicine().getPrice() == 0) {
+            int input = JOptionPane.showOptionDialog(null, "Are you you want to send " + request.getId() + " request for marketing?", "Process Confirmation", JOptionPane.OK_OPTION, JOptionPane.INFORMATION_MESSAGE, null, null, null);
+            if (input == JOptionPane.OK_OPTION) {
+                String progress = (notesTxtField.getText() == null || notesTxtField.getText().equals("")) ? "" : notesTxtField.getText();
+                request.setProgress(progress);
+                request.setStatus("Sent for marketing");
+                request.setSender(userAccount);
+                request.setReceiver(null);
+                sendToMarketing();
+                JOptionPane.showMessageDialog(null, "Your request has been sent to marketing organization");
+                displayPanel.remove(this);
+                Component[] componentArray = displayPanel.getComponents();
+                Component component = componentArray[componentArray.length - 1];
+                InspectorWorkAreaJPanel mwjp = (InspectorWorkAreaJPanel) component;
+                mwjp.populateTables();
+                CardLayout layout = (CardLayout) displayPanel.getLayout();
+                layout.previous(displayPanel);
+            }
 
-        if (input == JOptionPane.OK_OPTION) {
-            String progress = (notesTxtField.getText() == null || notesTxtField.getText().equals("")) ? "" : notesTxtField.getText();
-            request.setProgress(progress);
-            request.setStatus("Sent for delivery");
-            request.setSender(userAccount);
-            request.setReceiver(null);
-            sendToDelivery();
-            JOptionPane.showMessageDialog(null, "Your request has been sent to delivery team");
-            displayPanel.remove(this);
-            Component[] componentArray = displayPanel.getComponents();
-            Component component = componentArray[componentArray.length - 1];
-            InspectorWorkAreaJPanel mwjp = (InspectorWorkAreaJPanel) component;
-            mwjp.populateTables();
-            CardLayout layout = (CardLayout) displayPanel.getLayout();
-            layout.previous(displayPanel);
+        } else {
+            int input = JOptionPane.showOptionDialog(null, "Are you you want to send " + request.getId() + " order for delivery?", "Process Confirmation", JOptionPane.OK_OPTION, JOptionPane.INFORMATION_MESSAGE, null, null, null);
+            if (input == JOptionPane.OK_OPTION) {
+                String progress = (notesTxtField.getText() == null || notesTxtField.getText().equals("")) ? "" : notesTxtField.getText();
+                request.setProgress(progress);
+                request.setStatus("Sent for delivery");
+                request.setSender(userAccount);
+                request.setReceiver(null);
+                sendToDelivery();
+                JOptionPane.showMessageDialog(null, "Your request has been sent to delivery team");
+                displayPanel.remove(this);
+                Component[] componentArray = displayPanel.getComponents();
+                Component component = componentArray[componentArray.length - 1];
+                InspectorWorkAreaJPanel mwjp = (InspectorWorkAreaJPanel) component;
+                mwjp.populateTables();
+                CardLayout layout = (CardLayout) displayPanel.getLayout();
+                layout.previous(displayPanel);
+            }
         }
+
+
     }//GEN-LAST:event_completeBtnActionPerformed
     private void sendToDelivery() {
         Organization org = null;
@@ -147,6 +172,27 @@ public class InspectorProcessJPanel extends javax.swing.JPanel {
             if (o instanceof DeliveryOrganization) {
                 org = o;
                 break;
+            }
+        }
+        if (org != null) {
+            org.getWorkQueue().getWorkRequestList().add(request);
+            userAccount.getWorkQueue().getWorkRequestList().add(request);
+        }
+    }
+
+    private void sendToMarketing() {
+        Organization org = null;
+        for (Network n : ecoSystem.getNetworkDirectory().getNetworkList()) {
+            for (Enterprise e : n.getEnterpriseDirectory().getEnterpriseList()) {
+                if (e instanceof MarketingEnterprise) {
+                    for (Organization o : e.getOrganizationDirectory().getOrganizationList()) {
+                        if (o instanceof AdvertisingOrganization) {
+                            org = o;
+                            break;
+                        }
+                    }
+                    break;
+                }
             }
         }
         if (org != null) {

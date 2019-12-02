@@ -7,10 +7,15 @@ package UI.MktDoctorRole;
 
 import Business.EcoSystem.EcoSystem;
 import Business.EnterpriseDirectory.Enterprise;
+import Business.MedicineList.Medicine;
+import Business.Network.Network;
 import Business.Organization.Organization;
+import Business.Organization.ResearchOrganization;
 import Business.UserAccount.UserAccount;
+import Business.WorkQueue.CPResearchWorkRequest;
 import java.awt.CardLayout;
 import java.awt.Component;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 
 /**
@@ -27,6 +32,7 @@ public class ResearchWRJPanel extends javax.swing.JPanel {
     private Enterprise enterprise;
     private Organization organization;
     private EcoSystem ecoSystem;
+    private static int id = 1;
 
     public ResearchWRJPanel(JPanel displayPanel, UserAccount userAccount, Enterprise enterprise, Organization organization, EcoSystem ecoSystem) {
         initComponents();
@@ -52,12 +58,13 @@ public class ResearchWRJPanel extends javax.swing.JPanel {
         jLabel3 = new javax.swing.JLabel();
         jLabel4 = new javax.swing.JLabel();
         jLabel5 = new javax.swing.JLabel();
-        jTextField1 = new javax.swing.JTextField();
-        jTextField2 = new javax.swing.JTextField();
-        jTextField3 = new javax.swing.JTextField();
-        jComboBox1 = new javax.swing.JComboBox<>();
-        jComboBox2 = new javax.swing.JComboBox<>();
-        jButton1 = new javax.swing.JButton();
+        medicineNameTxtField = new javax.swing.JTextField();
+        strengthTxtField = new javax.swing.JTextField();
+        ingredientTxtField = new javax.swing.JTextField();
+        medicineTypeDropdown = new javax.swing.JComboBox<>();
+        stateDropdown = new javax.swing.JComboBox<>();
+        confirmOrderBtn = new javax.swing.JButton();
+        jLabel6 = new javax.swing.JLabel();
 
         setBackground(new java.awt.Color(0, 153, 153));
         setForeground(new java.awt.Color(255, 255, 255));
@@ -84,17 +91,30 @@ public class ResearchWRJPanel extends javax.swing.JPanel {
         jLabel5.setForeground(new java.awt.Color(255, 255, 255));
         jLabel5.setText("State:");
 
-        jTextField3.addActionListener(new java.awt.event.ActionListener() {
+        ingredientTxtField.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jTextField3ActionPerformed(evt);
+                ingredientTxtFieldActionPerformed(evt);
             }
         });
 
-        jComboBox1.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Capsule", "Tablet", "Syrup" }));
+        medicineTypeDropdown.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Tablet", "Capsule", "Syrup" }));
+        medicineTypeDropdown.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                medicineTypeDropdownActionPerformed(evt);
+            }
+        });
 
-        jComboBox2.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        stateDropdown.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Arizona", "California", "Colorado", "Florida", "Georgia", "Illinois", "Massachusetts", "Michigan", "Texas", "Wisconsin" }));
 
-        jButton1.setText("Confirm Order");
+        confirmOrderBtn.setText("Send Research Request");
+        confirmOrderBtn.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                confirmOrderBtnActionPerformed(evt);
+            }
+        });
+
+        jLabel6.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel6.setText("(mg)");
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
@@ -106,26 +126,27 @@ public class ResearchWRJPanel extends javax.swing.JPanel {
                         .addGap(76, 76, 76)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                             .addComponent(jLabel2)
-                            .addGroup(layout.createSequentialGroup()
-                                .addGap(11, 11, 11)
-                                .addComponent(jLabel1))
+                            .addComponent(jLabel1)
                             .addComponent(jLabel3)
                             .addComponent(jLabel4)
                             .addComponent(jLabel5))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jTextField2, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jTextField3, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jComboBox2, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                            .addComponent(medicineNameTxtField, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(medicineTypeDropdown, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(strengthTxtField, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(jLabel6))
+                            .addComponent(ingredientTxtField, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(stateDropdown, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE)))
                     .addGroup(layout.createSequentialGroup()
                         .addGap(25, 25, 25)
                         .addComponent(backBtn))
                     .addGroup(layout.createSequentialGroup()
                         .addGap(362, 362, 362)
-                        .addComponent(jButton1)))
-                .addContainerGap(518, Short.MAX_VALUE))
+                        .addComponent(confirmOrderBtn)))
+                .addContainerGap(464, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -135,25 +156,26 @@ public class ResearchWRJPanel extends javax.swing.JPanel {
                 .addGap(109, 109, 109)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel1)
-                    .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(medicineNameTxtField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel2)
-                    .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(medicineTypeDropdown, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel3)
-                    .addComponent(jTextField2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(strengthTxtField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel6))
                 .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel4)
-                    .addComponent(jTextField3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(ingredientTxtField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel5)
-                    .addComponent(jComboBox2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(stateDropdown, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(105, 105, 105)
-                .addComponent(jButton1)
+                .addComponent(confirmOrderBtn)
                 .addContainerGap(301, Short.MAX_VALUE))
         );
     }// </editor-fold>//GEN-END:initComponents
@@ -168,23 +190,100 @@ public class ResearchWRJPanel extends javax.swing.JPanel {
         layout.previous(displayPanel);
     }//GEN-LAST:event_backBtnActionPerformed
 
-    private void jTextField3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField3ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jTextField3ActionPerformed
+    private void ingredientTxtFieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ingredientTxtFieldActionPerformed
+    }//GEN-LAST:event_ingredientTxtFieldActionPerformed
+
+    private void confirmOrderBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_confirmOrderBtnActionPerformed
+        String medicineName = medicineNameTxtField.getText();
+        if (medicineName == null || medicineName.equals("")) {
+            JOptionPane.showMessageDialog(null, "Please enter valid medicine name", "Invalid medicine name", JOptionPane.ERROR_MESSAGE);
+            return;
+        }
+
+        String medicineType = String.valueOf(medicineTypeDropdown.getSelectedItem());
+        int medicineStrength;
+        if (medicineType.equals("Syrup")) {
+            medicineStrength = 0;
+        } else {
+            try {
+                Integer.parseInt(strengthTxtField.getText());
+            } catch (Exception e) {
+                JOptionPane.showMessageDialog(null, "Please enter valid medicine strength", "Invalid medicine strength", JOptionPane.ERROR_MESSAGE);
+                return;
+            }
+            medicineStrength = Integer.parseInt(strengthTxtField.getText());
+        }
+        String activeIngredient = ingredientTxtField.getText();
+        if (activeIngredient == null || activeIngredient.equals("")) {
+            JOptionPane.showMessageDialog(null, "Please enter valid active ingredient", "Invalid active ingredient", JOptionPane.ERROR_MESSAGE);
+            return;
+        }
+        String state = String.valueOf(stateDropdown.getSelectedItem());
+        Medicine medicine = new Medicine(medicineName, medicineStrength, "", 0, 0, 0, activeIngredient, medicineType);
+
+        CPResearchWorkRequest request = new CPResearchWorkRequest();
+        request.setId("DR-WR-" + id++);
+        request.setSender(userAccount);
+        request.setStatus("Research Request Accepted");
+        request.setOriginator(userAccount);
+        request.setMedicine(medicine);
+        request.setActiveIngredient(activeIngredient);
+        request.setState(state);
+
+        Organization org = null;
+        for (Network n : ecoSystem.getNetworkDirectory().getNetworkList()) {
+            for (Enterprise e : n.getEnterpriseDirectory().getEnterpriseList()) {
+                for (Organization o : e.getOrganizationDirectory().getOrganizationList()) {
+                    if (o instanceof ResearchOrganization) {
+                        org = o;
+                        break;
+                    }
+                }
+                break;
+            }
+        }
+
+        if (org != null) {
+            org.getWorkQueue().getWorkRequestList().add(request);
+            userAccount.getWorkQueue().getWorkRequestList().add(request);
+
+            int input = JOptionPane.showOptionDialog(null, "Your request has been placed. Do you want to go back main screen?", "Request Confirmation", JOptionPane.OK_OPTION, JOptionPane.INFORMATION_MESSAGE, null, null, null);
+            if (input == JOptionPane.OK_OPTION) {
+                displayPanel.remove(this);
+                Component[] componentArray = displayPanel.getComponents();
+                Component component = componentArray[componentArray.length - 1];
+                DoctorWorkAreaJPanel dwjp = (DoctorWorkAreaJPanel) component;
+                dwjp.populateTable();
+                CardLayout layout = (CardLayout) displayPanel.getLayout();
+                layout.previous(displayPanel);
+            }
+        }
+    }//GEN-LAST:event_confirmOrderBtnActionPerformed
+
+    private void medicineTypeDropdownActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_medicineTypeDropdownActionPerformed
+        String type = String.valueOf(medicineTypeDropdown.getSelectedItem());
+        if (type.equals("Syrup")) {
+            strengthTxtField.setText("");
+            strengthTxtField.setEnabled(false);
+        } else {
+            strengthTxtField.setEnabled(true);
+        }
+    }//GEN-LAST:event_medicineTypeDropdownActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton backBtn;
-    private javax.swing.JButton jButton1;
-    private javax.swing.JComboBox<String> jComboBox1;
-    private javax.swing.JComboBox<String> jComboBox2;
+    private javax.swing.JButton confirmOrderBtn;
+    private javax.swing.JTextField ingredientTxtField;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
-    private javax.swing.JTextField jTextField1;
-    private javax.swing.JTextField jTextField2;
-    private javax.swing.JTextField jTextField3;
+    private javax.swing.JLabel jLabel6;
+    private javax.swing.JTextField medicineNameTxtField;
+    private javax.swing.JComboBox<String> medicineTypeDropdown;
+    private javax.swing.JComboBox<String> stateDropdown;
+    private javax.swing.JTextField strengthTxtField;
     // End of variables declaration//GEN-END:variables
 }

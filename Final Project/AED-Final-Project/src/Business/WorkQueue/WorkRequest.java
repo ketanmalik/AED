@@ -26,6 +26,8 @@ public class WorkRequest {
     private String progress;
     private UserAccount originator;
     private int code;
+    private String medicineName;
+    private int strength;
 
     public WorkRequest() {
         requestDate = new Date();

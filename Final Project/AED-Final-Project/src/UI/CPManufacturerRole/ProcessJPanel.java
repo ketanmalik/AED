@@ -152,7 +152,6 @@ public class ProcessJPanel extends javax.swing.JPanel {
         if (org != null) {
             org.getWorkQueue().getWorkRequestList().add(request);
             userAccount.getWorkQueue().getWorkRequestList().add(request);
-            System.out.println("UI.CPManufacturerRole.ProcessJPanel.sendToInspection()");
         }
     }
 

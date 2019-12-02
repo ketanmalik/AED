@@ -3,14 +3,13 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package UI.CPInspectorRole;
+package UI.MktAdvertisingRole;
 
 import Business.EcoSystem.EcoSystem;
 import Business.EnterpriseDirectory.Enterprise;
-import Business.Organization.InspectionOrganization;
+import Business.Organization.AdvertisingOrganization;
 import Business.Organization.Organization;
 import Business.UserAccount.UserAccount;
-import Business.WorkQueue.CPResearchWorkRequest;
 import Business.WorkQueue.WorkRequest;
 import java.awt.CardLayout;
 import javax.swing.JOptionPane;
@@ -21,31 +20,26 @@ import javax.swing.table.DefaultTableModel;
  *
  * @author ketanmalik
  */
-public class InspectorWorkAreaJPanel extends javax.swing.JPanel {
+public class AdvertisingWorkAreaJPanel extends javax.swing.JPanel {
 
     /**
-     * Creates new form InspectorWorkAreaJPanel
+     * Creates new form AdvertisingWorkAreaJPanel
      */
     private JPanel displayPanel;
     private UserAccount userAccount;
     private Enterprise enterprise;
-    private InspectionOrganization inspectionOrganization;
+    private AdvertisingOrganization advertisingOrganization;
     private EcoSystem ecoSystem;
 
-    public InspectorWorkAreaJPanel(JPanel displayPanel, UserAccount userAccount, Enterprise enterprise, Organization organization, EcoSystem ecoSystem) {
+    public AdvertisingWorkAreaJPanel(JPanel displayPanel, UserAccount userAccount, Enterprise enterprise, Organization organization, EcoSystem ecoSystem) {
         initComponents();
         this.displayPanel = displayPanel;
         this.userAccount = userAccount;
         this.enterprise = enterprise;
-        this.inspectionOrganization = (InspectionOrganization) organization;
+        this.advertisingOrganization = (AdvertisingOrganization) organization;
         this.ecoSystem = ecoSystem;
         setLabel();
         populateTables();
-    }
-
-    private void setLabel() {
-        titleLabel.setText("Welcome " + userAccount.getName());
-        enterpriseLabel.setText("Organization:" + " " + inspectionOrganization.getName());
     }
 
     /**
@@ -57,28 +51,38 @@ public class InspectorWorkAreaJPanel extends javax.swing.JPanel {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        jLabel3 = new javax.swing.JLabel();
-        assignToMeBtn = new javax.swing.JButton();
-        jScrollPane2 = new javax.swing.JScrollPane();
-        closedRequestTbl = new javax.swing.JTable();
-        jScrollPane1 = new javax.swing.JScrollPane();
-        openRequestTbl = new javax.swing.JTable();
         titleLabel = new javax.swing.JLabel();
         enterpriseLabel = new javax.swing.JLabel();
-        jLabel2 = new javax.swing.JLabel();
-        jLabel1 = new javax.swing.JLabel();
+        assignToMeBtn = new javax.swing.JButton();
         processBtn = new javax.swing.JButton();
+        jScrollPane2 = new javax.swing.JScrollPane();
+        closedRequestTbl = new javax.swing.JTable();
+        jLabel3 = new javax.swing.JLabel();
         jLabel4 = new javax.swing.JLabel();
+        jScrollPane1 = new javax.swing.JScrollPane();
+        openRequestTbl = new javax.swing.JTable();
 
         setBackground(new java.awt.Color(0, 153, 153));
 
-        jLabel3.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel3.setText("Closed Request:");
+        titleLabel.setFont(new java.awt.Font("Lucida Grande", 1, 18)); // NOI18N
+        titleLabel.setForeground(new java.awt.Color(255, 255, 255));
+        titleLabel.setText("Welcome Name");
+
+        enterpriseLabel.setFont(new java.awt.Font("Lucida Grande", 0, 18)); // NOI18N
+        enterpriseLabel.setForeground(new java.awt.Color(255, 255, 255));
+        enterpriseLabel.setText("Role: Enterprise Admin");
 
         assignToMeBtn.setText("Assign to me");
         assignToMeBtn.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 assignToMeBtnActionPerformed(evt);
+            }
+        });
+
+        processBtn.setText("Process");
+        processBtn.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                processBtnActionPerformed(evt);
             }
         });
 
@@ -92,6 +96,12 @@ public class InspectorWorkAreaJPanel extends javax.swing.JPanel {
         ));
         jScrollPane2.setViewportView(closedRequestTbl);
 
+        jLabel3.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel3.setText("Closed Request:");
+
+        jLabel4.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel4.setText("Open Requests:");
+
         openRequestTbl.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
 
@@ -102,57 +112,25 @@ public class InspectorWorkAreaJPanel extends javax.swing.JPanel {
         ));
         jScrollPane1.setViewportView(openRequestTbl);
 
-        titleLabel.setFont(new java.awt.Font("Lucida Grande", 1, 18)); // NOI18N
-        titleLabel.setForeground(new java.awt.Color(255, 255, 255));
-        titleLabel.setText("Welcome Name");
-
-        enterpriseLabel.setFont(new java.awt.Font("Lucida Grande", 0, 18)); // NOI18N
-        enterpriseLabel.setForeground(new java.awt.Color(255, 255, 255));
-        enterpriseLabel.setText("Role: Enterprise Admin");
-
-        jLabel2.setFont(new java.awt.Font("Lucida Grande", 0, 14)); // NOI18N
-        jLabel2.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel2.setText("it gets ready for delivery once the request is processed by you");
-
-        jLabel1.setFont(new java.awt.Font("Lucida Grande", 0, 14)); // NOI18N
-        jLabel1.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel1.setText("As an Inspector, you can assign the inspection work request to yourseld and");
-
-        processBtn.setText("Process");
-        processBtn.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                processBtnActionPerformed(evt);
-            }
-        });
-
-        jLabel4.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel4.setText("Open Requests:");
-
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(25, 25, 25)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jLabel2)
-                            .addComponent(jLabel1)
-                            .addGroup(layout.createSequentialGroup()
-                                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 675, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(29, 29, 29)
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                    .addComponent(assignToMeBtn, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                    .addComponent(processBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 113, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                            .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 675, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jLabel3)
-                            .addComponent(jLabel4)))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(349, 349, 349)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.CENTER)
-                            .addComponent(enterpriseLabel)
-                            .addComponent(titleLabel))))
+                .addGap(25, 25, 25)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.CENTER)
+                    .addComponent(enterpriseLabel)
+                    .addComponent(titleLabel)
+                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGroup(layout.createSequentialGroup()
+                            .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 675, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addGap(29, 29, 29)
+                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                .addComponent(assignToMeBtn, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(processBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 113, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 675, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(jLabel3)
+                        .addComponent(jLabel4)))
                 .addContainerGap(158, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
@@ -162,11 +140,7 @@ public class InspectorWorkAreaJPanel extends javax.swing.JPanel {
                 .addComponent(titleLabel)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(enterpriseLabel)
-                .addGap(52, 52, 52)
-                .addComponent(jLabel1)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jLabel2)
-                .addGap(50, 50, 50)
+                .addGap(83, 83, 83)
                 .addComponent(jLabel4)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -176,13 +150,35 @@ public class InspectorWorkAreaJPanel extends javax.swing.JPanel {
                         .addComponent(assignToMeBtn)
                         .addGap(18, 18, 18)
                         .addComponent(processBtn)))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 86, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 77, Short.MAX_VALUE)
                 .addComponent(jLabel3)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 170, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(101, 101, 101))
+                .addGap(175, 175, 175))
         );
     }// </editor-fold>//GEN-END:initComponents
+    public void populateTables() {
+        DefaultTableModel dtm = (DefaultTableModel) openRequestTbl.getModel();
+        DefaultTableModel dtm1 = (DefaultTableModel) closedRequestTbl.getModel();
+
+        dtm.setRowCount(0);
+        dtm1.setRowCount(0);
+        for (WorkRequest request : advertisingOrganization.getWorkQueue().getWorkRequestList()) {
+
+            Object[] row = new Object[4];
+            row[0] = request;
+            row[1] = request.getMedicine();
+            row[2] = request.getSender();
+            row[3] = request.getReceiver();
+
+            if (request.getStatus().equalsIgnoreCase("Request Completed")) {
+                dtm1.addRow(row);
+            } else {
+                dtm.addRow(row);
+
+            }
+        }
+    }
 
     private void assignToMeBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_assignToMeBtnActionPerformed
         int selectedRow = openRequestTbl.getSelectedRow();
@@ -190,7 +186,7 @@ public class InspectorWorkAreaJPanel extends javax.swing.JPanel {
             WorkRequest request = (WorkRequest) openRequestTbl.getValueAt(selectedRow, 0);
             if (request.getReceiver() == null) {
                 request.setReceiver(userAccount);
-                request.setStatus("Ready for Inspection");
+                request.setStatus("Ready for Advertising");
                 populateTables();
             } else {
                 JOptionPane.showMessageDialog(null, "The request has already been assigned to " + request.getReceiver(), "Multiple Assignment", JOptionPane.ERROR_MESSAGE);
@@ -210,8 +206,8 @@ public class InspectorWorkAreaJPanel extends javax.swing.JPanel {
                 JOptionPane.showMessageDialog(null, "The request has not been assigned to you", "Unauthorized Process", JOptionPane.ERROR_MESSAGE);
                 return;
             } else {
-                request.setStatus("Inspection In Process");
-                InspectorProcessJPanel process = new InspectorProcessJPanel(displayPanel, userAccount, enterprise, inspectionOrganization, ecoSystem, request);
+                request.setStatus("Manufacturing In Process");
+                ProcessJPanel process = new ProcessJPanel(displayPanel, userAccount, enterprise, ecoSystem, request);
                 CardLayout layout = (CardLayout) displayPanel.getLayout();
                 displayPanel.add("process", process);
                 layout.next(displayPanel);
@@ -222,35 +218,16 @@ public class InspectorWorkAreaJPanel extends javax.swing.JPanel {
         }
     }//GEN-LAST:event_processBtnActionPerformed
 
-    public void populateTables() {
-        DefaultTableModel dtm = (DefaultTableModel) openRequestTbl.getModel();
-        DefaultTableModel dtm1 = (DefaultTableModel) closedRequestTbl.getModel();
-
-        dtm.setRowCount(0);
-        dtm1.setRowCount(0);
-        for (WorkRequest request : inspectionOrganization.getWorkQueue().getWorkRequestList()) {
-
-            Object[] row = new Object[4];
-            row[0] = request;
-            row[1] = request.getMedicine();
-            row[2] = request.getSender();
-            row[3] = request.getReceiver();
-
-            if (request.getStatus().equalsIgnoreCase("Sent for delivery") || request.getStatus().equalsIgnoreCase("sent for marketing")) {
-                dtm1.addRow(row);
-            } else {
-                dtm.addRow(row);
-
-            }
-        }
+    private void setLabel() {
+        titleLabel.setText("Welcome " + userAccount.getName());
+        enterpriseLabel.setText("Enterprise: " + enterprise.getName());
     }
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton assignToMeBtn;
     private javax.swing.JTable closedRequestTbl;
     private javax.swing.JLabel enterpriseLabel;
-    private javax.swing.JLabel jLabel1;
-    private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JScrollPane jScrollPane1;

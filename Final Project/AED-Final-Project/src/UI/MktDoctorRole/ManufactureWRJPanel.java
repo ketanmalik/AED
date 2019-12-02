@@ -14,6 +14,7 @@ import Business.Organization.ManufactureOrganization;
 import Business.Organization.Organization;
 import Business.UserAccount.UserAccount;
 import Business.WorkQueue.CPManufactureWorkRequest;
+import UI.MktPatientRole.PatientWorkAreaJPanel;
 import java.awt.CardLayout;
 import java.awt.Component;
 import javax.swing.JOptionPane;
@@ -34,6 +35,7 @@ public class ManufactureWRJPanel extends javax.swing.JPanel {
     private Organization organization;
     private EcoSystem ecoSystem;
     private static int id = 1;
+    private static int idPatient = 1;
 
     public ManufactureWRJPanel(JPanel displayPanel, UserAccount userAccount, Enterprise enterprise, Organization organization, EcoSystem ecoSystem) {
         initComponents();
@@ -212,8 +214,13 @@ public class ManufactureWRJPanel extends javax.swing.JPanel {
         displayPanel.remove(this);
         Component[] componentArray = displayPanel.getComponents();
         Component component = componentArray[componentArray.length - 1];
-        DoctorWorkAreaJPanel dwjp = (DoctorWorkAreaJPanel) component;
-        dwjp.populateTable();
+        if (userAccount.getIdentifier().equals("mp")) {
+            PatientWorkAreaJPanel pwjp = (PatientWorkAreaJPanel) component;
+            pwjp.populateTable();
+        } else {
+            DoctorWorkAreaJPanel dwjp = (DoctorWorkAreaJPanel) component;
+            dwjp.populateTable();
+        }
         CardLayout layout = (CardLayout) displayPanel.getLayout();
         layout.previous(displayPanel);
     }//GEN-LAST:event_backBtnActionPerformed
@@ -244,7 +251,11 @@ public class ManufactureWRJPanel extends javax.swing.JPanel {
         String message = (messageTxtField.getText().equals("") || messageTxtField.getText() == null) ? "" : messageTxtField.getText();
 
         CPManufactureWorkRequest request = new CPManufactureWorkRequest();
-        request.setId("DM-WR-" + id++);
+        if (userAccount.getIdentifier().equals("mp")) {
+            request.setId("PM-WR-" + idPatient++);
+        } else {
+            request.setId("DM-WR-" + id++);
+        }
         request.setMedicine(medicine);
         request.setQuantity(quantity);
         request.setSender(userAccount);
@@ -272,14 +283,19 @@ public class ManufactureWRJPanel extends javax.swing.JPanel {
         if (org != null) {
             org.getWorkQueue().getWorkRequestList().add(request);
             userAccount.getWorkQueue().getWorkRequestList().add(request);
-            int input = JOptionPane.showOptionDialog(null, "Your order has been placed. Do you want to go back main screen?", "Order Confirmation", JOptionPane.OK_OPTION, JOptionPane.INFORMATION_MESSAGE, null, null, null);
 
+            int input = JOptionPane.showOptionDialog(null, "Your order has been placed. Do you want to go back main screen?", "Order Confirmation", JOptionPane.OK_OPTION, JOptionPane.INFORMATION_MESSAGE, null, null, null);
             if (input == JOptionPane.OK_OPTION) {
                 displayPanel.remove(this);
                 Component[] componentArray = displayPanel.getComponents();
                 Component component = componentArray[componentArray.length - 1];
-                DoctorWorkAreaJPanel dwjp = (DoctorWorkAreaJPanel) component;
-                dwjp.populateTable();
+                if (userAccount.getIdentifier().equals("mp")) {
+                    PatientWorkAreaJPanel pwjp = (PatientWorkAreaJPanel) component;
+                    pwjp.populateTable();
+                } else {
+                    DoctorWorkAreaJPanel dwjp = (DoctorWorkAreaJPanel) component;
+                    dwjp.populateTable();
+                }
                 CardLayout layout = (CardLayout) displayPanel.getLayout();
                 layout.previous(displayPanel);
             }

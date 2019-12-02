@@ -3,14 +3,15 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package UI.MktDoctorRole;
+package UI.MktPatientRole;
 
 import Business.EcoSystem.EcoSystem;
 import Business.EnterpriseDirectory.Enterprise;
 import Business.Organization.Organization;
 import Business.UserAccount.UserAccount;
-import Business.WorkQueue.WorkRequest;
 import Business.Util.DateUtil;
+import Business.WorkQueue.WorkRequest;
+import UI.MktDoctorRole.ManufactureWRJPanel;
 import java.awt.CardLayout;
 import javax.swing.JPanel;
 import javax.swing.table.DefaultTableModel;
@@ -19,18 +20,18 @@ import javax.swing.table.DefaultTableModel;
  *
  * @author ketanmalik
  */
-public class DoctorWorkAreaJPanel extends javax.swing.JPanel {
+public class PatientWorkAreaJPanel extends javax.swing.JPanel {
 
     /**
-     * Creates new form DoctorWorkAreaJPanel
+     * Creates new form PatientWorkAreaJPanel
      */
     private JPanel displayPanel;
     private UserAccount userAccount;
     private Enterprise enterprise;
     private Organization organization;
     private EcoSystem ecoSystem;
-    
-    public DoctorWorkAreaJPanel(JPanel displayPanel, UserAccount userAccount, Enterprise enterprise, Organization organization, EcoSystem ecoSystem) {
+
+    public PatientWorkAreaJPanel(JPanel displayPanel, UserAccount userAccount, Enterprise enterprise, Organization organization, EcoSystem ecoSystem) {
         initComponents();
         this.displayPanel = displayPanel;
         this.userAccount = userAccount;
@@ -39,27 +40,6 @@ public class DoctorWorkAreaJPanel extends javax.swing.JPanel {
         this.ecoSystem = ecoSystem;
         setLabel();
         populateTable();
-    }
-    
-    private void setLabel() {
-        titleLabel.setText("Welcome Dr. " + userAccount.getName());
-        enterpriseLabel.setText("Enterprise: " + enterprise.getName());
-        description1.setText("As a Doctor, you can either 'Request Research' for a medicine and we will find you a perfect formulation or");
-        description2.setText("you can 'Request Medicine' to order from a list of medicines we currently manufacture");
-    }
-    
-    public void populateTable() {
-        DefaultTableModel dtm = (DefaultTableModel) requestTbl.getModel();
-        dtm.setRowCount(0);
-        for (WorkRequest request : userAccount.getWorkQueue().getWorkRequestList()) {
-            Object[] row = new Object[4];
-            row[0] = request;
-            row[1] = request.getReceiver();
-            row[2] = DateUtil.getDateToString(request.getRequestDate());
-            row[3] = request.getStatus();
-            
-            dtm.addRow(row);
-        }
     }
 
     /**
@@ -75,11 +55,8 @@ public class DoctorWorkAreaJPanel extends javax.swing.JPanel {
         requestTbl = new javax.swing.JTable();
         titleLabel = new javax.swing.JLabel();
         enterpriseLabel = new javax.swing.JLabel();
-        description1 = new javax.swing.JLabel();
         requestMedicineBtn = new javax.swing.JButton();
         viewOrderBtn = new javax.swing.JButton();
-        description2 = new javax.swing.JLabel();
-        requestResearchBtn = new javax.swing.JButton();
 
         setBackground(new java.awt.Color(0, 153, 153));
 
@@ -91,7 +68,6 @@ public class DoctorWorkAreaJPanel extends javax.swing.JPanel {
                 "Order ID", "Receiver", "Request Date", "Status"
             }
         ));
-        requestTbl.setFocusCycleRoot(true);
         jScrollPane1.setViewportView(requestTbl);
 
         titleLabel.setFont(new java.awt.Font("Lucida Grande", 1, 18)); // NOI18N
@@ -102,10 +78,6 @@ public class DoctorWorkAreaJPanel extends javax.swing.JPanel {
         enterpriseLabel.setForeground(new java.awt.Color(255, 255, 255));
         enterpriseLabel.setText("Role: Enterprise Admin");
 
-        description1.setFont(new java.awt.Font("Lucida Grande", 0, 14)); // NOI18N
-        description1.setForeground(new java.awt.Color(255, 255, 255));
-        description1.setText("Role: Enterprise Admin");
-
         requestMedicineBtn.setText("Request Medicine");
         requestMedicineBtn.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -114,17 +86,6 @@ public class DoctorWorkAreaJPanel extends javax.swing.JPanel {
         });
 
         viewOrderBtn.setText("View Order Details");
-
-        description2.setFont(new java.awt.Font("Lucida Grande", 0, 14)); // NOI18N
-        description2.setForeground(new java.awt.Color(255, 255, 255));
-        description2.setText("Role: Enterprise Admin");
-
-        requestResearchBtn.setText("Request Research");
-        requestResearchBtn.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                requestResearchBtnActionPerformed(evt);
-            }
-        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
@@ -139,18 +100,11 @@ public class DoctorWorkAreaJPanel extends javax.swing.JPanel {
                             .addComponent(titleLabel)))
                     .addGroup(layout.createSequentialGroup()
                         .addGap(45, 45, 45)
-                        .addComponent(description2))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(45, 45, 45)
                         .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 675, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(68, 68, 68)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                             .addComponent(viewOrderBtn, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(requestMedicineBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 146, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(requestResearchBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 146, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(45, 45, 45)
-                        .addComponent(description1)))
+                            .addComponent(requestMedicineBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 146, javax.swing.GroupLayout.PREFERRED_SIZE))))
                 .addContainerGap(66, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
@@ -160,24 +114,37 @@ public class DoctorWorkAreaJPanel extends javax.swing.JPanel {
                 .addComponent(titleLabel)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(enterpriseLabel)
-                .addGap(43, 43, 43)
-                .addComponent(description1)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(description2)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(46, 46, 46)
-                        .addComponent(requestResearchBtn)
-                        .addGap(18, 18, 18)
+                        .addGap(179, 179, 179)
                         .addComponent(requestMedicineBtn)
                         .addGap(18, 18, 18)
                         .addComponent(viewOrderBtn))
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(31, 31, 31)
+                        .addGap(114, 114, 114)
                         .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 170, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addContainerGap(435, Short.MAX_VALUE))
         );
     }// </editor-fold>//GEN-END:initComponents
+
+    private void setLabel() {
+        titleLabel.setText("Welcome " + userAccount.getName());
+        enterpriseLabel.setText("Enterprise: " + enterprise.getName());
+    }
+
+    public void populateTable() {
+        DefaultTableModel dtm = (DefaultTableModel) requestTbl.getModel();
+        dtm.setRowCount(0);
+        for (WorkRequest request : userAccount.getWorkQueue().getWorkRequestList()) {
+            Object[] row = new Object[4];
+            row[0] = request;
+            row[1] = request.getReceiver();
+            row[2] = DateUtil.getDateToString(request.getRequestDate());
+            row[3] = request.getStatus();
+
+            dtm.addRow(row);
+        }
+    }
 
     private void requestMedicineBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_requestMedicineBtnActionPerformed
         ManufactureWRJPanel manufactureWR = new ManufactureWRJPanel(displayPanel, userAccount, enterprise, organization, ecoSystem);
@@ -186,21 +153,11 @@ public class DoctorWorkAreaJPanel extends javax.swing.JPanel {
         layout.next(displayPanel);
     }//GEN-LAST:event_requestMedicineBtnActionPerformed
 
-    private void requestResearchBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_requestResearchBtnActionPerformed
-        ResearchWRJPanel researchWR = new ResearchWRJPanel(displayPanel, userAccount, enterprise, organization, ecoSystem);
-        CardLayout layout = (CardLayout) displayPanel.getLayout();
-        displayPanel.add("researchWR", researchWR);
-        layout.next(displayPanel);
-    }//GEN-LAST:event_requestResearchBtnActionPerformed
-
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JLabel description1;
-    private javax.swing.JLabel description2;
     private javax.swing.JLabel enterpriseLabel;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JButton requestMedicineBtn;
-    private javax.swing.JButton requestResearchBtn;
     private javax.swing.JTable requestTbl;
     private javax.swing.JLabel titleLabel;
     private javax.swing.JButton viewOrderBtn;
