@@ -9,7 +9,7 @@ import Business.EcoSystem.EcoSystem;
 import Business.EnterpriseDirectory.Enterprise;
 import Business.Network.Network;
 import Business.UserAccount.UserAccount;
-import Business.Util.DateUtil;
+import Business.util.DateUtil;
 import UI.MainJFrame.MainJFrame;
 import java.awt.Color;
 import java.util.Date;

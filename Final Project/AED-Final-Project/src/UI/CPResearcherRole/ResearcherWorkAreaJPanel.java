@@ -197,10 +197,12 @@ public class ResearcherWorkAreaJPanel extends javax.swing.JPanel {
             row[2] = request.getSender();
             row[3] = request.getReceiver();
 
-            if (request.getStatus().equalsIgnoreCase("Sent for inspection")) {
-                dtm1.addRow(row);
-            } else {
+            if (request.getStatus().equalsIgnoreCase("Research Request Accepted")
+                    || request.getStatus().equalsIgnoreCase("ready for research")
+                    || request.getStatus().equalsIgnoreCase("research in process")) {
                 dtm.addRow(row);
+            } else {
+                dtm1.addRow(row);
 
             }
         }

@@ -20,7 +20,7 @@ import static Business.Organization.Organization.Type.Patient;
 import Business.Role.CPEntpAdmin;
 import Business.Role.SysAdminRole;
 import Business.UserAccount.UserAccount;
-import Business.Util.DateUtil;
+import Business.util.DateUtil;
 
 /**
  *

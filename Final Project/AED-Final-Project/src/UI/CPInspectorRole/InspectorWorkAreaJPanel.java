@@ -236,10 +236,12 @@ public class InspectorWorkAreaJPanel extends javax.swing.JPanel {
             row[2] = request.getSender();
             row[3] = request.getReceiver();
 
-            if (request.getStatus().equalsIgnoreCase("Sent for delivery") || request.getStatus().equalsIgnoreCase("sent for marketing")) {
-                dtm1.addRow(row);
-            } else {
+            if (request.getStatus().equalsIgnoreCase("Sent for inspection")
+                    || request.getStatus().equalsIgnoreCase("Ready for Inspection")
+                    || request.getStatus().equalsIgnoreCase("Inspection In Process")) {
                 dtm.addRow(row);
+            } else {
+                dtm1.addRow(row);
 
             }
         }

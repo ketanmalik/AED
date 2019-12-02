@@ -61,10 +61,12 @@ public class ManufacturerWorkAreaJPanel extends javax.swing.JPanel {
             row[2] = request.getSender();
             row[3] = request.getReceiver();
 
-            if (request.getStatus().equalsIgnoreCase("Sent for inspection")) {
-                dtm1.addRow(row);
-            } else {
+            if (request.getStatus().equalsIgnoreCase("order confirmed")
+                    || request.getStatus().equalsIgnoreCase("ready for manufacturing")
+                    || request.getStatus().equalsIgnoreCase("manufacturing in process")) {
                 dtm.addRow(row);
+            } else {
+                dtm1.addRow(row);
 
             }
         }

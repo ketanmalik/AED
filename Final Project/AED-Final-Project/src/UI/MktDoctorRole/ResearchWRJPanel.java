@@ -65,6 +65,8 @@ public class ResearchWRJPanel extends javax.swing.JPanel {
         stateDropdown = new javax.swing.JComboBox<>();
         confirmOrderBtn = new javax.swing.JButton();
         jLabel6 = new javax.swing.JLabel();
+        phoneTxtField = new javax.swing.JTextField();
+        jLabel7 = new javax.swing.JLabel();
 
         setBackground(new java.awt.Color(0, 153, 153));
         setForeground(new java.awt.Color(255, 255, 255));
@@ -116,6 +118,9 @@ public class ResearchWRJPanel extends javax.swing.JPanel {
         jLabel6.setForeground(new java.awt.Color(255, 255, 255));
         jLabel6.setText("(mg)");
 
+        jLabel7.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel7.setText("Phone Number:");
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
         layout.setHorizontalGroup(
@@ -146,7 +151,13 @@ public class ResearchWRJPanel extends javax.swing.JPanel {
                     .addGroup(layout.createSequentialGroup()
                         .addGap(362, 362, 362)
                         .addComponent(confirmOrderBtn)))
-                .addContainerGap(464, Short.MAX_VALUE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+            .addGroup(layout.createSequentialGroup()
+                .addContainerGap(88, Short.MAX_VALUE)
+                .addComponent(jLabel7)
+                .addGap(18, 18, 18)
+                .addComponent(phoneTxtField, javax.swing.GroupLayout.PREFERRED_SIZE, 197, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(601, 601, 601))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -174,7 +185,11 @@ public class ResearchWRJPanel extends javax.swing.JPanel {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel5)
                     .addComponent(stateDropdown, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(105, 105, 105)
+                .addGap(18, 18, 18)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(phoneTxtField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel7))
+                .addGap(63, 63, 63)
                 .addComponent(confirmOrderBtn)
                 .addContainerGap(301, Short.MAX_VALUE))
         );
@@ -218,6 +233,7 @@ public class ResearchWRJPanel extends javax.swing.JPanel {
             JOptionPane.showMessageDialog(null, "Please enter valid active ingredient", "Invalid active ingredient", JOptionPane.ERROR_MESSAGE);
             return;
         }
+        String phoneNumber = phoneTxtField.getText();
         String state = String.valueOf(stateDropdown.getSelectedItem());
         Medicine medicine = new Medicine(medicineName, medicineStrength, "", 0, 0, 0, activeIngredient, medicineType);
 
@@ -229,6 +245,7 @@ public class ResearchWRJPanel extends javax.swing.JPanel {
         request.setMedicine(medicine);
         request.setActiveIngredient(activeIngredient);
         request.setState(state);
+        request.setPhoneNo("+1" + phoneNumber);
 
         Organization org = null;
         for (Network n : ecoSystem.getNetworkDirectory().getNetworkList()) {
@@ -281,8 +298,10 @@ public class ResearchWRJPanel extends javax.swing.JPanel {
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
+    private javax.swing.JLabel jLabel7;
     private javax.swing.JTextField medicineNameTxtField;
     private javax.swing.JComboBox<String> medicineTypeDropdown;
+    private javax.swing.JTextField phoneTxtField;
     private javax.swing.JComboBox<String> stateDropdown;
     private javax.swing.JTextField strengthTxtField;
     // End of variables declaration//GEN-END:variables

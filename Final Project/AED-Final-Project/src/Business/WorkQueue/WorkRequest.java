@@ -26,8 +26,7 @@ public class WorkRequest {
     private String progress;
     private UserAccount originator;
     private int code;
-    private String medicineName;
-    private int strength;
+    private String phoneNo;
 
     public WorkRequest() {
         requestDate = new Date();
@@ -119,6 +118,14 @@ public class WorkRequest {
 
     public void setCode(int code) {
         this.code = code;
+    }
+
+    public String getPhoneNo() {
+        return phoneNo;
+    }
+
+    public void setPhoneNo(String phoneNo) {
+        this.phoneNo = phoneNo;
     }
 
     @Override

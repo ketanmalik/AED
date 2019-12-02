@@ -29,7 +29,7 @@ public class ProcessJPanel extends javax.swing.JPanel {
     private EcoSystem ecoSystem;
     private WorkRequest request;
     private static int id = 1;
-    
+
     public ProcessJPanel(JPanel displayPanel, UserAccount userAccount, Enterprise enterprise, EcoSystem ecoSystem, WorkRequest request) {
         initComponents();
         this.displayPanel = displayPanel;
@@ -68,7 +68,7 @@ public class ProcessJPanel extends javax.swing.JPanel {
         quantityTxtField = new javax.swing.JTextField();
         activeIngredientTxtField = new javax.swing.JTextField();
         descriptionTxtField = new javax.swing.JTextField();
-        jLabel9 = new javax.swing.JLabel();
+        strengthLabel = new javax.swing.JLabel();
         jLabel10 = new javax.swing.JLabel();
         jLabel11 = new javax.swing.JLabel();
         quantityLabel = new javax.swing.JLabel();
@@ -129,8 +129,8 @@ public class ProcessJPanel extends javax.swing.JPanel {
 
         descriptionTxtField.setText("jTextField7");
 
-        jLabel9.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel9.setText("(mg)");
+        strengthLabel.setForeground(new java.awt.Color(255, 255, 255));
+        strengthLabel.setText("(mg)");
 
         jLabel10.setForeground(new java.awt.Color(255, 255, 255));
         jLabel10.setText("(USD)");
@@ -170,7 +170,7 @@ public class ProcessJPanel extends javax.swing.JPanel {
                             .addComponent(descriptionTxtField))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jLabel9)
+                            .addComponent(strengthLabel)
                             .addComponent(jLabel10)
                             .addComponent(jLabel11)
                             .addComponent(quantityLabel)))
@@ -196,7 +196,7 @@ public class ProcessJPanel extends javax.swing.JPanel {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel2)
                     .addComponent(strengthTxtField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel9))
+                    .addComponent(strengthLabel))
                 .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel8)
@@ -232,18 +232,26 @@ public class ProcessJPanel extends javax.swing.JPanel {
 
     private void setFields() {
         nameTxtField.setText(request.getMedicine().getName());
-        strengthTxtField.setText(String.valueOf(request.getMedicine().getStrength()));
         priceTxtField.setText("");
         marketPriceTxtField.setText("");
         quantityTxtField.setText("");
         activeIngredientTxtField.setText(request.getMedicine().getActiveIngredient());
-        descriptionTxtField.setText("");
+        descriptionTxtField.setText(request.getMedicine().getDescription());
         String type = request.getMedicine().getType();
         if (type.equals("Tablet")) {
+            strengthLabel.setText("(mg)");
+            strengthTxtField.setText(String.valueOf(request.getMedicine().getStrength()));
+            quantityLabel.setText("(units per pack)");
             typeDropdown.setSelectedIndex(0);
         } else if (type.equals("Capsule")) {
+            strengthLabel.setText("(mg)");
+            strengthTxtField.setText(String.valueOf(request.getMedicine().getStrength()));
+            quantityLabel.setText("(units per pack)");
             typeDropdown.setSelectedIndex(1);
         } else if (type.equals("Syrup")) {
+            strengthLabel.setText("");
+            strengthTxtField.setText("");
+            quantityLabel.setText("(ml)");
             typeDropdown.setSelectedIndex(2);
         }
     }
@@ -266,14 +274,43 @@ public class ProcessJPanel extends javax.swing.JPanel {
     }//GEN-LAST:event_backBtnActionPerformed
 
     private void completeBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_completeBtnActionPerformed
+        double price;
+        double marketPrice;
+        int quantity;
+        try {
+            Double.parseDouble(priceTxtField.getText());
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null, "Please enter valid value for price", "Invalid Price", JOptionPane.ERROR_MESSAGE);
+            return;
+        }
+        try {
+            Double.parseDouble(marketPriceTxtField.getText());
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null, "Please enter valid value for price", "Invalid Price", JOptionPane.ERROR_MESSAGE);
+            return;
+        }
+        try {
+            Integer.parseInt(quantityTxtField.getText());
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null, "Please enter valid value for price", "Invalid Price", JOptionPane.ERROR_MESSAGE);
+            return;
+        }
+        price = Double.parseDouble(priceTxtField.getText());
+        marketPrice = Double.parseDouble(marketPriceTxtField.getText());
+        quantity = Integer.parseInt(quantityTxtField.getText());
+
         int input = JOptionPane.showOptionDialog(null, "Are you you want to complete " + request.getId() + " request", "Process Confirmation", JOptionPane.OK_OPTION, JOptionPane.INFORMATION_MESSAGE, null, null, null);
-        
+
         if (input == JOptionPane.OK_OPTION) {
 //            String progress = (notesTxtField.getText() == null || notesTxtField.getText().equals("")) ? "" : notesTxtField.getText();
 //            request.setProgress(progress);
+            request.getMedicine().setPrice(price);
+            request.getMedicine().setMarketPrice(marketPrice);
+            request.getMedicine().setQuantity(quantity);
             request.setStatus("Request Completed");
             request.setSender(userAccount);
             request.setReceiver(null);
+            ecoSystem.getMedicineList().add(request.getMedicine());
             JOptionPane.showMessageDialog(null, "Your request has been completed");
             displayPanel.remove(this);
             Component[] componentArray = displayPanel.getComponents();
@@ -300,12 +337,12 @@ public class ProcessJPanel extends javax.swing.JPanel {
     private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel7;
     private javax.swing.JLabel jLabel8;
-    private javax.swing.JLabel jLabel9;
     private javax.swing.JTextField marketPriceTxtField;
     private javax.swing.JTextField nameTxtField;
     private javax.swing.JTextField priceTxtField;
     private javax.swing.JLabel quantityLabel;
     private javax.swing.JTextField quantityTxtField;
+    private javax.swing.JLabel strengthLabel;
     private javax.swing.JTextField strengthTxtField;
     private javax.swing.JComboBox<String> typeDropdown;
     // End of variables declaration//GEN-END:variables

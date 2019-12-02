@@ -11,6 +11,7 @@ import Business.Organization.DeliveryOrganization;
 import Business.Organization.Organization;
 import Business.UserAccount.UserAccount;
 import Business.WorkQueue.WorkRequest;
+import Business.util.SMS;
 import java.awt.CardLayout;
 import java.awt.Component;
 import javax.swing.JOptionPane;
@@ -33,7 +34,7 @@ public class DeliveryProcessJPanel extends javax.swing.JPanel {
     private WorkRequest request;
     private static int id = 1;
     private static int code = 1001;
-    
+
     public DeliveryProcessJPanel(JPanel displayPanel, UserAccount userAccount, Enterprise enterprise, Organization organization, EcoSystem ecoSystem, WorkRequest request) {
         initComponents();
         this.displayPanel = displayPanel;
@@ -129,7 +130,7 @@ public class DeliveryProcessJPanel extends javax.swing.JPanel {
 
     private void completeBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_completeBtnActionPerformed
         int input = JOptionPane.showOptionDialog(null, "Are you you want to send " + request.getId() + " order for pickup?", "Process Confirmation", JOptionPane.OK_OPTION, JOptionPane.INFORMATION_MESSAGE, null, null, null);
-        
+
         if (input == JOptionPane.OK_OPTION) {
             String progress = (codeTxtField.getText() == null || codeTxtField.getText().equals("")) ? "" : codeTxtField.getText();
             request.setProgress(progress);
@@ -138,6 +139,7 @@ public class DeliveryProcessJPanel extends javax.swing.JPanel {
             request.setReceiver(null);
             request.setCode(code++);
             sendToOriginator();
+            SMS.sendSMS(request.getId(),request.getCode());
             JOptionPane.showMessageDialog(null, "The order is now ready for pickup");
             displayPanel.remove(this);
             Component[] componentArray = displayPanel.getComponents();
@@ -158,12 +160,11 @@ public class DeliveryProcessJPanel extends javax.swing.JPanel {
         CardLayout layout = (CardLayout) displayPanel.getLayout();
         layout.previous(displayPanel);
     }//GEN-LAST:event_backBtnActionPerformed
-    
+
     private void sendToOriginator() {
-        
+
         Organization org = null;
-        System.out.println(request.getOriginator().getIdentifier());
-        
+
 //        for (Organization o : enterprise.getOrganizationDirectory().getOrganizationList()) {
 //            if (o instanceof DeliveryOrganization) {
 //                org = o;
