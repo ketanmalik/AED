@@ -14,6 +14,7 @@ import Business.Organization.ManufactureOrganization;
 import Business.Organization.Organization;
 import Business.UserAccount.UserAccount;
 import Business.WorkQueue.CPManufactureWorkRequest;
+import UI.MktPatientRole.PatientWorkAreaJPanel;
 import java.awt.CardLayout;
 import java.awt.Component;
 import javax.swing.JOptionPane;
@@ -34,6 +35,7 @@ public class ManufactureWRJPanel extends javax.swing.JPanel {
     private Organization organization;
     private EcoSystem ecoSystem;
     private static int id = 1;
+    private static int idPatient = 1;
 
     public ManufactureWRJPanel(JPanel displayPanel, UserAccount userAccount, Enterprise enterprise, Organization organization, EcoSystem ecoSystem) {
         initComponents();
@@ -68,6 +70,8 @@ public class ManufactureWRJPanel extends javax.swing.JPanel {
         orderTypeTxtField = new javax.swing.JTextField();
         quantityLabel = new javax.swing.JLabel();
         jLabel6 = new javax.swing.JLabel();
+        jLabel7 = new javax.swing.JLabel();
+        phoneTxtField = new javax.swing.JTextField();
 
         setBackground(new java.awt.Color(0, 153, 153));
 
@@ -123,6 +127,9 @@ public class ManufactureWRJPanel extends javax.swing.JPanel {
         jLabel6.setForeground(new java.awt.Color(255, 255, 255));
         jLabel6.setText("(including taxes)");
 
+        jLabel7.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel7.setText("Phone Number:");
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
         layout.setHorizontalGroup(
@@ -139,14 +146,16 @@ public class ManufactureWRJPanel extends javax.swing.JPanel {
                             .addComponent(jLabel4)
                             .addComponent(jLabel3)
                             .addComponent(jLabel2)
-                            .addComponent(jLabel1))
+                            .addComponent(jLabel1)
+                            .addComponent(jLabel7))
                         .addGap(18, 18, 18)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                             .addComponent(medicineDropdown, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                             .addComponent(quantityDropdown, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                             .addComponent(priceTxtField)
                             .addComponent(messageTxtField, javax.swing.GroupLayout.DEFAULT_SIZE, 200, Short.MAX_VALUE)
-                            .addComponent(orderTypeTxtField))
+                            .addComponent(orderTypeTxtField)
+                            .addComponent(phoneTxtField))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(quantityLabel)
@@ -180,12 +189,16 @@ public class ManufactureWRJPanel extends javax.swing.JPanel {
                     .addComponent(priceTxtField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel6))
                 .addGap(18, 18, 18)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jLabel5)
-                    .addComponent(messageTxtField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(105, 105, 105)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(messageTxtField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel5))
+                .addGap(18, 18, 18)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(phoneTxtField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel7))
+                .addGap(71, 71, 71)
                 .addComponent(confirmBtn)
-                .addContainerGap(301, Short.MAX_VALUE))
+                .addContainerGap(293, Short.MAX_VALUE))
         );
     }// </editor-fold>//GEN-END:initComponents
 
@@ -212,8 +225,13 @@ public class ManufactureWRJPanel extends javax.swing.JPanel {
         displayPanel.remove(this);
         Component[] componentArray = displayPanel.getComponents();
         Component component = componentArray[componentArray.length - 1];
-        DoctorWorkAreaJPanel dwjp = (DoctorWorkAreaJPanel) component;
-        dwjp.populateTable();
+        if (userAccount.getIdentifier().equals("mp")) {
+            PatientWorkAreaJPanel pwjp = (PatientWorkAreaJPanel) component;
+            pwjp.populateTable();
+        } else {
+            DoctorWorkAreaJPanel dwjp = (DoctorWorkAreaJPanel) component;
+            dwjp.populateTable();
+        }
         CardLayout layout = (CardLayout) displayPanel.getLayout();
         layout.previous(displayPanel);
     }//GEN-LAST:event_backBtnActionPerformed
@@ -242,16 +260,21 @@ public class ManufactureWRJPanel extends javax.swing.JPanel {
         int quantity = Integer.parseInt(String.valueOf(quantityDropdown.getSelectedItem()).substring(0, 1)) * medicine.getQuantity();
         double price = Double.parseDouble(priceTxtField.getText().substring(1));
         String message = (messageTxtField.getText().equals("") || messageTxtField.getText() == null) ? "" : messageTxtField.getText();
-
+        String phoneNumber = phoneTxtField.getText();
         CPManufactureWorkRequest request = new CPManufactureWorkRequest();
-        request.setId("DM-WR-" + id++);
+        if (userAccount.getIdentifier().equals("mp")) {
+            request.setId("PM-WR-" + idPatient++);
+        } else {
+            request.setId("DM-WR-" + id++);
+        }
         request.setMedicine(medicine);
         request.setQuantity(quantity);
         request.setSender(userAccount);
         request.setStatus("Order Confirmed");
         request.setMessage(message);
         request.setPrice(price);
-        request.setQuantity(quantity);
+        request.setOriginator(userAccount);
+        request.setPhoneNo("+1" + phoneNumber);
 
         Organization org = null;
         for (Network n : ecoSystem.getNetworkDirectory().getNetworkList()) {
@@ -271,14 +294,19 @@ public class ManufactureWRJPanel extends javax.swing.JPanel {
         if (org != null) {
             org.getWorkQueue().getWorkRequestList().add(request);
             userAccount.getWorkQueue().getWorkRequestList().add(request);
-            int input = JOptionPane.showOptionDialog(null, "Your order has been placed. Do you want to go back main screen?", "Order Confirmation", JOptionPane.OK_OPTION, JOptionPane.INFORMATION_MESSAGE, null, null, null);
 
+            int input = JOptionPane.showOptionDialog(null, "Your order has been placed. Do you want to go back main screen?", "Order Confirmation", JOptionPane.OK_OPTION, JOptionPane.INFORMATION_MESSAGE, null, null, null);
             if (input == JOptionPane.OK_OPTION) {
                 displayPanel.remove(this);
                 Component[] componentArray = displayPanel.getComponents();
                 Component component = componentArray[componentArray.length - 1];
-                DoctorWorkAreaJPanel dwjp = (DoctorWorkAreaJPanel) component;
-                dwjp.populateTable();
+                if (userAccount.getIdentifier().equals("mp")) {
+                    PatientWorkAreaJPanel pwjp = (PatientWorkAreaJPanel) component;
+                    pwjp.populateTable();
+                } else {
+                    DoctorWorkAreaJPanel dwjp = (DoctorWorkAreaJPanel) component;
+                    dwjp.populateTable();
+                }
                 CardLayout layout = (CardLayout) displayPanel.getLayout();
                 layout.previous(displayPanel);
             }
@@ -295,9 +323,11 @@ public class ManufactureWRJPanel extends javax.swing.JPanel {
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
+    private javax.swing.JLabel jLabel7;
     private javax.swing.JComboBox<String> medicineDropdown;
     private javax.swing.JTextField messageTxtField;
     private javax.swing.JTextField orderTypeTxtField;
+    private javax.swing.JTextField phoneTxtField;
     private javax.swing.JTextField priceTxtField;
     private javax.swing.JComboBox<String> quantityDropdown;
     private javax.swing.JLabel quantityLabel;

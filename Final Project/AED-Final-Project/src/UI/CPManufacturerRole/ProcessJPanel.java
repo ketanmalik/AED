@@ -116,6 +116,7 @@ public class ProcessJPanel extends javax.swing.JPanel {
         Component[] componentArray = displayPanel.getComponents();
         Component component = componentArray[componentArray.length - 1];
         ManufacturerWorkAreaJPanel mwjp = (ManufacturerWorkAreaJPanel) component;
+        mwjp.populateTables();
         CardLayout layout = (CardLayout) displayPanel.getLayout();
         layout.previous(displayPanel);
     }//GEN-LAST:event_backBtnActionPerformed
@@ -127,6 +128,8 @@ public class ProcessJPanel extends javax.swing.JPanel {
             String progress = (notesTxtField.getText() == null || notesTxtField.getText().equals("")) ? "" : notesTxtField.getText();
             request.setProgress(progress);
             request.setStatus("Sent for inspection");
+            request.setSender(userAccount);
+            request.setReceiver(null);
             sendToInspection();
             JOptionPane.showMessageDialog(null, "Your request has been sent to inspection team");
             displayPanel.remove(this);
@@ -149,7 +152,6 @@ public class ProcessJPanel extends javax.swing.JPanel {
         if (org != null) {
             org.getWorkQueue().getWorkRequestList().add(request);
             userAccount.getWorkQueue().getWorkRequestList().add(request);
-            System.out.println("UI.CPManufacturerRole.ProcessJPanel.sendToInspection()");
         }
     }
 

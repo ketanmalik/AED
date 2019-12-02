@@ -9,7 +9,7 @@ import Business.EcoSystem.EcoSystem;
 import Business.EnterpriseDirectory.Enterprise;
 import Business.Organization.Organization;
 import Business.UserAccount.UserAccount;
-import UI.MktOrganizations.AdvertisingSupervisorJPanel;
+import UI.MktAdvertisingRole.AdvertisingWorkAreaJPanel;
 import javax.swing.JPanel;
 
 /**
@@ -20,7 +20,7 @@ public class AdvertisingSupervisorRole extends Role {
 
     @Override
     public JPanel createWorkArea(JPanel displayPanel, UserAccount userAccount, Enterprise enterprise, Organization organization, EcoSystem ecoSystem) {
-        return new AdvertisingSupervisorJPanel(displayPanel, userAccount, enterprise, organization, ecoSystem);
+        return new AdvertisingWorkAreaJPanel(displayPanel, userAccount, enterprise, organization, ecoSystem);
     }
     
         @Override

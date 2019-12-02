@@ -91,6 +91,7 @@ public class DoctorWorkAreaJPanel extends javax.swing.JPanel {
                 "Order ID", "Receiver", "Request Date", "Status"
             }
         ));
+        requestTbl.setFocusCycleRoot(true);
         jScrollPane1.setViewportView(requestTbl);
 
         titleLabel.setFont(new java.awt.Font("Lucida Grande", 1, 18)); // NOI18N

@@ -9,7 +9,7 @@ import Business.EcoSystem.EcoSystem;
 import Business.EnterpriseDirectory.Enterprise;
 import Business.Organization.Organization;
 import Business.UserAccount.UserAccount;
-import UI.MktOrganizations.AddPatientsJPanel;
+import UI.MktPatientRole.PatientWorkAreaJPanel;
 import javax.swing.JPanel;
 
 /**
@@ -20,7 +20,7 @@ public class AddPatientsRole extends Role {
 
     @Override
     public JPanel createWorkArea(JPanel displayPanel, UserAccount userAccount, Enterprise enterprise, Organization organization, EcoSystem ecoSystem) {
-        return new AddPatientsJPanel(displayPanel, userAccount, enterprise, organization, ecoSystem);
+        return new PatientWorkAreaJPanel(displayPanel, userAccount, enterprise, organization, ecoSystem);
     }
 
     @Override
