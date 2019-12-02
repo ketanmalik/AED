@@ -8,6 +8,7 @@ package UI.EntpAdmin;
 import Business.EcoSystem.EcoSystem;
 import Business.Employee.Employee;
 import Business.EnterpriseDirectory.Enterprise;
+import Business.Network.Network;
 import Business.Organization.Organization;
 import Business.UserAccount.UserAccount;
 import Business.Organization.Organization.Type;
@@ -358,12 +359,17 @@ public class ManageUserJPanel extends javax.swing.JPanel {
         String empName = String.valueOf(empDropdown.getSelectedItem());
         String r = String.valueOf(roleDropdown.getSelectedItem());
 
-        if (username.equals("") || username == null) {
-            JOptionPane.showMessageDialog(null, "Username cannot be empty");
+        if (username.equals("") || username == null || !RegexValidations.usernameValidation(username)) {
+            JOptionPane.showMessageDialog(null, "Please enter valid username");
             return;
         }
-        if (password.equals("") || password == null) {
-            JOptionPane.showMessageDialog(null, "Password cannot be empty");
+        if (password.equals("") || password == null || RegexValidations.passwordValidation(password)) {
+            JOptionPane.showMessageDialog(null, "Please enter valid password");
+            return;
+        }
+
+        if (!validateUsername(username)) {
+            JOptionPane.showMessageDialog(null, "The username is already taken. Please enter a different username", "Duplicate Username", JOptionPane.ERROR_MESSAGE);
             return;
         }
         if (type == null) {
@@ -432,6 +438,29 @@ public class ManageUserJPanel extends javax.swing.JPanel {
 
     }//GEN-LAST:event_addUaBtnActionPerformed
 
+    private boolean validateUsername(String str) {
+        boolean unique = true;
+
+        for (Network n : ecoSystem.getNetworkDirectory().getNetworkList()) {
+            for (Enterprise e : n.getEnterpriseDirectory().getEnterpriseList()) {
+                for (UserAccount ua : e.getUserAccountDirectory().getUserAccountList()) {
+                    if (ua.getUsername().equalsIgnoreCase(str)) {
+                        unique = false;
+                        return unique;
+                    }
+                    for (Organization o : e.getOrganizationDirectory().getOrganizationList()) {
+                        for (UserAccount u : o.getUserAccountDirectory().getUserAccountList()) {
+                            if (u.getUsername().equalsIgnoreCase(str)) {
+                                unique = false;
+                                return unique;
+                            }
+                        }
+                    }
+                }
+            }
+        }
+        return unique;
+    }
     private void passwordTxtFieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_passwordTxtFieldActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_passwordTxtFieldActionPerformed

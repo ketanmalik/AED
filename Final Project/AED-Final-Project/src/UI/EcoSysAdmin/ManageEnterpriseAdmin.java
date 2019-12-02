@@ -341,6 +341,11 @@ public class ManageEnterpriseAdmin extends javax.swing.JPanel {
     }//GEN-LAST:event_addBtnActionPerformed
 
     private void confirmBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_confirmBtnActionPerformed
+        String entp = String.valueOf(enterpriseDropdown.getSelectedItem());
+        if (entp.equals("") || entp == null || entp.equals("null")) {
+            JOptionPane.showMessageDialog(null, "Please add enterprise in this network", "No Enterprise", JOptionPane.ERROR_MESSAGE);
+            return;
+        }
         String name = nameTxtField.getText();
         if (name == null || name.equals("") || !RegexValidations.nameValidation(name)) {
             JOptionPane.showMessageDialog(null, "Please enter valid name", "Invalid Entry", JOptionPane.ERROR_MESSAGE);
@@ -356,6 +361,7 @@ public class ManageEnterpriseAdmin extends javax.swing.JPanel {
             JOptionPane.showMessageDialog(null, "Please enter valid password", "Invalid Entry", JOptionPane.ERROR_MESSAGE);
             return;
         }
+
         if (mode == "update") {
             if (name.equalsIgnoreCase(uaToUpdate.getName())
                     && password.equals(uaToUpdate.getPassword())

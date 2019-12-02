@@ -9,9 +9,16 @@ import Business.EcoSystem.EcoSystem;
 import Business.EnterpriseDirectory.Enterprise;
 import Business.Organization.Organization;
 import Business.UserAccount.UserAccount;
+import UI.Charts.EmpWrChart;
+import UI.Charts.EntpOrgChart;
 import UI.MainJFrame.MainJFrame;
+import java.awt.CardLayout;
 import java.awt.Color;
 import javax.swing.JPanel;
+import org.jfree.chart.ChartFactory;
+import org.jfree.chart.ChartPanel;
+import org.jfree.chart.JFreeChart;
+import org.jfree.data.general.DefaultPieDataset;
 
 /**
  *
@@ -84,6 +91,8 @@ public class EntpAdminJPanel extends javax.swing.JPanel {
 
         titleLabel = new javax.swing.JLabel();
         roleLabel = new javax.swing.JLabel();
+        orgChartBtn = new javax.swing.JButton();
+        empWrChartBtn = new javax.swing.JButton();
 
         setBackground(new java.awt.Color(0, 153, 153));
 
@@ -95,16 +104,37 @@ public class EntpAdminJPanel extends javax.swing.JPanel {
         roleLabel.setForeground(new java.awt.Color(255, 255, 255));
         roleLabel.setText("Role: Enterprise Admin");
 
+        orgChartBtn.setText("View Employee-Organization Distribution");
+        orgChartBtn.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                orgChartBtnActionPerformed(evt);
+            }
+        });
+
+        empWrChartBtn.setText("View Organization-WorkRequest Distribution");
+        empWrChartBtn.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                empWrChartBtnActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(349, 349, 349)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.CENTER)
-                    .addComponent(titleLabel)
-                    .addComponent(roleLabel))
-                .addContainerGap(453, Short.MAX_VALUE))
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(394, 394, 394)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.CENTER)
+                            .addComponent(titleLabel)
+                            .addComponent(roleLabel)))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(418, 418, 418)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(empWrChartBtn, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(orgChartBtn, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
+                .addContainerGap(386, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -113,12 +143,45 @@ public class EntpAdminJPanel extends javax.swing.JPanel {
                 .addComponent(titleLabel)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(roleLabel)
-                .addContainerGap(719, Short.MAX_VALUE))
+                .addGap(132, 132, 132)
+                .addComponent(orgChartBtn)
+                .addGap(18, 18, 18)
+                .addComponent(empWrChartBtn)
+                .addContainerGap(505, Short.MAX_VALUE))
         );
     }// </editor-fold>//GEN-END:initComponents
 
+    private void orgChartBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_orgChartBtnActionPerformed
+        String title = "No. of employees in each Organization";
+        EntpOrgChart orgChart = new EntpOrgChart(displayPanel, enterprise, title);
+        CardLayout layout = (CardLayout) displayPanel.getLayout();
+        displayPanel.add("orgChart", orgChart);
+        layout.next(displayPanel);
+    }//GEN-LAST:event_orgChartBtnActionPerformed
+
+    private void empWrChartBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_empWrChartBtnActionPerformed
+        String title = "No. of work requests under each Employee";
+        EmpWrChart empChart = new EmpWrChart(displayPanel, enterprise, title);
+        CardLayout layout = (CardLayout) displayPanel.getLayout();
+        displayPanel.add("empChart", empChart);
+        layout.next(displayPanel);
+    }//GEN-LAST:event_empWrChartBtnActionPerformed
+
+    public JPanel createChartPanel() {
+        DefaultPieDataset pieDataset = new DefaultPieDataset();
+        pieDataset.setValue("One", new Integer(10));
+        pieDataset.setValue("Two", new Integer(20));
+        pieDataset.setValue("Three", new Integer(30));
+        pieDataset.setValue("Four", new Integer(10));
+        pieDataset.setValue("Five", new Integer(20));
+        pieDataset.setValue("Six", new Integer(10));
+        JFreeChart chart = ChartFactory.createPieChart3D("3D Pie Chart", pieDataset, true, true, true);
+        return new ChartPanel(chart);
+    }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton empWrChartBtn;
+    private javax.swing.JButton orgChartBtn;
     private javax.swing.JLabel roleLabel;
     private javax.swing.JLabel titleLabel;
     // End of variables declaration//GEN-END:variables

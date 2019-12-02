@@ -180,7 +180,7 @@
         <Property name="foreground" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
           <Color blue="ff" green="ff" red="ff" type="rgb"/>
         </Property>
-        <Property name="text" type="java.lang.String" value="it gets ready for delivery once the request is processed by you"/>
+        <Property name="text" type="java.lang.String" value="it is sent to appropriate organization depending upon the inspection results"/>
       </Properties>
     </Component>
     <Component class="javax.swing.JLabel" name="jLabel1">

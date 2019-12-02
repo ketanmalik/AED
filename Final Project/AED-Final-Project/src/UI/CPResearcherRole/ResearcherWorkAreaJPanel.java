@@ -72,7 +72,7 @@ public class ResearcherWorkAreaJPanel extends javax.swing.JPanel {
 
         jLabel1.setFont(new java.awt.Font("Lucida Grande", 0, 14)); // NOI18N
         jLabel1.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel1.setText("As a Manufacturer, you can assign the manufacturing work request to yourseld and");
+        jLabel1.setText("As a Researcher, you can assign the research work request to yourseld and");
 
         jLabel2.setFont(new java.awt.Font("Lucida Grande", 0, 14)); // NOI18N
         jLabel2.setForeground(new java.awt.Color(255, 255, 255));

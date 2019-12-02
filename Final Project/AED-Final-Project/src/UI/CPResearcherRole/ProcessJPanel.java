@@ -6,7 +6,9 @@
 package UI.CPResearcherRole;
 
 import Business.EcoSystem.EcoSystem;
+import Business.EnterpriseDirectory.CompoundPharmacyEnterprise;
 import Business.EnterpriseDirectory.Enterprise;
+import Business.Network.Network;
 import Business.Organization.InspectionOrganization;
 import Business.Organization.Organization;
 import Business.Organization.ResearchOrganization;
@@ -14,6 +16,8 @@ import Business.UserAccount.UserAccount;
 import Business.WorkQueue.WorkRequest;
 import java.awt.CardLayout;
 import java.awt.Component;
+import java.util.ArrayList;
+import java.util.List;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 
@@ -283,22 +287,49 @@ public class ProcessJPanel extends javax.swing.JPanel {
         }
 
     }//GEN-LAST:event_completeBtnActionPerformed
-    private void sendRequest() {
-
-    }
 
     private void sendToInspection() {
-        Organization org = null;
-        for (Organization o : enterprise.getOrganizationDirectory().getOrganizationList()) {
-            if (o instanceof InspectionOrganization) {
-                org = o;
-                break;
+        //        Organization org = null;
+        List<Organization> org = new ArrayList<>();
+
+        for (Network n : ecoSystem.getNetworkDirectory().getNetworkList()) {
+            for (Enterprise e : n.getEnterpriseDirectory().getEnterpriseList()) {
+                if (e instanceof CompoundPharmacyEnterprise) {
+                    for (Organization o : e.getOrganizationDirectory().getOrganizationList()) {
+                        if (o instanceof InspectionOrganization) {
+                            org.add(o);
+                        }
+                    }
+                }
+            }
+        }
+//        for (Organization o : enterprise.getOrganizationDirectory().getOrganizationList()) {
+//            if (o instanceof InspectionOrganization) {
+//                org = o;
+//                break;
+//            }
+//        }
+
+        if (org != null) {
+            for (Organization o : org) {
+                o.getWorkQueue().getWorkRequestList().add(request);
             }
         }
         if (org != null) {
-            org.getWorkQueue().getWorkRequestList().add(request);
+//            org.getWorkQueue().getWorkRequestList().add(request);
             userAccount.getWorkQueue().getWorkRequestList().add(request);
         }
+//        Organization org = null;
+//        for (Organization o : enterprise.getOrganizationDirectory().getOrganizationList()) {
+//            if (o instanceof InspectionOrganization) {
+//                org = o;
+//                break;
+//            }
+//        }
+//        if (org != null) {
+//            org.getWorkQueue().getWorkRequestList().add(request);
+//            userAccount.getWorkQueue().getWorkRequestList().add(request);
+//        }
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

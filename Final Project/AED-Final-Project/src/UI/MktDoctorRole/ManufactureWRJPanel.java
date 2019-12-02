@@ -17,6 +17,8 @@ import Business.WorkQueue.CPManufactureWorkRequest;
 import UI.MktPatientRole.PatientWorkAreaJPanel;
 import java.awt.CardLayout;
 import java.awt.Component;
+import java.util.ArrayList;
+import java.util.List;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 
@@ -34,8 +36,8 @@ public class ManufactureWRJPanel extends javax.swing.JPanel {
     private Enterprise enterprise;
     private Organization organization;
     private EcoSystem ecoSystem;
-    private static int id = 1;
-    private static int idPatient = 1;
+    private static int id;
+    private static int idPatient;
 
     public ManufactureWRJPanel(JPanel displayPanel, UserAccount userAccount, Enterprise enterprise, Organization organization, EcoSystem ecoSystem) {
         initComponents();
@@ -44,6 +46,8 @@ public class ManufactureWRJPanel extends javax.swing.JPanel {
         this.enterprise = enterprise;
         this.organization = organization;
         this.ecoSystem = ecoSystem;
+        this.id = ecoSystem.id;
+        this.idPatient = ecoSystem.id;
         populateDetails();
     }
 
@@ -129,6 +133,9 @@ public class ManufactureWRJPanel extends javax.swing.JPanel {
 
         jLabel7.setForeground(new java.awt.Color(255, 255, 255));
         jLabel7.setText("Phone Number:");
+
+        phoneTxtField.setText("8572078509");
+        phoneTxtField.setEnabled(false);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
@@ -264,8 +271,10 @@ public class ManufactureWRJPanel extends javax.swing.JPanel {
         CPManufactureWorkRequest request = new CPManufactureWorkRequest();
         if (userAccount.getIdentifier().equals("mp")) {
             request.setId("PM-WR-" + idPatient++);
+            ecoSystem.id = idPatient;
         } else {
             request.setId("DM-WR-" + id++);
+            ecoSystem.id = id;
         }
         request.setMedicine(medicine);
         request.setQuantity(quantity);
@@ -276,23 +285,40 @@ public class ManufactureWRJPanel extends javax.swing.JPanel {
         request.setOriginator(userAccount);
         request.setPhoneNo("+1" + phoneNumber);
 
-        Organization org = null;
+//        Organization org = null;
+//        for (Network n : ecoSystem.getNetworkDirectory().getNetworkList()) {
+//            for (Enterprise e : n.getEnterpriseDirectory().getEnterpriseList()) {
+//                if (e instanceof CompoundPharmacyEnterprise) {
+//                    for (Organization o : e.getOrganizationDirectory().getOrganizationList()) {
+//                        if (o instanceof ManufactureOrganization) {
+//                            org = o;
+//                            break;
+//                        }
+//                    }
+//                    break;
+//                }
+//            }
+//        }
+        List<Organization> org = new ArrayList<>();
         for (Network n : ecoSystem.getNetworkDirectory().getNetworkList()) {
             for (Enterprise e : n.getEnterpriseDirectory().getEnterpriseList()) {
                 if (e instanceof CompoundPharmacyEnterprise) {
                     for (Organization o : e.getOrganizationDirectory().getOrganizationList()) {
                         if (o instanceof ManufactureOrganization) {
-                            org = o;
-                            break;
+                            org.add(o);
                         }
                     }
-                    break;
                 }
             }
         }
 
         if (org != null) {
-            org.getWorkQueue().getWorkRequestList().add(request);
+            for (Organization o : org) {
+                o.getWorkQueue().getWorkRequestList().add(request);
+            }
+        }
+        if (org != null) {
+//            org.getWorkQueue().getWorkRequestList().add(request);
             userAccount.getWorkQueue().getWorkRequestList().add(request);
 
             int input = JOptionPane.showOptionDialog(null, "Your order has been placed. Do you want to go back main screen?", "Order Confirmation", JOptionPane.OK_OPTION, JOptionPane.INFORMATION_MESSAGE, null, null, null);
