@@ -15,7 +15,7 @@ import java.util.regex.Pattern;
 public class RegexValidations {
 
     public static boolean nameValidation(String str) {
-        Pattern p = Pattern.compile("^[a-zA-Z][a-zA-Z\\s]+");
+        Pattern p = Pattern.compile("^[a-zA-Z][a-zA-Z\\s]*");
         Matcher m = p.matcher(str);
         return m.matches();
     }

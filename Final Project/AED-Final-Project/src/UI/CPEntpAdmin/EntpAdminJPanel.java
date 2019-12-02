@@ -3,30 +3,35 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package UI.MktEntpAdmin;
+package UI.CPEntpAdmin;
 
 import Business.EcoSystem.EcoSystem;
 import Business.EnterpriseDirectory.Enterprise;
 import Business.Organization.Organization;
 import Business.UserAccount.UserAccount;
+import UI.MainJFrame.MainJFrame;
+import java.awt.Color;
 import javax.swing.JPanel;
 
 /**
  *
  * @author ketanmalik
  */
-public class MktAdminJPanel extends javax.swing.JPanel {
+public class EntpAdminJPanel extends javax.swing.JPanel {
 
     /**
-     * Creates new form MktAdminJPanel
+     * Creates new form EntpAdminJPanel
      */
     private JPanel displayPanel;
     private UserAccount userAccount;
     private Enterprise enterprise;
     private Organization organization;
     private EcoSystem ecoSystem;
+    private String mode = "";
+    private String identifier = "";
+    private String col[] = new String[4];
 
-    public MktAdminJPanel(JPanel displayPanel, UserAccount userAccount, Enterprise enterprise, Organization organization, EcoSystem ecoSystem) {
+    public EntpAdminJPanel(JPanel displayPanel, UserAccount userAccount, Enterprise enterprise, Organization organization, EcoSystem ecoSystem) {
         initComponents();
         this.displayPanel = displayPanel;
         this.userAccount = userAccount;
@@ -34,7 +39,34 @@ public class MktAdminJPanel extends javax.swing.JPanel {
         this.organization = organization;
         this.ecoSystem = ecoSystem;
         setLabel();
-        System.out.println("UI.MktEntpAdmin.MktAdminJPanel.<init>()");
+        modifyButtons();
+    }
+
+    private void modifyButtons() {
+        MainJFrame.manageNetworkBtn.setVisible(true);
+        MainJFrame.manageNetworkBtn.setText("Manage Organizations");
+        MainJFrame.manageNetworkBtn.setOpaque(false);
+        MainJFrame.manageNetworkBtn.setContentAreaFilled(false);
+        MainJFrame.manageNetworkBtn.setBorderPainted(false);
+        MainJFrame.manageNetworkBtn.setForeground(Color.white);
+
+        MainJFrame.manageEnterpriseBtn.setVisible(true);
+        MainJFrame.manageEnterpriseBtn.setText("Manage Employees");
+        MainJFrame.manageEnterpriseBtn.setOpaque(false);
+        MainJFrame.manageEnterpriseBtn.setContentAreaFilled(false);
+        MainJFrame.manageEnterpriseBtn.setBorderPainted(false);
+        MainJFrame.manageEnterpriseBtn.setForeground(Color.white);
+
+        MainJFrame.manageAdminBtn.setVisible(true);
+        MainJFrame.manageAdminBtn.setText("Manage User Accounts");
+        MainJFrame.manageAdminBtn.setOpaque(false);
+        MainJFrame.manageAdminBtn.setContentAreaFilled(false);
+        MainJFrame.manageAdminBtn.setBorderPainted(false);
+        MainJFrame.manageAdminBtn.setForeground(Color.white);
+
+        MainJFrame.logoutBtn.setOpaque(false);
+        MainJFrame.logoutBtn.setContentAreaFilled(false);
+        MainJFrame.logoutBtn.setBorderPainted(false);
     }
 
     private void setLabel() {
