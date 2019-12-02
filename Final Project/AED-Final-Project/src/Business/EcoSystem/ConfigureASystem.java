@@ -39,7 +39,7 @@ public class ConfigureASystem {
         // 2. Creating Boston Network under EcoSystem Admin
         Network network = system.addNetwork();
         network.setName("Boston");
-        network.setLocation("MA, USA");
+        network.setLocation("MA USA");
         network.setCreatedBy(sysAdmin);
         network.setCreatedOn(DateUtil.getStringToDate("11/25/2019"));
         network.setLastUpdatedOn(DateUtil.getStringToDate("11/25/2019"));

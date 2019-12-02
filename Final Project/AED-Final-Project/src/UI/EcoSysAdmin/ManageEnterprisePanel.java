@@ -8,14 +8,14 @@ package UI.EcoSysAdmin;
 import Business.EcoSystem.EcoSystem;
 import Business.EnterpriseDirectory.Enterprise;
 import Business.EnterpriseDirectory.Enterprise.EnterpriseType;
+import Business.util.RegexValidations;
 import static Business.EnterpriseDirectory.Enterprise.EnterpriseType.Management;
 import static Business.EnterpriseDirectory.Enterprise.EnterpriseType.Pharmaceutical;
 import Business.Network.Network;
+import Business.Organization.Organization;
 import Business.UserAccount.UserAccount;
 import UI.MainJFrame.MainJFrame;
 import java.awt.Color;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.table.DefaultTableModel;
@@ -44,6 +44,8 @@ public class ManageEnterprisePanel extends javax.swing.JPanel {
         populateTable();
         populateDropdowns();
         enableFields(false);
+        empLabel.setVisible(false);
+        orgLabel.setVisible(false);
     }
 
     private void enableFields(boolean bool) {
@@ -51,6 +53,8 @@ public class ManageEnterprisePanel extends javax.swing.JPanel {
         typeDropdown.setEnabled(bool);
         nameTxtField.setEnabled(bool);
         confirmBtn.setEnabled(bool);
+        employeesTxtField.setEnabled(bool);
+        organizationDropdown.setEnabled(bool);
     }
 
     private void modifyButtons() {
@@ -111,6 +115,12 @@ public class ManageEnterprisePanel extends javax.swing.JPanel {
         confirmBtn = new javax.swing.JButton();
         networkDropdown = new javax.swing.JComboBox<>();
         typeDropdown = new javax.swing.JComboBox<>();
+        jLabel5 = new javax.swing.JLabel();
+        jLabel6 = new javax.swing.JLabel();
+        organizationDropdown = new javax.swing.JComboBox<>();
+        employeesTxtField = new javax.swing.JTextField();
+        empLabel = new javax.swing.JLabel();
+        orgLabel = new javax.swing.JLabel();
 
         setBackground(new java.awt.Color(0, 153, 153));
 
@@ -161,10 +171,10 @@ public class ManageEnterprisePanel extends javax.swing.JPanel {
         jLabel2.setText("Network:");
 
         jLabel3.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel3.setText("Type:");
+        jLabel3.setText("Enterprise Type:");
 
         jLabel4.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel4.setText("Name:");
+        jLabel4.setText("Enterprise Name:");
 
         confirmBtn.setText("Confirm");
         confirmBtn.addActionListener(new java.awt.event.ActionListener() {
@@ -173,6 +183,18 @@ public class ManageEnterprisePanel extends javax.swing.JPanel {
             }
         });
 
+        jLabel5.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel5.setText("No. of Employees:");
+
+        jLabel6.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel6.setText("Organization List:");
+
+        empLabel.setForeground(new java.awt.Color(255, 255, 255));
+        empLabel.setText("(Go to Manage Enterprise Admin)");
+
+        orgLabel.setForeground(new java.awt.Color(255, 255, 255));
+        orgLabel.setText("(Enterprise admins can add organization)");
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
         layout.setHorizontalGroup(
@@ -180,60 +202,90 @@ public class ManageEnterprisePanel extends javax.swing.JPanel {
             .addGroup(layout.createSequentialGroup()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(22, 22, 22)
+                        .addGap(45, 45, 45)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(layout.createSequentialGroup()
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                                    .addComponent(jLabel3)
-                                    .addComponent(jLabel2)
-                                    .addComponent(jLabel4))
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(networkDropdown, javax.swing.GroupLayout.PREFERRED_SIZE, 180, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(typeDropdown, javax.swing.GroupLayout.PREFERRED_SIZE, 180, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(nameTxtField, javax.swing.GroupLayout.PREFERRED_SIZE, 180, javax.swing.GroupLayout.PREFERRED_SIZE)))
                             .addComponent(jLabel1)
                             .addGroup(layout.createSequentialGroup()
-                                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 464, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(23, 23, 23)
+                                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 750, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(70, 70, 70)
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                     .addComponent(updateBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
                                     .addComponent(viewBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(addBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)))))
+                                    .addComponent(addBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                            .addGroup(layout.createSequentialGroup()
+                                .addGap(288, 288, 288)
+                                .addComponent(confirmBtn))))
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(251, 251, 251)
-                        .addComponent(confirmBtn)))
-                .addContainerGap(391, Short.MAX_VALUE))
+                        .addGap(60, 60, 60)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(jLabel4)
+                            .addComponent(jLabel3))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(typeDropdown, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(nameTxtField, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(45, 45, 45)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(jLabel5)
+                            .addComponent(jLabel6))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(organizationDropdown, 0, 200, Short.MAX_VALUE)
+                            .addComponent(employeesTxtField))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(empLabel)
+                            .addComponent(orgLabel)))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(109, 109, 109)
+                        .addComponent(jLabel2)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(networkDropdown, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(44, 44, 44)
-                .addComponent(jLabel1)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
+                        .addGap(45, 45, 45)
+                        .addComponent(jLabel1)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 250, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(146, 146, 146)
                         .addComponent(addBtn)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addComponent(viewBtn)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(updateBtn))
-                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 175, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(45, 45, 45)
+                        .addComponent(updateBtn)))
+                .addGap(70, 70, 70)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jLabel4)
+                            .addComponent(nameTxtField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(18, 18, 18)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jLabel3)
+                            .addComponent(typeDropdown, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jLabel5)
+                            .addComponent(employeesTxtField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(empLabel))
+                        .addGap(18, 18, 18)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jLabel6)
+                            .addComponent(organizationDropdown, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(orgLabel))))
+                .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel2)
                     .addComponent(networkDropdown, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(15, 15, 15)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel3)
-                    .addComponent(typeDropdown, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(18, 18, 18)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel4)
-                    .addComponent(nameTxtField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(45, 45, 45)
+                .addGap(70, 70, 70)
                 .addComponent(confirmBtn)
-                .addContainerGap(322, Short.MAX_VALUE))
+                .addContainerGap(193, Short.MAX_VALUE))
         );
     }// </editor-fold>//GEN-END:initComponents
 
@@ -264,23 +316,40 @@ public class ManageEnterprisePanel extends javax.swing.JPanel {
         }
     }
 
-    private boolean validateStr(String str) {
-        Pattern p = Pattern.compile("[a-zA-Z]+");
-        Matcher m = p.matcher(str);
-        return m.matches();
-    }
     private void addBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addBtnActionPerformed
         mode = "add";
         enableFields(true);
+        organizationDropdown.setEnabled(false);
+        employeesTxtField.setEnabled(false);
+        organizationDropdown.removeAllItems();
+        employeesTxtField.setText("");
+        empLabel.setVisible(false);
+        orgLabel.setVisible(false);
     }//GEN-LAST:event_addBtnActionPerformed
 
     private void viewBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_viewBtnActionPerformed
         int selectedRow = enterpriseTbl.getSelectedRow();
         if (selectedRow >= 0) {
             enableFields(false);
+            empLabel.setVisible(true);
+            orgLabel.setVisible(true);
+            organizationDropdown.setEnabled(true);
             Enterprise e = (Enterprise) enterpriseTbl.getValueAt(selectedRow, 0);
             Network n = (Network) enterpriseTbl.getValueAt(selectedRow, 1);
             networkDropdown.setSelectedItem(n.getName());
+            if (e.getEmployeeDirectory().getEmployeeList() == null) {
+                employeesTxtField.setText("0");
+            } else {
+                employeesTxtField.setText(String.valueOf(e.getEmployeeDirectory().getEmployeeList().size()));
+            }
+            if (e.getOrganizationDirectory().getOrganizationList() != null) {
+                organizationDropdown.removeAllItems();
+                for (Organization o : e.getOrganizationDirectory().getOrganizationList()) {
+                    organizationDropdown.addItem(String.valueOf(o.getName()));
+                }
+            } else {
+                organizationDropdown.removeAllItems();
+            }
             typeDropdown.setSelectedItem(e.getEnterpriseType().getValue());
             nameTxtField.setText(e.getName());
         } else {
@@ -291,6 +360,8 @@ public class ManageEnterprisePanel extends javax.swing.JPanel {
     private void updateBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_updateBtnActionPerformed
         int selectedRow = enterpriseTbl.getSelectedRow();
         if (selectedRow >= 0) {
+            empLabel.setVisible(false);
+            orgLabel.setVisible(false);
             mode = "update";
             enableFields(false);
             enterpriseToUpdate = (Enterprise) enterpriseTbl.getValueAt(selectedRow, 0);
@@ -308,7 +379,7 @@ public class ManageEnterprisePanel extends javax.swing.JPanel {
 
     private void confirmBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_confirmBtnActionPerformed
         String name = nameTxtField.getText();
-        if (name.equals("") || name == null) {
+        if (name.equals("") || name == null || !RegexValidations.nameValidation(name)) {
             JOptionPane.showMessageDialog(null, "Please enter a valid enterprise name to continue", "Invalid Name", JOptionPane.ERROR_MESSAGE);
             return;
         }
@@ -328,7 +399,8 @@ public class ManageEnterprisePanel extends javax.swing.JPanel {
                     break;
                 }
             }
-
+            empLabel.setVisible(false);
+            orgLabel.setVisible(false);
             temp.getEnterpriseDirectory().createEnterprise(name, enterpriseType);
             populateTable();
             nameTxtField.setText("");
@@ -341,6 +413,8 @@ public class ManageEnterprisePanel extends javax.swing.JPanel {
                 JOptionPane.showMessageDialog(null, "Please make some changes to update details", "No changes made", JOptionPane.ERROR_MESSAGE);
                 return;
             }
+            empLabel.setVisible(false);
+            orgLabel.setVisible(false);
             enterpriseToUpdate.setName(name);
             populateTable();
             enableFields(false);
@@ -353,14 +427,20 @@ public class ManageEnterprisePanel extends javax.swing.JPanel {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton addBtn;
     private javax.swing.JButton confirmBtn;
+    private javax.swing.JLabel empLabel;
+    private javax.swing.JTextField employeesTxtField;
     private javax.swing.JTable enterpriseTbl;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
+    private javax.swing.JLabel jLabel5;
+    private javax.swing.JLabel jLabel6;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTextField nameTxtField;
     private javax.swing.JComboBox<String> networkDropdown;
+    private javax.swing.JLabel orgLabel;
+    private javax.swing.JComboBox<String> organizationDropdown;
     private javax.swing.JComboBox<String> typeDropdown;
     private javax.swing.JButton updateBtn;
     private javax.swing.JButton viewBtn;
