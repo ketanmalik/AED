@@ -21,24 +21,45 @@
   <Layout>
     <DimensionLayout dim="0">
       <Group type="103" groupAlignment="0" attributes="0">
-          <Group type="102" alignment="0" attributes="0">
-              <EmptySpace min="-2" pref="349" max="-2" attributes="0"/>
-              <Group type="103" groupAlignment="2" attributes="0">
-                  <Component id="titleLabel" alignment="2" min="-2" max="-2" attributes="0"/>
-                  <Component id="roleLabel" alignment="2" min="-2" max="-2" attributes="0"/>
+          <Group type="102" attributes="0">
+              <Group type="103" groupAlignment="0" attributes="0">
+                  <Group type="102" attributes="0">
+                      <EmptySpace min="-2" pref="399" max="-2" attributes="0"/>
+                      <Group type="103" groupAlignment="2" attributes="0">
+                          <Component id="titleLabel" alignment="2" min="-2" max="-2" attributes="0"/>
+                          <Component id="roleLabel" alignment="2" min="-2" max="-2" attributes="0"/>
+                      </Group>
+                  </Group>
+                  <Group type="102" alignment="0" attributes="0">
+                      <EmptySpace min="-2" pref="378" max="-2" attributes="0"/>
+                      <Group type="103" groupAlignment="0" max="-2" attributes="0">
+                          <Component id="empWrChartBtn" alignment="0" max="32767" attributes="0"/>
+                          <Component id="orgChartBtn" alignment="0" max="32767" attributes="0"/>
+                          <Component id="medManufactureChartBtn" alignment="0" max="32767" attributes="0"/>
+                          <Component id="medResearchChartBtn" alignment="0" min="-2" pref="314" max="-2" attributes="0"/>
+                      </Group>
+                  </Group>
               </Group>
-              <EmptySpace pref="453" max="32767" attributes="0"/>
+              <EmptySpace pref="392" max="32767" attributes="0"/>
           </Group>
       </Group>
     </DimensionLayout>
     <DimensionLayout dim="1">
       <Group type="103" groupAlignment="0" attributes="0">
           <Group type="102" alignment="0" attributes="0">
-              <EmptySpace min="-2" pref="25" max="-2" attributes="0"/>
+              <EmptySpace min="-2" pref="26" max="-2" attributes="0"/>
               <Component id="titleLabel" min="-2" max="-2" attributes="0"/>
               <EmptySpace type="unrelated" max="-2" attributes="0"/>
               <Component id="roleLabel" min="-2" max="-2" attributes="0"/>
-              <EmptySpace pref="719" max="32767" attributes="0"/>
+              <EmptySpace min="-2" pref="131" max="-2" attributes="0"/>
+              <Component id="orgChartBtn" min="-2" max="-2" attributes="0"/>
+              <EmptySpace type="separate" max="-2" attributes="0"/>
+              <Component id="empWrChartBtn" min="-2" max="-2" attributes="0"/>
+              <EmptySpace type="separate" max="-2" attributes="0"/>
+              <Component id="medManufactureChartBtn" min="-2" max="-2" attributes="0"/>
+              <EmptySpace type="separate" max="-2" attributes="0"/>
+              <Component id="medResearchChartBtn" min="-2" max="-2" attributes="0"/>
+              <EmptySpace pref="405" max="32767" attributes="0"/>
           </Group>
       </Group>
     </DimensionLayout>
@@ -65,6 +86,38 @@
         </Property>
         <Property name="text" type="java.lang.String" value="Role: Enterprise Admin"/>
       </Properties>
+    </Component>
+    <Component class="javax.swing.JButton" name="orgChartBtn">
+      <Properties>
+        <Property name="text" type="java.lang.String" value="View Employee-Organization Distribution"/>
+      </Properties>
+      <Events>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="orgChartBtnActionPerformed"/>
+      </Events>
+    </Component>
+    <Component class="javax.swing.JButton" name="empWrChartBtn">
+      <Properties>
+        <Property name="text" type="java.lang.String" value="View Organization-WorkRequest Distribution"/>
+      </Properties>
+      <Events>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="empWrChartBtnActionPerformed"/>
+      </Events>
+    </Component>
+    <Component class="javax.swing.JButton" name="medManufactureChartBtn">
+      <Properties>
+        <Property name="text" type="java.lang.String" value="View State-Wise Manufacturing Request"/>
+      </Properties>
+      <Events>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="medManufactureChartBtnActionPerformed"/>
+      </Events>
+    </Component>
+    <Component class="javax.swing.JButton" name="medResearchChartBtn">
+      <Properties>
+        <Property name="text" type="java.lang.String" value="View State-Wise Research Request"/>
+      </Properties>
+      <Events>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="medResearchChartBtnActionPerformed"/>
+      </Events>
     </Component>
   </SubComponents>
 </Form>

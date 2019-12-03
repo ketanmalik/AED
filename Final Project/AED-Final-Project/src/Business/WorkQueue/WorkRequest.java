@@ -27,6 +27,7 @@ public class WorkRequest {
     private UserAccount originator;
     private int code;
     private String phoneNo;
+    private String state;
 
     public WorkRequest() {
         requestDate = new Date();
@@ -126,6 +127,14 @@ public class WorkRequest {
 
     public void setPhoneNo(String phoneNo) {
         this.phoneNo = phoneNo;
+    }
+
+    public String getState() {
+        return state;
+    }
+
+    public void setState(String state) {
+        this.state = state;
     }
 
     @Override

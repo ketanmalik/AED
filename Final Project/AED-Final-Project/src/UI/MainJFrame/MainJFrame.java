@@ -17,6 +17,7 @@ import UI.EcoSysAdmin.ManageNetworkPanel;
 import UI.EntpAdmin.ManageEmployeeJPanel;
 import UI.EntpAdmin.ManageOrganizationJPanel;
 import UI.EntpAdmin.ManageUserJPanel;
+import UI.MktEntpAdmin.MktAdminJPanel;
 import java.awt.CardLayout;
 import java.awt.Component;
 import java.awt.event.*;
@@ -250,10 +251,19 @@ public class MainJFrame extends javax.swing.JFrame {
         // TODO add your handling code here:
         Component[] componentArray = displayPanel.getComponents();
         displayPanel.removeAll();
-        for(Component c: componentArray){
-            if(c instanceof EntpAdminJPanel){
-                displayPanel.add(c);
-                break;
+        if (currentUser.getIdentifier().equals("cpAdmin")) {
+            for (Component c : componentArray) {
+                if (c instanceof EntpAdminJPanel) {
+                    displayPanel.add(c);
+                    break;
+                }
+            }
+        } else {
+            for (Component c : componentArray) {
+                if (c instanceof MktAdminJPanel) {
+                    displayPanel.add(c);
+                    break;
+                }
             }
         }
         CardLayout layout = (CardLayout) displayPanel.getLayout();

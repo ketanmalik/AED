@@ -313,6 +313,7 @@ public class ProcessJPanel extends javax.swing.JPanel {
             request.setRequestDate(new Date());
             request.setSender(userAccount);
             request.setReceiver(null);
+            userAccount.getWorkQueue().getWorkRequestList().clear();
             ecoSystem.getMedicineList().add(request.getMedicine());
             String msg = "Your request with ID " + request.getId() + " is now ready for manufacturing. Please place an order for manufacturing the medicine";
             SMS.sendSMS(msg);

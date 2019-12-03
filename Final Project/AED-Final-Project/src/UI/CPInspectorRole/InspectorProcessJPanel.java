@@ -149,6 +149,7 @@ public class InspectorProcessJPanel extends javax.swing.JPanel {
                 request.setStatus("Sent for marketing");
                 request.setSender(userAccount);
                 request.setReceiver(null);
+                userAccount.getWorkQueue().getWorkRequestList().clear();
                 sendToMarketing();
                 JOptionPane.showMessageDialog(null, "Your request has been sent to marketing organization");
                 displayPanel.remove(this);
@@ -168,6 +169,7 @@ public class InspectorProcessJPanel extends javax.swing.JPanel {
                 request.setStatus("Sent for delivery");
                 request.setSender(userAccount);
                 request.setReceiver(null);
+                userAccount.getWorkQueue().getWorkRequestList().clear();
                 sendToDelivery();
                 JOptionPane.showMessageDialog(null, "Your request has been sent to delivery team");
                 displayPanel.remove(this);
@@ -237,7 +239,6 @@ public class InspectorProcessJPanel extends javax.swing.JPanel {
             for (Organization o : org) {
                 o.getWorkQueue().getWorkRequestList().add(request);
             }
-            userAccount.getWorkQueue().getWorkRequestList().add(request);
         }
     }
 
@@ -261,7 +262,6 @@ public class InspectorProcessJPanel extends javax.swing.JPanel {
             for (Organization o : org) {
                 o.getWorkQueue().getWorkRequestList().add(request);
             }
-            userAccount.getWorkQueue().getWorkRequestList().add(request);
         }
     }
 

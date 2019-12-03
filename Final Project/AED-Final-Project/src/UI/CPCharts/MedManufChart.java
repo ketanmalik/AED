@@ -3,12 +3,12 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package UI.Charts;
+package UI.CPCharts;
 
 import Business.EcoSystem.EcoSystem;
 import Business.EnterpriseDirectory.Enterprise;
+import Business.Organization.ManufactureOrganization;
 import Business.Organization.Organization;
-import Business.Organization.ResearchOrganization;
 import Business.WorkQueue.WorkRequest;
 import java.awt.CardLayout;
 import java.awt.Component;
@@ -25,16 +25,16 @@ import org.jfree.data.general.DefaultPieDataset;
  *
  * @author ketanmalik
  */
-public class MedResearchChart extends javax.swing.JPanel {
+public class MedManufChart extends javax.swing.JPanel {
 
     /**
-     * Creates new form MedResearchChart
+     * Creates new form MedManufChart
      */
     private JPanel displayPanel;
     private Enterprise enterprise;
     private Map<String, Integer> map;
 
-    public MedResearchChart(JPanel displayPanel, Enterprise enterprise, EcoSystem ecoSystem, String title) {
+    public MedManufChart(JPanel displayPanel, Enterprise enterprise, EcoSystem ecoSystem, String title) {
         this.displayPanel = displayPanel;
         this.enterprise = enterprise;
         map = new HashMap<>();
@@ -108,17 +108,9 @@ public class MedResearchChart extends javax.swing.JPanel {
         );
     }// </editor-fold>//GEN-END:initComponents
 
-    private void backBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_backBtnActionPerformed
-        displayPanel.remove(this);
-        Component[] componentArray = displayPanel.getComponents();
-        Component component = componentArray[componentArray.length - 1];
-        CardLayout layout = (CardLayout) displayPanel.getLayout();
-        layout.previous(displayPanel);
-    }//GEN-LAST:event_backBtnActionPerformed
-
     private void generateMap() {
         for (Organization o : enterprise.getOrganizationDirectory().getOrganizationList()) {
-            if (o instanceof ResearchOrganization) {
+            if (o instanceof ManufactureOrganization) {
                 for (WorkRequest w : o.getWorkQueue().getWorkRequestList()) {
                     if (map.containsKey(w.getMedicine().getName())) {
                         int i = map.get(w.getMedicine().getName()) + 1;
@@ -137,9 +129,19 @@ public class MedResearchChart extends javax.swing.JPanel {
         for (String s : key) {
             pieDataset.setValue(s, map.get(s));
         }
-        JFreeChart chart = ChartFactory.createPieChart3D("Medicines under research", pieDataset, true, true, true);
+        JFreeChart chart = ChartFactory.createPieChart3D("Medicines under manufacturing", pieDataset, true, true, true);
         return new ChartPanel(chart);
     }
+
+    private void backBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_backBtnActionPerformed
+        displayPanel.remove(this);
+        Component[] componentArray = displayPanel.getComponents();
+        Component component = componentArray[componentArray.length - 1];
+        CardLayout layout = (CardLayout) displayPanel.getLayout();
+        layout.previous(displayPanel);
+    }//GEN-LAST:event_backBtnActionPerformed
+
+
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton backBtn;
     private javax.swing.JPanel chartPanel;

@@ -18,6 +18,7 @@ import static Business.Organization.Organization.Type.Advertising;
 import static Business.Organization.Organization.Type.Doctor;
 import static Business.Organization.Organization.Type.Patient;
 import Business.Role.CPEntpAdmin;
+import Business.Role.MktEntpAdmin;
 import Business.Role.SysAdminRole;
 import Business.UserAccount.UserAccount;
 import Business.util.DateUtil;
@@ -68,7 +69,7 @@ public class ConfigureASystem {
 
         // 6. Creating mktAdmin for Marketing
         Employee mktEmployee = marketingEnterprise.getEmployeeDirectory().createEmployee("Marketing Admin");
-        UserAccount mktAdmin = marketingEnterprise.getUserAccountDirectory().createUserAccount(mktEmployee.getName(), "mk", "mk", mktEmployee, new CPEntpAdmin(), "mktAdmin");
+        UserAccount mktAdmin = marketingEnterprise.getUserAccountDirectory().createUserAccount(mktEmployee.getName(), "mk", "mk", mktEmployee, new MktEntpAdmin(), "mktAdmin");
 
         // 7. Creating Organizations under CP Enterprise
         for (Network n : system.getNetworkDirectory().getNetworkList()) {

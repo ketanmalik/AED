@@ -138,9 +138,9 @@ public class DeliveryProcessJPanel extends javax.swing.JPanel {
             request.setStatus("Available for pickup");
             request.setSender(userAccount);
             request.setReceiver(null);
+            userAccount.getWorkQueue().getWorkRequestList().clear();
             request.setCode(code++);
             request.setResolveDate(new Date());
-            sendToOriginator();
             String msg = "Your request with ID " + request.getId() + " is now ready for pickup. Pickup code: " + request.getCode();
             SMS.sendSMS(msg);
             JOptionPane.showMessageDialog(null, "The order is now ready for pickup");
@@ -164,21 +164,6 @@ public class DeliveryProcessJPanel extends javax.swing.JPanel {
         layout.previous(displayPanel);
     }//GEN-LAST:event_backBtnActionPerformed
 
-    private void sendToOriginator() {
-
-        Organization org = null;
-
-//        for (Organization o : enterprise.getOrganizationDirectory().getOrganizationList()) {
-//            if (o instanceof DeliveryOrganization) {
-//                org = o;
-//                break;
-//            }
-//        }
-//        if (org != null) {
-//            org.getWorkQueue().getWorkRequestList().add(request);
-//            userAccount.getWorkQueue().getWorkRequestList().add(request);
-//        }
-    }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton backBtn;

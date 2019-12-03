@@ -9,10 +9,10 @@ import Business.EcoSystem.EcoSystem;
 import Business.EnterpriseDirectory.Enterprise;
 import Business.Organization.Organization;
 import Business.UserAccount.UserAccount;
-import UI.Charts.EmpWrChart;
-import UI.Charts.EntpOrgChart;
-import UI.Charts.MedManufChart;
-import UI.Charts.MedResearchChart;
+import UI.CPCharts.EmpWrChart;
+import UI.CPCharts.EntpOrgChart;
+import UI.CPCharts.MedManufChart;
+import UI.CPCharts.MedResearchChart;
 import UI.MainJFrame.MainJFrame;
 import java.awt.CardLayout;
 import java.awt.Color;
@@ -36,9 +36,6 @@ public class EntpAdminJPanel extends javax.swing.JPanel {
     private Enterprise enterprise;
     private Organization organization;
     private EcoSystem ecoSystem;
-    private String mode = "";
-    private String identifier = "";
-    private String col[] = new String[4];
 
     public EntpAdminJPanel(JPanel displayPanel, UserAccount userAccount, Enterprise enterprise, Organization organization, EcoSystem ecoSystem) {
         initComponents();
@@ -212,17 +209,6 @@ public class EntpAdminJPanel extends javax.swing.JPanel {
         layout.next(displayPanel);
     }//GEN-LAST:event_medResearchChartBtnActionPerformed
 
-    public JPanel createChartPanel() {
-        DefaultPieDataset pieDataset = new DefaultPieDataset();
-        pieDataset.setValue("One", new Integer(10));
-        pieDataset.setValue("Two", new Integer(20));
-        pieDataset.setValue("Three", new Integer(30));
-        pieDataset.setValue("Four", new Integer(10));
-        pieDataset.setValue("Five", new Integer(20));
-        pieDataset.setValue("Six", new Integer(10));
-        JFreeChart chart = ChartFactory.createPieChart3D("3D Pie Chart", pieDataset, true, true, true);
-        return new ChartPanel(chart);
-    }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton empWrChartBtn;

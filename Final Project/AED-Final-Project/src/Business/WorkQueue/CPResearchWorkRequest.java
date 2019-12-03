@@ -13,7 +13,6 @@ public class CPResearchWorkRequest extends WorkRequest {
 
     private String result;
     private String activeIngredient;
-    private String state;
 
     public String getResult() {
         return result;
@@ -29,13 +28,5 @@ public class CPResearchWorkRequest extends WorkRequest {
 
     public void setActiveIngredient(String activeIngredient) {
         this.activeIngredient = activeIngredient;
-    }
-
-    public String getState() {
-        return state;
-    }
-
-    public void setState(String state) {
-        this.state = state;
     }
 }

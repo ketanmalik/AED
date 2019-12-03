@@ -3,12 +3,19 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package UI.Charts;
+package UI.MktCharts;
 
 import Business.EnterpriseDirectory.Enterprise;
+import Business.Organization.DoctorOrganization;
 import Business.Organization.Organization;
+import Business.UserAccount.UserAccount;
+import Business.WorkQueue.CPResearchWorkRequest;
+import Business.WorkQueue.WorkRequest;
 import java.awt.CardLayout;
 import java.awt.Component;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.Set;
 import javax.swing.JPanel;
 import org.jfree.chart.ChartFactory;
 import org.jfree.chart.ChartPanel;
@@ -19,30 +26,22 @@ import org.jfree.data.general.DefaultPieDataset;
  *
  * @author ketanmalik
  */
-public class EntpOrgChart extends javax.swing.JPanel {
+public class ReseStateChart extends javax.swing.JPanel {
 
     /**
-     * Creates new form EntpOrgChart
+     * Creates new form ReseStateChart
      */
     private JPanel displayPanel;
     private Enterprise enterprise;
-    private String title;
+    private Map<String, Integer> map;
 
-    public EntpOrgChart(JPanel displayPanel, Enterprise enterprise, String title) {
+    public ReseStateChart(JPanel displayPanel, Enterprise enterprise, String title) {
         this.displayPanel = displayPanel;
         this.enterprise = enterprise;
-        this.title = title;
+        map = new HashMap<>();
+        generateMap();
         initComponents();
         titleLabel.setText(title);
-    }
-
-    public JPanel createChart() {
-        DefaultPieDataset pieDataset = new DefaultPieDataset();
-        for (Organization o : enterprise.getOrganizationDirectory().getOrganizationList()) {
-            pieDataset.setValue(o.getName(), o.getEmployeeDirectory().getEmployeeList().size());
-        }
-        JFreeChart chart = ChartFactory.createPieChart3D("Employee distribution in organization", pieDataset, true, true, true);
-        return new ChartPanel(chart);
     }
 
     /**
@@ -55,8 +54,8 @@ public class EntpOrgChart extends javax.swing.JPanel {
     private void initComponents() {
 
         chartPanel = createChart();
-        backBtn = new javax.swing.JButton();
         titleLabel = new javax.swing.JLabel();
+        backBtn = new javax.swing.JButton();
 
         setBackground(new java.awt.Color(0, 153, 153));
 
@@ -71,16 +70,16 @@ public class EntpOrgChart extends javax.swing.JPanel {
             .addGap(0, 530, Short.MAX_VALUE)
         );
 
+        titleLabel.setFont(new java.awt.Font("Lucida Grande", 0, 18)); // NOI18N
+        titleLabel.setForeground(new java.awt.Color(255, 255, 255));
+        titleLabel.setText("No. of employees in Organization");
+
         backBtn.setText("Back");
         backBtn.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 backBtnActionPerformed(evt);
             }
         });
-
-        titleLabel.setFont(new java.awt.Font("Lucida Grande", 0, 18)); // NOI18N
-        titleLabel.setForeground(new java.awt.Color(255, 255, 255));
-        titleLabel.setText("No. of employees in Organization");
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
@@ -118,6 +117,35 @@ public class EntpOrgChart extends javax.swing.JPanel {
         layout.previous(displayPanel);
     }//GEN-LAST:event_backBtnActionPerformed
 
+    private void generateMap() {
+        for (Organization o : enterprise.getOrganizationDirectory().getOrganizationList()) {
+            if (o instanceof DoctorOrganization) {
+                for (UserAccount u : o.getUserAccountDirectory().getUserAccountList()) {
+                    for (WorkRequest wr : u.getWorkQueue().getWorkRequestList()) {
+                        if (wr instanceof CPResearchWorkRequest) {
+                            if (map.containsKey(wr.getState())) {
+                                int i = map.get(wr.getState()) + 1;
+                                map.put(wr.getState(), i);
+                            } else {
+                                map.put(wr.getState(), 1);
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+
+    public JPanel createChart() {
+        DefaultPieDataset pieDataset = new DefaultPieDataset();
+
+        Set<String> key = map.keySet();
+        for (String s : key) {
+            pieDataset.setValue(s, map.get(s));
+        }
+        JFreeChart chart = ChartFactory.createPieChart3D("Research request distribution in different states", pieDataset, true, true, true);
+        return new ChartPanel(chart);
+    }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton backBtn;
