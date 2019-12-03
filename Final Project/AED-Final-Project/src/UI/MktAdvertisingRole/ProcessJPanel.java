@@ -12,6 +12,7 @@ import Business.WorkQueue.WorkRequest;
 import Business.util.SMS;
 import java.awt.CardLayout;
 import java.awt.Component;
+import java.util.Date;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 
@@ -309,6 +310,7 @@ public class ProcessJPanel extends javax.swing.JPanel {
             request.getMedicine().setMarketPrice(marketPrice);
             request.getMedicine().setQuantity(quantity);
             request.setStatus("Request Completed");
+            request.setRequestDate(new Date());
             request.setSender(userAccount);
             request.setReceiver(null);
             ecoSystem.getMedicineList().add(request.getMedicine());

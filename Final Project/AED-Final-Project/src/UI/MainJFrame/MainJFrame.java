@@ -10,6 +10,7 @@ import Business.EcoSystem.EcoSystem;
 import Business.EnterpriseDirectory.Enterprise;
 import Business.Organization.Organization;
 import Business.UserAccount.UserAccount;
+import UI.CPEntpAdmin.EntpAdminJPanel;
 import UI.EcoSysAdmin.ManageEnterpriseAdmin;
 import UI.EcoSysAdmin.ManageEnterprisePanel;
 import UI.EcoSysAdmin.ManageNetworkPanel;
@@ -17,6 +18,7 @@ import UI.EntpAdmin.ManageEmployeeJPanel;
 import UI.EntpAdmin.ManageOrganizationJPanel;
 import UI.EntpAdmin.ManageUserJPanel;
 import java.awt.CardLayout;
+import java.awt.Component;
 import java.awt.event.*;
 import javax.swing.Timer;
 
@@ -68,6 +70,7 @@ public class MainJFrame extends javax.swing.JFrame {
         manageEnterpriseBtn.setVisible(state);
         manageAdminBtn.setVisible(state);
         logoutBtn.setVisible(state);
+        homeBtn.setVisible(state);
     }
 
     /**
@@ -85,6 +88,7 @@ public class MainJFrame extends javax.swing.JFrame {
         manageEnterpriseBtn = new javax.swing.JButton();
         manageAdminBtn = new javax.swing.JButton();
         logoutBtn = new javax.swing.JButton();
+        homeBtn = new javax.swing.JButton();
         displayPanel = new javax.swing.JPanel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
@@ -129,6 +133,13 @@ public class MainJFrame extends javax.swing.JFrame {
             }
         });
 
+        homeBtn.setIcon(new javax.swing.ImageIcon("/Users/ketanmalik/Downloads/Sem1/AED/Git/malik_ketan_001378783/Final Project/icons8-home-30.png")); // NOI18N
+        homeBtn.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                homeBtnActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout controlPanelLayout = new javax.swing.GroupLayout(controlPanel);
         controlPanel.setLayout(controlPanelLayout);
         controlPanelLayout.setHorizontalGroup(
@@ -140,7 +151,9 @@ public class MainJFrame extends javax.swing.JFrame {
                 .addComponent(manageEnterpriseBtn)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(manageAdminBtn)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 268, Short.MAX_VALUE)
+                .addComponent(homeBtn)
+                .addGap(18, 18, 18)
                 .addComponent(logoutBtn)
                 .addContainerGap())
         );
@@ -152,7 +165,8 @@ public class MainJFrame extends javax.swing.JFrame {
                     .addComponent(manageNetworkBtn)
                     .addComponent(manageEnterpriseBtn)
                     .addComponent(manageAdminBtn)
-                    .addComponent(logoutBtn))
+                    .addComponent(logoutBtn)
+                    .addComponent(homeBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 38, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap())
         );
 
@@ -166,7 +180,7 @@ public class MainJFrame extends javax.swing.JFrame {
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(splitPane, javax.swing.GroupLayout.DEFAULT_SIZE, 1100, Short.MAX_VALUE)
+            .addComponent(splitPane)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -232,6 +246,20 @@ public class MainJFrame extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_manageAdminBtnActionPerformed
 
+    private void homeBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_homeBtnActionPerformed
+        // TODO add your handling code here:
+        Component[] componentArray = displayPanel.getComponents();
+        displayPanel.removeAll();
+        for(Component c: componentArray){
+            if(c instanceof EntpAdminJPanel){
+                displayPanel.add(c);
+                break;
+            }
+        }
+        CardLayout layout = (CardLayout) displayPanel.getLayout();
+        layout.next(displayPanel);
+    }//GEN-LAST:event_homeBtnActionPerformed
+
     public static Organization getInOrganization() {
         return inOrganization;
     }
@@ -294,6 +322,7 @@ public class MainJFrame extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JPanel controlPanel;
     private javax.swing.JPanel displayPanel;
+    public static javax.swing.JButton homeBtn;
     public static javax.swing.JButton logoutBtn;
     public static javax.swing.JButton manageAdminBtn;
     public static javax.swing.JButton manageEnterpriseBtn;

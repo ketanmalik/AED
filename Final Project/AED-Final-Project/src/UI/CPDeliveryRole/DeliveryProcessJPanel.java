@@ -14,6 +14,7 @@ import Business.WorkQueue.WorkRequest;
 import Business.util.SMS;
 import java.awt.CardLayout;
 import java.awt.Component;
+import java.util.Date;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 
@@ -138,6 +139,7 @@ public class DeliveryProcessJPanel extends javax.swing.JPanel {
             request.setSender(userAccount);
             request.setReceiver(null);
             request.setCode(code++);
+            request.setResolveDate(new Date());
             sendToOriginator();
             String msg = "Your request with ID " + request.getId() + " is now ready for pickup. Pickup code: " + request.getCode();
             SMS.sendSMS(msg);

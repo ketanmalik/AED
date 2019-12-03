@@ -129,6 +129,7 @@ public class SignInPanel extends javax.swing.JPanel {
             CardLayout layout = (CardLayout) displayPanel.getLayout();
             layout.next(displayPanel);
             MainJFrame.showButtons(true);
+            MainJFrame.homeBtn.setVisible(false);
             return;
         } else {
             for (Network n : ecoSystem.getNetworkDirectory().getNetworkList()) {

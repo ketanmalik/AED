@@ -46,8 +46,8 @@ public class ManufactureWRJPanel extends javax.swing.JPanel {
         this.enterprise = enterprise;
         this.organization = organization;
         this.ecoSystem = ecoSystem;
-        this.id = ecoSystem.id;
-        this.idPatient = ecoSystem.id;
+        this.id = ecoSystem.getId();
+        this.idPatient = ecoSystem.getId();
         populateDetails();
     }
 
@@ -271,10 +271,10 @@ public class ManufactureWRJPanel extends javax.swing.JPanel {
         CPManufactureWorkRequest request = new CPManufactureWorkRequest();
         if (userAccount.getIdentifier().equals("mp")) {
             request.setId("PM-WR-" + idPatient++);
-            ecoSystem.id = idPatient;
+            ecoSystem.setId(idPatient);
         } else {
             request.setId("DM-WR-" + id++);
-            ecoSystem.id = id;
+            ecoSystem.setId(id);
         }
         request.setMedicine(medicine);
         request.setQuantity(quantity);

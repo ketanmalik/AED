@@ -345,6 +345,11 @@ public class ManageUserJPanel extends javax.swing.JPanel {
         MainJFrame.manageAdminBtn.setBorderPainted(false);
         MainJFrame.manageAdminBtn.setForeground(Color.black);
 
+        MainJFrame.homeBtn.setVisible(true);
+        MainJFrame.homeBtn.setOpaque(false);
+        MainJFrame.homeBtn.setContentAreaFilled(false);
+        MainJFrame.homeBtn.setBorderPainted(false);
+
         MainJFrame.logoutBtn.setOpaque(false);
         MainJFrame.logoutBtn.setContentAreaFilled(false);
         MainJFrame.logoutBtn.setBorderPainted(false);

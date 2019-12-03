@@ -131,9 +131,10 @@ public class ConfigureASystem {
         // 10. Create Medicine List
         system.getMedicineList().add(new Medicine("Albendazole", 200, "Anti-worm Medication", 0.3, 1.1, 30, "Benzimidazoles", "Tablet"));
         system.getMedicineList().add(new Medicine("Bosentan", 125, "Pulmonary artery hypertension", 1.5, 5, 25, "phenylalanine", "Tablet"));
-        system.getMedicineList().add(new Medicine("Delsym", 0, "Cough & sour throat", 2, 18, 6, "Dextromethorphan Polistirex","Syrup"));
-        system.getMedicineList().add(new Medicine("Syprine", 250, "Wilson's deisease", 177.6, 222, 10, "Trientine hydrochloride","Capsule"));
+        system.getMedicineList().add(new Medicine("Delsym", 0, "Cough & sour throat", 2, 18, 6, "Dextromethorphan Polistirex", "Syrup"));
+        system.getMedicineList().add(new Medicine("Syprine", 250, "Wilson's deisease", 177.6, 222, 10, "Trientine hydrochloride", "Capsule"));
 
+        system.setId(1);
         return system;
     }
 

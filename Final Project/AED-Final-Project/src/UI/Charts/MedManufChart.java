@@ -5,10 +5,16 @@
  */
 package UI.Charts;
 
+import Business.EcoSystem.EcoSystem;
 import Business.EnterpriseDirectory.Enterprise;
+import Business.Organization.ManufactureOrganization;
 import Business.Organization.Organization;
+import Business.WorkQueue.WorkRequest;
 import java.awt.CardLayout;
 import java.awt.Component;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.Set;
 import javax.swing.JPanel;
 import org.jfree.chart.ChartFactory;
 import org.jfree.chart.ChartPanel;
@@ -19,19 +25,20 @@ import org.jfree.data.general.DefaultPieDataset;
  *
  * @author ketanmalik
  */
-public class EmpWrChart extends javax.swing.JPanel {
+public class MedManufChart extends javax.swing.JPanel {
 
     /**
-     * Creates new form EmpWrChart
+     * Creates new form MedManufChart
      */
     private JPanel displayPanel;
     private Enterprise enterprise;
-    private String title;
+    private Map<String, Integer> map;
 
-    public EmpWrChart(JPanel displayPanel, Enterprise enterprise, String title) {
+    public MedManufChart(JPanel displayPanel, Enterprise enterprise, EcoSystem ecoSystem, String title) {
         this.displayPanel = displayPanel;
         this.enterprise = enterprise;
-        this.title = title;
+        map = new HashMap<>();
+        generateMap();
         initComponents();
         titleLabel.setText(title);
     }
@@ -45,11 +52,18 @@ public class EmpWrChart extends javax.swing.JPanel {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        chartPanel = createChart();
         backBtn = new javax.swing.JButton();
+        chartPanel = createChart();
         titleLabel = new javax.swing.JLabel();
 
         setBackground(new java.awt.Color(0, 153, 153));
+
+        backBtn.setText("Back");
+        backBtn.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                backBtnActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout chartPanelLayout = new javax.swing.GroupLayout(chartPanel);
         chartPanel.setLayout(chartPanelLayout);
@@ -61,13 +75,6 @@ public class EmpWrChart extends javax.swing.JPanel {
             chartPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGap(0, 530, Short.MAX_VALUE)
         );
-
-        backBtn.setText("Back");
-        backBtn.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                backBtnActionPerformed(evt);
-            }
-        });
 
         titleLabel.setFont(new java.awt.Font("Lucida Grande", 0, 18)); // NOI18N
         titleLabel.setForeground(new java.awt.Color(255, 255, 255));
@@ -101,14 +108,28 @@ public class EmpWrChart extends javax.swing.JPanel {
         );
     }// </editor-fold>//GEN-END:initComponents
 
+    private void generateMap() {
+        for (Organization o : enterprise.getOrganizationDirectory().getOrganizationList()) {
+            if (o instanceof ManufactureOrganization) {
+                for (WorkRequest w : o.getWorkQueue().getWorkRequestList()) {
+                    if (map.containsKey(w.getMedicine().getName())) {
+                        int i = map.get(w.getMedicine().getName()) + 1;
+                        map.put(w.getMedicine().getName(), i);
+                    } else {
+                        map.put(w.getMedicine().getName(), 1);
+                    }
+                }
+            }
+        }
+    }
+
     public JPanel createChart() {
         DefaultPieDataset pieDataset = new DefaultPieDataset();
-
-        for (Organization o : enterprise.getOrganizationDirectory().getOrganizationList()) {
-            pieDataset.setValue(o.getName(), o.getWorkQueue().getWorkRequestList().size());
+        Set<String> key = map.keySet();
+        for (String s : key) {
+            pieDataset.setValue(s, map.get(s));
         }
-
-        JFreeChart chart = ChartFactory.createPieChart3D("Work Request distribution among organizations", pieDataset, true, true, true);
+        JFreeChart chart = ChartFactory.createPieChart3D("Medicines under manufacturing", pieDataset, true, true, true);
         return new ChartPanel(chart);
     }
 
