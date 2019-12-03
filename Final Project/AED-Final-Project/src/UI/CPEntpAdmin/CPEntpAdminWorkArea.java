@@ -19,6 +19,8 @@ import Business.Role.ManufacturerRole;
 import Business.Role.ResearcherRole;
 import Business.Role.Role;
 import Business.UserAccount.UserAccount;
+import UI.MainJFrame.MainJFrame;
+import java.awt.Color;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.table.DefaultTableModel;
@@ -56,7 +58,34 @@ public class CPEntpAdminWorkArea extends javax.swing.JPanel {
         orgEmpDropdown.setVisible(false);
         orgRoleLeble.setVisible(false);
         orgRoleDropdown.setVisible(false);
+        modifyButtons();
+    }
 
+    private void modifyButtons() {
+        MainJFrame.manageNetworkBtn.setVisible(true);
+        MainJFrame.manageNetworkBtn.setText("Manage Organizations");
+        MainJFrame.manageNetworkBtn.setOpaque(false);
+        MainJFrame.manageNetworkBtn.setContentAreaFilled(false);
+        MainJFrame.manageNetworkBtn.setBorderPainted(false);
+        MainJFrame.manageNetworkBtn.setForeground(Color.black);
+
+        MainJFrame.manageEnterpriseBtn.setVisible(true);
+        MainJFrame.manageEnterpriseBtn.setText("Manage Employees");
+        MainJFrame.manageEnterpriseBtn.setOpaque(false);
+        MainJFrame.manageEnterpriseBtn.setContentAreaFilled(false);
+        MainJFrame.manageEnterpriseBtn.setBorderPainted(false);
+        MainJFrame.manageEnterpriseBtn.setForeground(Color.white);
+
+        MainJFrame.manageAdminBtn.setVisible(true);
+        MainJFrame.manageAdminBtn.setText("Manage User Accounts");
+        MainJFrame.manageAdminBtn.setOpaque(false);
+        MainJFrame.manageAdminBtn.setContentAreaFilled(false);
+        MainJFrame.manageAdminBtn.setBorderPainted(false);
+        MainJFrame.manageAdminBtn.setForeground(Color.white);
+
+        MainJFrame.logoutBtn.setOpaque(false);
+        MainJFrame.logoutBtn.setContentAreaFilled(false);
+        MainJFrame.logoutBtn.setBorderPainted(false);
     }
 
     private void setLabel() {
@@ -249,54 +278,53 @@ public class CPEntpAdminWorkArea extends javax.swing.JPanel {
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addGap(45, 45, 45)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(roleLabel)
-                            .addComponent(titleLabel))
-                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                        .addComponent(employeesManageBtn, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(organizationManageBtn, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addComponent(userAccountManageBtn))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 106, Short.MAX_VALUE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(orgCompLabel)
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 600, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGroup(layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                                .addComponent(employeesManageBtn, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addComponent(organizationManageBtn, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                            .addComponent(userAccountManageBtn))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 106, Short.MAX_VALUE)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(orgCompLabel)
-                            .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 600, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addGroup(layout.createSequentialGroup()
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(orgTypeLabel, javax.swing.GroupLayout.Alignment.TRAILING)
-                                    .addComponent(orgNameLabel, javax.swing.GroupLayout.Alignment.TRAILING)
-                                    .addComponent(orgRoleLeble, javax.swing.GroupLayout.Alignment.TRAILING))
-                                .addGap(18, 18, 18)
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                    .addComponent(orgTypeDropdown, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                    .addComponent(orgNameTxtField)
-                                    .addComponent(orgRoleDropdown, 0, 160, Short.MAX_VALUE))
-                                .addGap(18, 18, 18)
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                                    .addComponent(orgPassLabel)
-                                    .addComponent(orgEmpLabel))
-                                .addGap(18, 18, 18)
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                    .addComponent(orgPassTxtField)
-                                    .addComponent(orgEmpDropdown, 0, 160, Short.MAX_VALUE))))
-                        .addContainerGap(76, Short.MAX_VALUE))))
+                            .addComponent(orgTypeLabel, javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(orgNameLabel, javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(orgRoleLeble, javax.swing.GroupLayout.Alignment.TRAILING))
+                        .addGap(18, 18, 18)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(orgTypeDropdown, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(orgNameTxtField)
+                            .addComponent(orgRoleDropdown, 0, 160, Short.MAX_VALUE))
+                        .addGap(18, 18, 18)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(orgPassLabel)
+                            .addComponent(orgEmpLabel))
+                        .addGap(18, 18, 18)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(orgPassTxtField)
+                            .addComponent(orgEmpDropdown, 0, 160, Short.MAX_VALUE))))
+                .addContainerGap(76, Short.MAX_VALUE))
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(orgAddBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 170, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(289, 289, 289))
+            .addGroup(layout.createSequentialGroup()
+                .addGap(349, 349, 349)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.CENTER)
+                    .addComponent(titleLabel)
+                    .addComponent(roleLabel))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(62, 62, 62)
+                .addGap(25, 25, 25)
                 .addComponent(titleLabel)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(roleLabel)
-                .addGap(38, 38, 38)
+                .addGap(94, 94, 94)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(orgCompLabel)
@@ -320,7 +348,6 @@ public class CPEntpAdminWorkArea extends javax.swing.JPanel {
                     .addComponent(orgNameLabel)
                     .addComponent(orgPassLabel)
                     .addComponent(orgPassTxtField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
                         .addGap(58, 58, 58)
@@ -328,7 +355,7 @@ public class CPEntpAdminWorkArea extends javax.swing.JPanel {
                     .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                         .addComponent(orgRoleDropdown, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addComponent(orgRoleLeble)))
-                .addContainerGap(231, Short.MAX_VALUE))
+                .addContainerGap(212, Short.MAX_VALUE))
         );
     }// </editor-fold>//GEN-END:initComponents
 

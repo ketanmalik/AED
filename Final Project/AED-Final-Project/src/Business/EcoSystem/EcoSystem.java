@@ -23,6 +23,7 @@ public class EcoSystem extends Organization {
     private static EcoSystem ecoSystemObj = null;
     private NetworkDirectory networkDirectory;
     private List<Medicine> medicineList;
+    public static int id = 1;
 
     private EcoSystem() {
         super("Ecosystem");

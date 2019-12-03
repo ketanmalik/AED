@@ -105,7 +105,7 @@
         <Property name="foreground" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
           <Color blue="ff" green="ff" red="ff" type="rgb"/>
         </Property>
-        <Property name="text" type="java.lang.String" value="As a Manufacturer, you can assign the manufacturing work request to yourseld and"/>
+        <Property name="text" type="java.lang.String" value="As a Researcher, you can assign the research work request to yourseld and"/>
       </Properties>
     </Component>
     <Component class="javax.swing.JLabel" name="jLabel2">

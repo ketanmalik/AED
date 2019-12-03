@@ -9,6 +9,7 @@ import Business.EcoSystem.EcoSystem;
 import Business.EnterpriseDirectory.Enterprise;
 import Business.UserAccount.UserAccount;
 import Business.WorkQueue.WorkRequest;
+import Business.util.SMS;
 import java.awt.CardLayout;
 import java.awt.Component;
 import javax.swing.JOptionPane;
@@ -311,7 +312,9 @@ public class ProcessJPanel extends javax.swing.JPanel {
             request.setSender(userAccount);
             request.setReceiver(null);
             ecoSystem.getMedicineList().add(request.getMedicine());
-            JOptionPane.showMessageDialog(null, "Your request has been completed");
+            String msg = "Your request with ID " + request.getId() + " is now ready for manufacturing. Please place an order for manufacturing the medicine";
+            SMS.sendSMS(msg);
+            JOptionPane.showMessageDialog(null, "Your request has been completed. The medicine can now be ordered and manufactured");
             displayPanel.remove(this);
             Component[] componentArray = displayPanel.getComponents();
             Component component = componentArray[componentArray.length - 1];

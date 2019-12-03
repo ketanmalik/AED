@@ -6,6 +6,7 @@
 package UI.CPInspectorRole;
 
 import Business.EcoSystem.EcoSystem;
+import Business.EnterpriseDirectory.CompoundPharmacyEnterprise;
 import Business.EnterpriseDirectory.Enterprise;
 import Business.EnterpriseDirectory.MarketingEnterprise;
 import Business.Network.Network;
@@ -15,8 +16,11 @@ import Business.Organization.InspectionOrganization;
 import Business.Organization.Organization;
 import Business.UserAccount.UserAccount;
 import Business.WorkQueue.WorkRequest;
+import Business.util.RegexValidations;
 import java.awt.CardLayout;
 import java.awt.Component;
+import java.util.ArrayList;
+import java.util.List;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 
@@ -60,6 +64,7 @@ public class InspectorProcessJPanel extends javax.swing.JPanel {
         jLabel1 = new javax.swing.JLabel();
         notesTxtField = new javax.swing.JTextField();
         completeBtn = new javax.swing.JButton();
+        failBtn = new javax.swing.JButton();
 
         setBackground(new java.awt.Color(0, 153, 153));
 
@@ -80,6 +85,13 @@ public class InspectorProcessJPanel extends javax.swing.JPanel {
             }
         });
 
+        failBtn.setText("Fail Inspection");
+        failBtn.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                failBtnActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
         layout.setHorizontalGroup(
@@ -95,9 +107,11 @@ public class InspectorProcessJPanel extends javax.swing.JPanel {
                                 .addComponent(notesTxtField, javax.swing.GroupLayout.PREFERRED_SIZE, 350, javax.swing.GroupLayout.PREFERRED_SIZE))
                             .addComponent(backBtn)))
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(407, 407, 407)
-                        .addComponent(completeBtn)))
-                .addContainerGap(451, Short.MAX_VALUE))
+                        .addGap(290, 290, 290)
+                        .addComponent(completeBtn)
+                        .addGap(18, 18, 18)
+                        .addComponent(failBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 142, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addContainerGap(408, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -109,7 +123,9 @@ public class InspectorProcessJPanel extends javax.swing.JPanel {
                     .addComponent(jLabel1)
                     .addComponent(notesTxtField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(68, 68, 68)
-                .addComponent(completeBtn)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(completeBtn)
+                    .addComponent(failBtn))
                 .addContainerGap(546, Short.MAX_VALUE))
         );
     }// </editor-fold>//GEN-END:initComponents
@@ -166,37 +182,85 @@ public class InspectorProcessJPanel extends javax.swing.JPanel {
 
 
     }//GEN-LAST:event_completeBtnActionPerformed
+
+    private void failBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_failBtnActionPerformed
+        String message = notesTxtField.getText();
+        if (message == null || message.equals("") || !RegexValidations.nameValidation(message)) {
+            JOptionPane.showMessageDialog(null, "Please enter valid message for failing the inspection", "Invalid Message", JOptionPane.ERROR_MESSAGE);
+            return;
+        }
+        int input = JOptionPane.showOptionDialog(null, "Are you you want to fail inspection for " + request.getId() + " request?", "Process Confirmation", JOptionPane.OK_OPTION, JOptionPane.INFORMATION_MESSAGE, null, null, null);
+        if (input == JOptionPane.OK_OPTION) {
+            request.setMessage(message);
+            request.setSender(userAccount);
+            request.setReceiver(null);
+
+            if (request.getMedicine().getPrice() == 0) {
+                request.setStatus("Research Request Accepted");
+            } else {
+                request.setStatus("Order Confirmed");
+            }
+            JOptionPane.showMessageDialog(null, "Your request has been sent back to the appropriate team");
+            displayPanel.remove(this);
+            Component[] componentArray = displayPanel.getComponents();
+            Component component = componentArray[componentArray.length - 1];
+            InspectorWorkAreaJPanel mwjp = (InspectorWorkAreaJPanel) component;
+            mwjp.populateTables();
+            CardLayout layout = (CardLayout) displayPanel.getLayout();
+            layout.previous(displayPanel);
+        }
+    }//GEN-LAST:event_failBtnActionPerformed
     private void sendToDelivery() {
-        Organization org = null;
-        for (Organization o : enterprise.getOrganizationDirectory().getOrganizationList()) {
-            if (o instanceof DeliveryOrganization) {
-                org = o;
-                break;
+//        Organization org = null;
+        List<Organization> org = new ArrayList<>();
+
+//        for (Organization o : enterprise.getOrganizationDirectory().getOrganizationList()) {
+//            if (o instanceof DeliveryOrganization) {
+//                org = o;
+//                break;
+//            }
+//        }
+        for (Network n : ecoSystem.getNetworkDirectory().getNetworkList()) {
+            for (Enterprise e : n.getEnterpriseDirectory().getEnterpriseList()) {
+                if (e instanceof CompoundPharmacyEnterprise) {
+                    for (Organization o : e.getOrganizationDirectory().getOrganizationList()) {
+                        if (o instanceof DeliveryOrganization) {
+                            org.add(o);
+                        }
+                    }
+                }
             }
         }
+
         if (org != null) {
-            org.getWorkQueue().getWorkRequestList().add(request);
+//            org.getWorkQueue().getWorkRequestList().add(request);
+            for (Organization o : org) {
+                o.getWorkQueue().getWorkRequestList().add(request);
+            }
             userAccount.getWorkQueue().getWorkRequestList().add(request);
         }
     }
 
     private void sendToMarketing() {
-        Organization org = null;
+//        Organization org = null;
+        List<Organization> org = new ArrayList<>();
+
         for (Network n : ecoSystem.getNetworkDirectory().getNetworkList()) {
             for (Enterprise e : n.getEnterpriseDirectory().getEnterpriseList()) {
                 if (e instanceof MarketingEnterprise) {
                     for (Organization o : e.getOrganizationDirectory().getOrganizationList()) {
                         if (o instanceof AdvertisingOrganization) {
-                            org = o;
-                            break;
+                            org.add(o);
                         }
                     }
-                    break;
                 }
             }
         }
         if (org != null) {
-            org.getWorkQueue().getWorkRequestList().add(request);
+//            org.getWorkQueue().getWorkRequestList().add(request);
+            for (Organization o : org) {
+                o.getWorkQueue().getWorkRequestList().add(request);
+            }
             userAccount.getWorkQueue().getWorkRequestList().add(request);
         }
     }
@@ -204,6 +268,7 @@ public class InspectorProcessJPanel extends javax.swing.JPanel {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton backBtn;
     private javax.swing.JButton completeBtn;
+    private javax.swing.JButton failBtn;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JTextField notesTxtField;
     // End of variables declaration//GEN-END:variables

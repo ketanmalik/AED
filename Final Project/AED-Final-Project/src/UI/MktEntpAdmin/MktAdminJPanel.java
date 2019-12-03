@@ -34,6 +34,7 @@ public class MktAdminJPanel extends javax.swing.JPanel {
         this.organization = organization;
         this.ecoSystem = ecoSystem;
         setLabel();
+        System.out.println("UI.MktEntpAdmin.MktAdminJPanel.<init>()");
     }
 
     private void setLabel() {
@@ -67,20 +68,20 @@ public class MktAdminJPanel extends javax.swing.JPanel {
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(45, 45, 45)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(roleLabel)
-                    .addComponent(titleLabel))
-                .addContainerGap(757, Short.MAX_VALUE))
+                .addGap(349, 349, 349)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.CENTER)
+                    .addComponent(titleLabel)
+                    .addComponent(roleLabel))
+                .addContainerGap(453, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(62, 62, 62)
+                .addGap(25, 25, 25)
                 .addComponent(titleLabel)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(roleLabel)
-                .addContainerGap(682, Short.MAX_VALUE))
+                .addContainerGap(719, Short.MAX_VALUE))
         );
     }// </editor-fold>//GEN-END:initComponents
 

@@ -6,15 +6,19 @@
 package UI.MktDoctorRole;
 
 import Business.EcoSystem.EcoSystem;
+import Business.EnterpriseDirectory.CompoundPharmacyEnterprise;
 import Business.EnterpriseDirectory.Enterprise;
 import Business.MedicineList.Medicine;
 import Business.Network.Network;
+import Business.Organization.ManufactureOrganization;
 import Business.Organization.Organization;
 import Business.Organization.ResearchOrganization;
 import Business.UserAccount.UserAccount;
 import Business.WorkQueue.CPResearchWorkRequest;
 import java.awt.CardLayout;
 import java.awt.Component;
+import java.util.ArrayList;
+import java.util.List;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 
@@ -32,7 +36,7 @@ public class ResearchWRJPanel extends javax.swing.JPanel {
     private Enterprise enterprise;
     private Organization organization;
     private EcoSystem ecoSystem;
-    private static int id = 1;
+    private static int id;
 
     public ResearchWRJPanel(JPanel displayPanel, UserAccount userAccount, Enterprise enterprise, Organization organization, EcoSystem ecoSystem) {
         initComponents();
@@ -41,6 +45,7 @@ public class ResearchWRJPanel extends javax.swing.JPanel {
         this.enterprise = enterprise;
         this.organization = organization;
         this.ecoSystem = ecoSystem;
+        this.id = ecoSystem.id;
     }
 
     /**
@@ -118,6 +123,9 @@ public class ResearchWRJPanel extends javax.swing.JPanel {
         jLabel6.setForeground(new java.awt.Color(255, 255, 255));
         jLabel6.setText("(mg)");
 
+        phoneTxtField.setText("8572078509");
+        phoneTxtField.setEnabled(false);
+
         jLabel7.setForeground(new java.awt.Color(255, 255, 255));
         jLabel7.setText("Phone Number:");
 
@@ -134,7 +142,8 @@ public class ResearchWRJPanel extends javax.swing.JPanel {
                             .addComponent(jLabel1)
                             .addComponent(jLabel3)
                             .addComponent(jLabel4)
-                            .addComponent(jLabel5))
+                            .addComponent(jLabel5)
+                            .addComponent(jLabel7))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(medicineNameTxtField, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -144,20 +153,15 @@ public class ResearchWRJPanel extends javax.swing.JPanel {
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addComponent(jLabel6))
                             .addComponent(ingredientTxtField, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(stateDropdown, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                            .addComponent(stateDropdown, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(phoneTxtField, javax.swing.GroupLayout.PREFERRED_SIZE, 197, javax.swing.GroupLayout.PREFERRED_SIZE)))
                     .addGroup(layout.createSequentialGroup()
                         .addGap(25, 25, 25)
                         .addComponent(backBtn))
                     .addGroup(layout.createSequentialGroup()
                         .addGap(362, 362, 362)
                         .addComponent(confirmOrderBtn)))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-            .addGroup(layout.createSequentialGroup()
-                .addContainerGap(88, Short.MAX_VALUE)
-                .addComponent(jLabel7)
-                .addGap(18, 18, 18)
-                .addComponent(phoneTxtField, javax.swing.GroupLayout.PREFERRED_SIZE, 197, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(601, 601, 601))
+                .addContainerGap(464, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -187,8 +191,8 @@ public class ResearchWRJPanel extends javax.swing.JPanel {
                     .addComponent(stateDropdown, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(phoneTxtField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel7))
+                    .addComponent(jLabel7)
+                    .addComponent(phoneTxtField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(63, 63, 63)
                 .addComponent(confirmOrderBtn)
                 .addContainerGap(301, Short.MAX_VALUE))
@@ -239,6 +243,7 @@ public class ResearchWRJPanel extends javax.swing.JPanel {
 
         CPResearchWorkRequest request = new CPResearchWorkRequest();
         request.setId("DR-WR-" + id++);
+        ecoSystem.id = id;
         request.setSender(userAccount);
         request.setStatus("Research Request Accepted");
         request.setOriginator(userAccount);
@@ -247,21 +252,39 @@ public class ResearchWRJPanel extends javax.swing.JPanel {
         request.setState(state);
         request.setPhoneNo("+1" + phoneNumber);
 
-        Organization org = null;
+//        Organization org = null;
+//        for (Network n : ecoSystem.getNetworkDirectory().getNetworkList()) {
+//            for (Enterprise e : n.getEnterpriseDirectory().getEnterpriseList()) {
+//                for (Organization o : e.getOrganizationDirectory().getOrganizationList()) {
+//                    if (o instanceof ResearchOrganization) {
+//                        org = o;
+//                        break;
+//                    }
+//                }
+//                break;
+//            }
+//        }
+        List<Organization> org = new ArrayList<>();
         for (Network n : ecoSystem.getNetworkDirectory().getNetworkList()) {
             for (Enterprise e : n.getEnterpriseDirectory().getEnterpriseList()) {
-                for (Organization o : e.getOrganizationDirectory().getOrganizationList()) {
-                    if (o instanceof ResearchOrganization) {
-                        org = o;
-                        break;
+                if (e instanceof CompoundPharmacyEnterprise) {
+                    for (Organization o : e.getOrganizationDirectory().getOrganizationList()) {
+                        if (o instanceof ResearchOrganization) {
+                            org.add(o);
+                        }
                     }
                 }
-                break;
             }
         }
 
         if (org != null) {
-            org.getWorkQueue().getWorkRequestList().add(request);
+            for (Organization o : org) {
+                o.getWorkQueue().getWorkRequestList().add(request);
+            }
+        }
+
+        if (org != null) {
+//            org.getWorkQueue().getWorkRequestList().add(request);
             userAccount.getWorkQueue().getWorkRequestList().add(request);
 
             int input = JOptionPane.showOptionDialog(null, "Your request has been placed. Do you want to go back main screen?", "Request Confirmation", JOptionPane.OK_OPTION, JOptionPane.INFORMATION_MESSAGE, null, null, null);

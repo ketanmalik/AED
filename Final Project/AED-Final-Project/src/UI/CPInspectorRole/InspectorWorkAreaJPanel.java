@@ -112,7 +112,7 @@ public class InspectorWorkAreaJPanel extends javax.swing.JPanel {
 
         jLabel2.setFont(new java.awt.Font("Lucida Grande", 0, 14)); // NOI18N
         jLabel2.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel2.setText("it gets ready for delivery once the request is processed by you");
+        jLabel2.setText("it is sent to appropriate organization depending upon the inspection results");
 
         jLabel1.setFont(new java.awt.Font("Lucida Grande", 0, 14)); // NOI18N
         jLabel1.setForeground(new java.awt.Color(255, 255, 255));

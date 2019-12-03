@@ -73,7 +73,7 @@ public class DeliveryWorkAreaJPanel extends javax.swing.JPanel {
 
         jLabel2.setFont(new java.awt.Font("Lucida Grande", 0, 14)); // NOI18N
         jLabel2.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel2.setText("it gets ready for pickup and marketing once the request is processed by you");
+        jLabel2.setText("it gets ready for pickup or marketing once the request is processed by you");
 
         enterpriseLabel.setFont(new java.awt.Font("Lucida Grande", 0, 18)); // NOI18N
         enterpriseLabel.setForeground(new java.awt.Color(255, 255, 255));

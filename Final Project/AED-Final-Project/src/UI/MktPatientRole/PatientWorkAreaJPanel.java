@@ -13,6 +13,7 @@ import Business.util.DateUtil;
 import Business.WorkQueue.WorkRequest;
 import UI.MktDoctorRole.ManufactureWRJPanel;
 import java.awt.CardLayout;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.table.DefaultTableModel;
 
@@ -57,6 +58,39 @@ public class PatientWorkAreaJPanel extends javax.swing.JPanel {
         enterpriseLabel = new javax.swing.JLabel();
         requestMedicineBtn = new javax.swing.JButton();
         viewOrderBtn = new javax.swing.JButton();
+        description1 = new javax.swing.JLabel();
+        resolveDateTxtBox = new javax.swing.JTextField();
+        codeTxtBox = new javax.swing.JTextField();
+        progressTxtBox = new javax.swing.JTextField();
+        phoneTxtBox = new javax.swing.JTextField();
+        marketPriceTxtBox = new javax.swing.JTextField();
+        activeIngredientTxtBox = new javax.swing.JTextField();
+        jLabel9 = new javax.swing.JLabel();
+        quantityTxtBox = new javax.swing.JTextField();
+        jLabel10 = new javax.swing.JLabel();
+        jLabel1 = new javax.swing.JLabel();
+        medicintTypeTxtBox = new javax.swing.JTextField();
+        jLabel2 = new javax.swing.JLabel();
+        jLabel3 = new javax.swing.JLabel();
+        jLabel11 = new javax.swing.JLabel();
+        jLabel12 = new javax.swing.JLabel();
+        jLabel13 = new javax.swing.JLabel();
+        jLabel4 = new javax.swing.JLabel();
+        medicineNameTxtBox = new javax.swing.JTextField();
+        jLabel5 = new javax.swing.JLabel();
+        strengthTxtBox = new javax.swing.JTextField();
+        jLabel6 = new javax.swing.JLabel();
+        jLabel14 = new javax.swing.JLabel();
+        jLabel7 = new javax.swing.JLabel();
+        descriptionTxtBox = new javax.swing.JTextField();
+        jLabel8 = new javax.swing.JLabel();
+        jLabel15 = new javax.swing.JLabel();
+        requestIdTxtBox = new javax.swing.JTextField();
+        priceTxtBox = new javax.swing.JTextField();
+        receiverTxtBox = new javax.swing.JTextField();
+        jLabel16 = new javax.swing.JLabel();
+        statusTxtBpx = new javax.swing.JTextField();
+        requestDateTxtBox = new javax.swing.JTextField();
 
         setBackground(new java.awt.Color(0, 153, 153));
 
@@ -86,6 +120,95 @@ public class PatientWorkAreaJPanel extends javax.swing.JPanel {
         });
 
         viewOrderBtn.setText("View Order Details");
+        viewOrderBtn.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                viewOrderBtnActionPerformed(evt);
+            }
+        });
+
+        description1.setFont(new java.awt.Font("Lucida Grande", 0, 14)); // NOI18N
+        description1.setForeground(new java.awt.Color(255, 255, 255));
+        description1.setText("As a patient representative, you can 'Request Medicine' to order from a list of medicines we currently manufacture");
+
+        resolveDateTxtBox.setEnabled(false);
+
+        codeTxtBox.setEnabled(false);
+
+        progressTxtBox.setEnabled(false);
+
+        phoneTxtBox.setEnabled(false);
+
+        marketPriceTxtBox.setEnabled(false);
+
+        activeIngredientTxtBox.setEnabled(false);
+
+        jLabel9.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel9.setText("Price:");
+
+        quantityTxtBox.setEnabled(false);
+
+        jLabel10.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel10.setText("Market Price:");
+
+        jLabel1.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel1.setText("Request ID:");
+
+        medicintTypeTxtBox.setEnabled(false);
+
+        jLabel2.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel2.setText("Current Receiver:");
+
+        jLabel3.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel3.setText("Current Status:");
+
+        jLabel11.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel11.setText("Quantity:");
+
+        jLabel12.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel12.setText("Active Ingredient:");
+
+        jLabel13.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel13.setText("Medicine Type:");
+
+        jLabel4.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel4.setText("Request Date:");
+
+        medicineNameTxtBox.setEnabled(false);
+
+        jLabel5.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel5.setText("Resolve Date:");
+
+        strengthTxtBox.setEnabled(false);
+
+        jLabel6.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel6.setText("Progress:");
+
+        jLabel14.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel14.setText("Medicine Name:");
+
+        jLabel7.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel7.setText("Code:");
+
+        descriptionTxtBox.setEnabled(false);
+
+        jLabel8.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel8.setText("Phone Number:");
+
+        jLabel15.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel15.setText("Strength:");
+
+        requestIdTxtBox.setEnabled(false);
+
+        priceTxtBox.setEnabled(false);
+
+        receiverTxtBox.setEnabled(false);
+
+        jLabel16.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel16.setText("Description:");
+
+        statusTxtBpx.setEnabled(false);
+
+        requestDateTxtBox.setEnabled(false);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
@@ -99,13 +222,57 @@ public class PatientWorkAreaJPanel extends javax.swing.JPanel {
                             .addComponent(enterpriseLabel)
                             .addComponent(titleLabel)))
                     .addGroup(layout.createSequentialGroup()
+                        .addGap(35, 35, 35)
+                        .addComponent(description1))
+                    .addGroup(layout.createSequentialGroup()
                         .addGap(45, 45, 45)
-                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 675, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(68, 68, 68)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(layout.createSequentialGroup()
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(jLabel1, javax.swing.GroupLayout.Alignment.TRAILING)
+                                    .addComponent(jLabel2, javax.swing.GroupLayout.Alignment.TRAILING)
+                                    .addComponent(jLabel3, javax.swing.GroupLayout.Alignment.TRAILING)
+                                    .addComponent(jLabel4, javax.swing.GroupLayout.Alignment.TRAILING)
+                                    .addComponent(jLabel5, javax.swing.GroupLayout.Alignment.TRAILING)
+                                    .addComponent(jLabel6, javax.swing.GroupLayout.Alignment.TRAILING)
+                                    .addComponent(jLabel7, javax.swing.GroupLayout.Alignment.TRAILING)
+                                    .addComponent(jLabel8, javax.swing.GroupLayout.Alignment.TRAILING))
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(requestIdTxtBox, javax.swing.GroupLayout.PREFERRED_SIZE, 250, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(receiverTxtBox, javax.swing.GroupLayout.PREFERRED_SIZE, 250, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(statusTxtBpx, javax.swing.GroupLayout.PREFERRED_SIZE, 250, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(requestDateTxtBox, javax.swing.GroupLayout.PREFERRED_SIZE, 250, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(resolveDateTxtBox, javax.swing.GroupLayout.PREFERRED_SIZE, 250, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(progressTxtBox, javax.swing.GroupLayout.PREFERRED_SIZE, 250, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(codeTxtBox, javax.swing.GroupLayout.PREFERRED_SIZE, 250, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(phoneTxtBox, javax.swing.GroupLayout.PREFERRED_SIZE, 250, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addGap(73, 73, 73)
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(jLabel9, javax.swing.GroupLayout.Alignment.TRAILING)
+                                    .addComponent(jLabel10, javax.swing.GroupLayout.Alignment.TRAILING)
+                                    .addComponent(jLabel11, javax.swing.GroupLayout.Alignment.TRAILING)
+                                    .addComponent(jLabel12, javax.swing.GroupLayout.Alignment.TRAILING)
+                                    .addComponent(jLabel13, javax.swing.GroupLayout.Alignment.TRAILING)
+                                    .addComponent(jLabel14, javax.swing.GroupLayout.Alignment.TRAILING)
+                                    .addComponent(jLabel15, javax.swing.GroupLayout.Alignment.TRAILING)
+                                    .addComponent(jLabel16, javax.swing.GroupLayout.Alignment.TRAILING))
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(medicineNameTxtBox, javax.swing.GroupLayout.PREFERRED_SIZE, 250, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(strengthTxtBox, javax.swing.GroupLayout.PREFERRED_SIZE, 250, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(descriptionTxtBox, javax.swing.GroupLayout.PREFERRED_SIZE, 250, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(priceTxtBox, javax.swing.GroupLayout.PREFERRED_SIZE, 250, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(marketPriceTxtBox, javax.swing.GroupLayout.PREFERRED_SIZE, 250, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(quantityTxtBox, javax.swing.GroupLayout.PREFERRED_SIZE, 250, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(activeIngredientTxtBox, javax.swing.GroupLayout.PREFERRED_SIZE, 250, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(medicintTypeTxtBox, javax.swing.GroupLayout.PREFERRED_SIZE, 250, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                            .addComponent(jScrollPane1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 803, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(18, 18, 18)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(viewOrderBtn, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(requestMedicineBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 146, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                .addContainerGap(66, Short.MAX_VALUE))
+                            .addComponent(requestMedicineBtn, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(viewOrderBtn, javax.swing.GroupLayout.DEFAULT_SIZE, 155, Short.MAX_VALUE))))
+                .addContainerGap(16, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -114,16 +281,84 @@ public class PatientWorkAreaJPanel extends javax.swing.JPanel {
                 .addComponent(titleLabel)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(enterpriseLabel)
+                .addGap(35, 35, 35)
+                .addComponent(description1)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(179, 179, 179)
+                        .addGap(35, 35, 35)
+                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 170, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(35, 35, 35)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(layout.createSequentialGroup()
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                    .addComponent(jLabel1)
+                                    .addComponent(requestIdTxtBox, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addGap(18, 18, 18)
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                    .addComponent(jLabel2)
+                                    .addComponent(receiverTxtBox, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addGap(18, 18, 18)
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                    .addComponent(jLabel3)
+                                    .addComponent(statusTxtBpx, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addGap(18, 18, 18)
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                    .addComponent(requestDateTxtBox, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(jLabel4))
+                                .addGap(18, 18, 18)
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                    .addComponent(jLabel5)
+                                    .addComponent(resolveDateTxtBox, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addGap(18, 18, 18)
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                    .addComponent(jLabel6)
+                                    .addComponent(progressTxtBox, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addGap(18, 18, 18)
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                    .addComponent(jLabel7)
+                                    .addComponent(codeTxtBox, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addGap(18, 18, 18)
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                    .addComponent(jLabel8)
+                                    .addComponent(phoneTxtBox, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                            .addGroup(layout.createSequentialGroup()
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                    .addComponent(jLabel14)
+                                    .addComponent(medicineNameTxtBox, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addGap(18, 18, 18)
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                    .addComponent(jLabel15)
+                                    .addComponent(strengthTxtBox, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addGap(18, 18, 18)
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                    .addComponent(jLabel16)
+                                    .addComponent(descriptionTxtBox, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addGap(18, 18, 18)
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                    .addComponent(priceTxtBox, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(jLabel9))
+                                .addGap(18, 18, 18)
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                    .addComponent(jLabel10)
+                                    .addComponent(marketPriceTxtBox, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addGap(18, 18, 18)
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                    .addComponent(jLabel11)
+                                    .addComponent(quantityTxtBox, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addGap(18, 18, 18)
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                    .addComponent(jLabel12)
+                                    .addComponent(activeIngredientTxtBox, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addGap(18, 18, 18)
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                    .addComponent(jLabel13)
+                                    .addComponent(medicintTypeTxtBox, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(54, 54, 54)
                         .addComponent(requestMedicineBtn)
                         .addGap(18, 18, 18)
-                        .addComponent(viewOrderBtn))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(114, 114, 114)
-                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 170, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap(435, Short.MAX_VALUE))
+                        .addComponent(viewOrderBtn)))
+                .addContainerGap(103, Short.MAX_VALUE))
         );
     }// </editor-fold>//GEN-END:initComponents
 
@@ -153,12 +388,84 @@ public class PatientWorkAreaJPanel extends javax.swing.JPanel {
         layout.next(displayPanel);
     }//GEN-LAST:event_requestMedicineBtnActionPerformed
 
+    private void viewOrderBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_viewOrderBtnActionPerformed
+        int selectedRow = requestTbl.getSelectedRow();
+        if (selectedRow >= 0) {
+            WorkRequest wr = (WorkRequest) requestTbl.getValueAt(selectedRow, 0);
+            requestIdTxtBox.setText(wr.getId());
+
+            try {
+                receiverTxtBox.setText(wr.getReceiver().getName());
+
+            } catch (Exception e) {
+                receiverTxtBox.setText("");
+            }
+
+            statusTxtBpx.setText(wr.getStatus());
+            requestDateTxtBox.setText(DateUtil.getDateToString(wr.getRequestDate()));
+            try {
+                resolveDateTxtBox.setText(DateUtil.getDateToString(wr.getResolveDate()));
+
+            } catch (Exception e) {
+                resolveDateTxtBox.setText("");
+            }
+
+            progressTxtBox.setText(wr.getProgress());
+            codeTxtBox.setText(wr.getCode() == 0 ? "" : String.valueOf(wr.getCode()));
+            phoneTxtBox.setText(String.valueOf(wr.getPhoneNo()));
+            medicineNameTxtBox.setText(wr.getMedicine().getName());
+            strengthTxtBox.setText(String.valueOf(wr.getMedicine().getStrength()));
+            descriptionTxtBox.setText(wr.getMedicine().getDescription());
+            priceTxtBox.setText(String.valueOf(wr.getMedicine().getPrice()));
+            marketPriceTxtBox.setText(String.valueOf(wr.getMedicine().getMarketPrice()));
+            quantityTxtBox.setText(String.valueOf(wr.getMedicine().getQuantity()));
+            activeIngredientTxtBox.setText(wr.getMedicine().getActiveIngredient());
+            medicintTypeTxtBox.setText(wr.getMedicine().getType());
+        } else {
+            JOptionPane.showMessageDialog(null, "Please select a row to view");
+            return;
+        }
+    }//GEN-LAST:event_viewOrderBtnActionPerformed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JTextField activeIngredientTxtBox;
+    private javax.swing.JTextField codeTxtBox;
+    private javax.swing.JLabel description1;
+    private javax.swing.JTextField descriptionTxtBox;
     private javax.swing.JLabel enterpriseLabel;
+    private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel10;
+    private javax.swing.JLabel jLabel11;
+    private javax.swing.JLabel jLabel12;
+    private javax.swing.JLabel jLabel13;
+    private javax.swing.JLabel jLabel14;
+    private javax.swing.JLabel jLabel15;
+    private javax.swing.JLabel jLabel16;
+    private javax.swing.JLabel jLabel2;
+    private javax.swing.JLabel jLabel3;
+    private javax.swing.JLabel jLabel4;
+    private javax.swing.JLabel jLabel5;
+    private javax.swing.JLabel jLabel6;
+    private javax.swing.JLabel jLabel7;
+    private javax.swing.JLabel jLabel8;
+    private javax.swing.JLabel jLabel9;
     private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JTextField marketPriceTxtBox;
+    private javax.swing.JTextField medicineNameTxtBox;
+    private javax.swing.JTextField medicintTypeTxtBox;
+    private javax.swing.JTextField phoneTxtBox;
+    private javax.swing.JTextField priceTxtBox;
+    private javax.swing.JTextField progressTxtBox;
+    private javax.swing.JTextField quantityTxtBox;
+    private javax.swing.JTextField receiverTxtBox;
+    private javax.swing.JTextField requestDateTxtBox;
+    private javax.swing.JTextField requestIdTxtBox;
     private javax.swing.JButton requestMedicineBtn;
     private javax.swing.JTable requestTbl;
+    private javax.swing.JTextField resolveDateTxtBox;
+    private javax.swing.JTextField statusTxtBpx;
+    private javax.swing.JTextField strengthTxtBox;
     private javax.swing.JLabel titleLabel;
     private javax.swing.JButton viewOrderBtn;
     // End of variables declaration//GEN-END:variables

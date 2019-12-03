@@ -139,7 +139,8 @@ public class DeliveryProcessJPanel extends javax.swing.JPanel {
             request.setReceiver(null);
             request.setCode(code++);
             sendToOriginator();
-            SMS.sendSMS(request.getId(),request.getCode());
+            String msg = "Your request with ID " + request.getId() + " is now ready for pickup. Pickup code: " + request.getCode();
+            SMS.sendSMS(msg);
             JOptionPane.showMessageDialog(null, "The order is now ready for pickup");
             displayPanel.remove(this);
             Component[] componentArray = displayPanel.getComponents();

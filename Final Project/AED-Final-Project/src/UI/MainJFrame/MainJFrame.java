@@ -7,11 +7,15 @@ package UI.MainJFrame;
 
 import Business.DB4OUtil.DB4OUtil;
 import Business.EcoSystem.EcoSystem;
+import Business.EnterpriseDirectory.Enterprise;
+import Business.Organization.Organization;
 import Business.UserAccount.UserAccount;
 import UI.EcoSysAdmin.ManageEnterpriseAdmin;
 import UI.EcoSysAdmin.ManageEnterprisePanel;
 import UI.EcoSysAdmin.ManageNetworkPanel;
-import UI.CPEntpAdmin.ManageCPOrganizationJPanel;
+import UI.EntpAdmin.ManageEmployeeJPanel;
+import UI.EntpAdmin.ManageOrganizationJPanel;
+import UI.EntpAdmin.ManageUserJPanel;
 import java.awt.CardLayout;
 import java.awt.event.*;
 import javax.swing.Timer;
@@ -28,6 +32,8 @@ public class MainJFrame extends javax.swing.JFrame {
     private EcoSystem ecoSystem;
     private DB4OUtil dB4OUtil = DB4OUtil.getInstance();
     private static UserAccount currentUser = null;
+    private static Organization inOrganization = null;
+    private static Enterprise inEnterprise = null;
 
     public MainJFrame() {
         initComponents();
@@ -134,7 +140,7 @@ public class MainJFrame extends javax.swing.JFrame {
                 .addComponent(manageEnterpriseBtn)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(manageAdminBtn)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 246, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(logoutBtn)
                 .addContainerGap())
         );
@@ -160,11 +166,11 @@ public class MainJFrame extends javax.swing.JFrame {
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(splitPane)
+            .addComponent(splitPane, javax.swing.GroupLayout.DEFAULT_SIZE, 1100, Short.MAX_VALUE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(splitPane, javax.swing.GroupLayout.DEFAULT_SIZE, 800, Short.MAX_VALUE)
+            .addComponent(splitPane, javax.swing.GroupLayout.DEFAULT_SIZE, 850, Short.MAX_VALUE)
         );
 
         pack();
@@ -174,7 +180,7 @@ public class MainJFrame extends javax.swing.JFrame {
         displayPanel.removeAll();
         showButtons(false);
         signInPanel();
-//        dB4OUtil.storeSystem(ecoSystem);
+        dB4OUtil.storeSystem(ecoSystem);
     }//GEN-LAST:event_logoutBtnActionPerformed
 
     private void manageNetworkBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_manageNetworkBtnActionPerformed
@@ -183,10 +189,13 @@ public class MainJFrame extends javax.swing.JFrame {
             displayPanel.add("manageNetworkPanel", manageNetworkPanel);
             CardLayout layout = (CardLayout) displayPanel.getLayout();
             layout.next(displayPanel);
-        } else if (currentUser.getIdentifier().equalsIgnoreCase("cpadmin")) {
-
+        } else if (currentUser.getIdentifier().equalsIgnoreCase("cpadmin")
+                || currentUser.getIdentifier().equalsIgnoreCase("mktadmin")) {
+            ManageOrganizationJPanel mojp = new ManageOrganizationJPanel(displayPanel, currentUser, inEnterprise, inOrganization, ecoSystem, "org");
+            displayPanel.add("mojp", mojp);
+            CardLayout layout = (CardLayout) displayPanel.getLayout();
+            layout.next(displayPanel);
         } else if (currentUser.getIdentifier().equalsIgnoreCase("mktadmin")) {
-
         }
     }//GEN-LAST:event_manageNetworkBtnActionPerformed
 
@@ -194,10 +203,14 @@ public class MainJFrame extends javax.swing.JFrame {
         if (currentUser.getIdentifier().equals("sysAdmin")) {
             ManageEnterprisePanel manageEnterprisePanel = new ManageEnterprisePanel(displayPanel, ecoSystem, currentUser);
             CardLayout layout = (CardLayout) displayPanel.getLayout();
-            displayPanel.add("manageNetworkPanel", manageEnterprisePanel);
+            displayPanel.add("manageEnterprisePanel", manageEnterprisePanel);
             layout.next(displayPanel);
-        } else if (currentUser.getIdentifier().equalsIgnoreCase("cpadmin")) {
-
+        } else if (currentUser.getIdentifier().equalsIgnoreCase("cpadmin")
+                || currentUser.getIdentifier().equalsIgnoreCase("mktadmin")) {
+            ManageEmployeeJPanel mejp = new ManageEmployeeJPanel(displayPanel, currentUser, inEnterprise, inOrganization, ecoSystem, "emp");
+            displayPanel.add("mejp", mejp);
+            CardLayout layout = (CardLayout) displayPanel.getLayout();
+            layout.next(displayPanel);
         } else if (currentUser.getIdentifier().equalsIgnoreCase("mktadmin")) {
 
         }
@@ -209,11 +222,31 @@ public class MainJFrame extends javax.swing.JFrame {
             CardLayout layout = (CardLayout) displayPanel.getLayout();
             displayPanel.add("manageEnterpriseAdmin", manageEnterpriseAdmin);
             layout.next(displayPanel);
-        } else if (currentUser.getIdentifier().equalsIgnoreCase("cpadmin")) {
-
+        } else if (currentUser.getIdentifier().equalsIgnoreCase("cpadmin")
+                || currentUser.getIdentifier().equalsIgnoreCase("mktadmin")) {
+            ManageUserJPanel mujp = new ManageUserJPanel(displayPanel, currentUser, inEnterprise, inOrganization, ecoSystem, "user");
+            displayPanel.add("mujp", mujp);
+            CardLayout layout = (CardLayout) displayPanel.getLayout();
+            layout.next(displayPanel);
         } else if (currentUser.getIdentifier().equalsIgnoreCase("mktadmin")) {
         }
     }//GEN-LAST:event_manageAdminBtnActionPerformed
+
+    public static Organization getInOrganization() {
+        return inOrganization;
+    }
+
+    public static void setInOrganization(Organization inOrganization) {
+        MainJFrame.inOrganization = inOrganization;
+    }
+
+    public static Enterprise getInEnterprise() {
+        return inEnterprise;
+    }
+
+    public static void setInEnterprise(Enterprise inEnterprise) {
+        MainJFrame.inEnterprise = inEnterprise;
+    }
 
     public static UserAccount getCurrentUser() {
         return currentUser;

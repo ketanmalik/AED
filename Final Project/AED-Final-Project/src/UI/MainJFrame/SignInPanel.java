@@ -10,7 +10,6 @@ import Business.EnterpriseDirectory.Enterprise;
 import Business.Network.Network;
 import Business.Organization.Organization;
 import Business.UserAccount.UserAccount;
-import Business.util.SMS;
 import UI.EcoSysAdmin.ManageNetworkPanel;
 import java.awt.CardLayout;
 import javax.swing.JOptionPane;
@@ -30,7 +29,7 @@ public class SignInPanel extends javax.swing.JPanel {
     private UserAccount userFound = null;
     private Enterprise inEnterprise = null;
     private Organization inOrganization = null;
-    private static int i = 0;
+   
 
     ;
 
@@ -162,13 +161,11 @@ public class SignInPanel extends javax.swing.JPanel {
         } else {
             MainJFrame.logoutBtn.setVisible(true);
             MainJFrame.setCurrentUser(userFound);
-            if (i == 1) {
-                System.out.println("UI.MainJFrame.SignInPanel.signInBtnActionPerformed()");
-            }
+            MainJFrame.setInOrganization(inOrganization);
+            MainJFrame.setInEnterprise(inEnterprise);
             CardLayout layout = (CardLayout) displayPanel.getLayout();
             displayPanel.add("workArea", userFound.getRole().createWorkArea(displayPanel, userFound, inEnterprise, inOrganization, ecoSystem));
             layout.next(displayPanel);
-            i++;
         }
     }//GEN-LAST:event_signInBtnActionPerformed
 
