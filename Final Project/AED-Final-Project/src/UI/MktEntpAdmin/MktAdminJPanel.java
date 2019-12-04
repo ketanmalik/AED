@@ -97,6 +97,11 @@ public class MktAdminJPanel extends javax.swing.JPanel {
         medResearchChartBtn = new javax.swing.JButton();
 
         setBackground(new java.awt.Color(0, 153, 153));
+        addComponentListener(new java.awt.event.ComponentAdapter() {
+            public void componentShown(java.awt.event.ComponentEvent evt) {
+                formComponentShown(evt);
+            }
+        });
 
         titleLabel.setFont(new java.awt.Font("Lucida Grande", 1, 18)); // NOI18N
         titleLabel.setForeground(new java.awt.Color(255, 255, 255));
@@ -204,6 +209,11 @@ public class MktAdminJPanel extends javax.swing.JPanel {
         displayPanel.add("reseStateChart", reseStateChart);
         layout.next(displayPanel);
     }//GEN-LAST:event_medResearchChartBtnActionPerformed
+
+    private void formComponentShown(java.awt.event.ComponentEvent evt) {//GEN-FIRST:event_formComponentShown
+        // TODO add your handling code here:
+        modifyButtons();
+    }//GEN-LAST:event_formComponentShown
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

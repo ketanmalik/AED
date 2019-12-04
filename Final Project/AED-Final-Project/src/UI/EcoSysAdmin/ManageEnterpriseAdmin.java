@@ -380,6 +380,7 @@ public class ManageEnterpriseAdmin extends javax.swing.JPanel {
             uaToUpdate.setPassword(password);
             uaToUpdate.setName(name);
         } else {
+            System.out.println(enterpriseDropdown.getSelectedItem());
             String identifier = enterpriseDropdown.getSelectedItem().equals("Compound Pharmacy") ? "cpAdmin" : "mktAdmin";
 
             if (!authenticateUsername(username)) {
@@ -396,12 +397,18 @@ public class ManageEnterpriseAdmin extends javax.swing.JPanel {
                             return;
                         }
                         tempEntp = e;
+                        identifier = tempEntp.getEnterpriseType().toString();
                         break;
                     }
                 }
             }
             Employee emp = tempEntp.getEmployeeDirectory().createEmployee(name);
-            tempEntp.getUserAccountDirectory().createUserAccount(name, username, password, emp, identifier.equals("cpAdmin") ? new CPEntpAdmin() : new MktEntpAdmin(), identifier);
+            System.out.println(identifier);
+            if (identifier.equalsIgnoreCase("compound pharmacy")) {
+                tempEntp.getUserAccountDirectory().createUserAccount(name, username, password, emp, new CPEntpAdmin(), "cpAdmin");
+            } else {
+                tempEntp.getUserAccountDirectory().createUserAccount(name, username, password, emp, new MktEntpAdmin(), "mktAdmin");
+            }
         }
         populateTable();
         clearFields();
