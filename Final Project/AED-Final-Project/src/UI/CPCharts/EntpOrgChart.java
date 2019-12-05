@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package UI.Charts;
+package UI.CPCharts;
 
 import Business.EnterpriseDirectory.Enterprise;
 import Business.Organization.Organization;
@@ -19,21 +19,30 @@ import org.jfree.data.general.DefaultPieDataset;
  *
  * @author ketanmalik
  */
-public class EmpWrChart extends javax.swing.JPanel {
+public class EntpOrgChart extends javax.swing.JPanel {
 
     /**
-     * Creates new form EmpWrChart
+     * Creates new form EntpOrgChart
      */
     private JPanel displayPanel;
     private Enterprise enterprise;
     private String title;
 
-    public EmpWrChart(JPanel displayPanel, Enterprise enterprise, String title) {
+    public EntpOrgChart(JPanel displayPanel, Enterprise enterprise, String title) {
         this.displayPanel = displayPanel;
         this.enterprise = enterprise;
         this.title = title;
         initComponents();
         titleLabel.setText(title);
+    }
+
+    public JPanel createChart() {
+        DefaultPieDataset pieDataset = new DefaultPieDataset();
+        for (Organization o : enterprise.getOrganizationDirectory().getOrganizationList()) {
+            pieDataset.setValue(o.getName(), o.getEmployeeDirectory().getEmployeeList().size());
+        }
+        JFreeChart chart = ChartFactory.createPieChart3D("Employee distribution in organization", pieDataset, true, true, true);
+        return new ChartPanel(chart);
     }
 
     /**
@@ -100,17 +109,6 @@ public class EmpWrChart extends javax.swing.JPanel {
                 .addContainerGap(113, Short.MAX_VALUE))
         );
     }// </editor-fold>//GEN-END:initComponents
-
-    public JPanel createChart() {
-        DefaultPieDataset pieDataset = new DefaultPieDataset();
-
-        for (Organization o : enterprise.getOrganizationDirectory().getOrganizationList()) {
-            pieDataset.setValue(o.getName(), o.getWorkQueue().getWorkRequestList().size());
-        }
-
-        JFreeChart chart = ChartFactory.createPieChart3D("Employee distribution in organization", pieDataset, true, true, true);
-        return new ChartPanel(chart);
-    }
 
     private void backBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_backBtnActionPerformed
         displayPanel.remove(this);

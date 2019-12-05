@@ -232,11 +232,18 @@ public class ManufacturerWorkAreaJPanel extends javax.swing.JPanel {
     private void assignToMeBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_assignToMeBtnActionPerformed
         int selectedRow = openRequestTbl.getSelectedRow();
         if (selectedRow >= 0) {
+
             WorkRequest request = (WorkRequest) openRequestTbl.getValueAt(selectedRow, 0);
             if (request.getReceiver() == null) {
-                request.setReceiver(userAccount);
-                request.setStatus("Ready for Manufacturing");
-                populateTables();
+                if (userAccount.getWorkQueue().getWorkRequestList().size() != 0) {
+                    JOptionPane.showMessageDialog(null, "You already have an open request. Please process it before taking new requests", "Multiple Assignment", JOptionPane.ERROR_MESSAGE);
+                    return;
+                } else {
+                    request.setReceiver(userAccount);
+                    userAccount.getWorkQueue().getWorkRequestList().add(request);
+                    request.setStatus("Ready for Manufacturing");
+                    populateTables();
+                }
             } else {
                 JOptionPane.showMessageDialog(null, "The request has already been assigned to " + request.getReceiver(), "Multiple Assignment", JOptionPane.ERROR_MESSAGE);
                 return;

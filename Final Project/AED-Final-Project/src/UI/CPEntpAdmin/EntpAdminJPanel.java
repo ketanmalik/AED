@@ -9,16 +9,14 @@ import Business.EcoSystem.EcoSystem;
 import Business.EnterpriseDirectory.Enterprise;
 import Business.Organization.Organization;
 import Business.UserAccount.UserAccount;
-import UI.Charts.EmpWrChart;
-import UI.Charts.EntpOrgChart;
+import UI.CPCharts.EmpWrChart;
+import UI.CPCharts.EntpOrgChart;
+import UI.CPCharts.MedManufChart;
+import UI.CPCharts.MedResearchChart;
 import UI.MainJFrame.MainJFrame;
 import java.awt.CardLayout;
 import java.awt.Color;
 import javax.swing.JPanel;
-import org.jfree.chart.ChartFactory;
-import org.jfree.chart.ChartPanel;
-import org.jfree.chart.JFreeChart;
-import org.jfree.data.general.DefaultPieDataset;
 
 /**
  *
@@ -34,9 +32,6 @@ public class EntpAdminJPanel extends javax.swing.JPanel {
     private Enterprise enterprise;
     private Organization organization;
     private EcoSystem ecoSystem;
-    private String mode = "";
-    private String identifier = "";
-    private String col[] = new String[4];
 
     public EntpAdminJPanel(JPanel displayPanel, UserAccount userAccount, Enterprise enterprise, Organization organization, EcoSystem ecoSystem) {
         initComponents();
@@ -71,6 +66,11 @@ public class EntpAdminJPanel extends javax.swing.JPanel {
         MainJFrame.manageAdminBtn.setBorderPainted(false);
         MainJFrame.manageAdminBtn.setForeground(Color.white);
 
+        MainJFrame.homeBtn.setVisible(true);
+        MainJFrame.homeBtn.setOpaque(false);
+        MainJFrame.homeBtn.setContentAreaFilled(false);
+        MainJFrame.homeBtn.setBorderPainted(false);
+
         MainJFrame.logoutBtn.setOpaque(false);
         MainJFrame.logoutBtn.setContentAreaFilled(false);
         MainJFrame.logoutBtn.setBorderPainted(false);
@@ -93,8 +93,15 @@ public class EntpAdminJPanel extends javax.swing.JPanel {
         roleLabel = new javax.swing.JLabel();
         orgChartBtn = new javax.swing.JButton();
         empWrChartBtn = new javax.swing.JButton();
+        medManufactureChartBtn = new javax.swing.JButton();
+        medResearchChartBtn = new javax.swing.JButton();
 
         setBackground(new java.awt.Color(0, 153, 153));
+        addComponentListener(new java.awt.event.ComponentAdapter() {
+            public void componentShown(java.awt.event.ComponentEvent evt) {
+                formComponentShown(evt);
+            }
+        });
 
         titleLabel.setFont(new java.awt.Font("Lucida Grande", 1, 18)); // NOI18N
         titleLabel.setForeground(new java.awt.Color(255, 255, 255));
@@ -118,6 +125,20 @@ public class EntpAdminJPanel extends javax.swing.JPanel {
             }
         });
 
+        medManufactureChartBtn.setText("View Medicine-Manufacturing Distribution");
+        medManufactureChartBtn.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                medManufactureChartBtnActionPerformed(evt);
+            }
+        });
+
+        medResearchChartBtn.setText("View Medicine-Research Distribution");
+        medResearchChartBtn.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                medResearchChartBtnActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
         layout.setHorizontalGroup(
@@ -133,7 +154,9 @@ public class EntpAdminJPanel extends javax.swing.JPanel {
                         .addGap(418, 418, 418)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                             .addComponent(empWrChartBtn, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(orgChartBtn, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
+                            .addComponent(orgChartBtn, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(medManufactureChartBtn, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(medResearchChartBtn, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
                 .addContainerGap(386, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
@@ -147,7 +170,11 @@ public class EntpAdminJPanel extends javax.swing.JPanel {
                 .addComponent(orgChartBtn)
                 .addGap(18, 18, 18)
                 .addComponent(empWrChartBtn)
-                .addContainerGap(505, Short.MAX_VALUE))
+                .addGap(18, 18, 18)
+                .addComponent(medManufactureChartBtn)
+                .addGap(18, 18, 18)
+                .addComponent(medResearchChartBtn)
+                .addContainerGap(405, Short.MAX_VALUE))
         );
     }// </editor-fold>//GEN-END:initComponents
 
@@ -167,20 +194,31 @@ public class EntpAdminJPanel extends javax.swing.JPanel {
         layout.next(displayPanel);
     }//GEN-LAST:event_empWrChartBtnActionPerformed
 
-    public JPanel createChartPanel() {
-        DefaultPieDataset pieDataset = new DefaultPieDataset();
-        pieDataset.setValue("One", new Integer(10));
-        pieDataset.setValue("Two", new Integer(20));
-        pieDataset.setValue("Three", new Integer(30));
-        pieDataset.setValue("Four", new Integer(10));
-        pieDataset.setValue("Five", new Integer(20));
-        pieDataset.setValue("Six", new Integer(10));
-        JFreeChart chart = ChartFactory.createPieChart3D("3D Pie Chart", pieDataset, true, true, true);
-        return new ChartPanel(chart);
-    }
+    private void medManufactureChartBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_medManufactureChartBtnActionPerformed
+        String title = "Work Requests for manufacturing medicine";
+        MedManufChart medManufChart = new MedManufChart(displayPanel, enterprise, ecoSystem, title);
+        CardLayout layout = (CardLayout) displayPanel.getLayout();
+        displayPanel.add("medManufChart", medManufChart);
+        layout.next(displayPanel);
+    }//GEN-LAST:event_medManufactureChartBtnActionPerformed
+
+    private void medResearchChartBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_medResearchChartBtnActionPerformed
+        String title = "Work Requests for research on medicine";
+        MedResearchChart medResearchChart = new MedResearchChart(displayPanel, enterprise, ecoSystem, title);
+        CardLayout layout = (CardLayout) displayPanel.getLayout();
+        displayPanel.add("medResearchChart", medResearchChart);
+        layout.next(displayPanel);
+    }//GEN-LAST:event_medResearchChartBtnActionPerformed
+
+    private void formComponentShown(java.awt.event.ComponentEvent evt) {//GEN-FIRST:event_formComponentShown
+        modifyButtons();
+    }//GEN-LAST:event_formComponentShown
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton empWrChartBtn;
+    private javax.swing.JButton medManufactureChartBtn;
+    private javax.swing.JButton medResearchChartBtn;
     private javax.swing.JButton orgChartBtn;
     private javax.swing.JLabel roleLabel;
     private javax.swing.JLabel titleLabel;

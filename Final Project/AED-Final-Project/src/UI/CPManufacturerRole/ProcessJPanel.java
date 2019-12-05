@@ -134,6 +134,7 @@ public class ProcessJPanel extends javax.swing.JPanel {
             request.setStatus("Sent for inspection");
             request.setSender(userAccount);
             request.setReceiver(null);
+            userAccount.getWorkQueue().getWorkRequestList().clear();
             sendToInspection();
             JOptionPane.showMessageDialog(null, "Your request has been sent to inspection team");
             displayPanel.remove(this);
@@ -172,10 +173,6 @@ public class ProcessJPanel extends javax.swing.JPanel {
             for (Organization o : org) {
                 o.getWorkQueue().getWorkRequestList().add(request);
             }
-        }
-        if (org != null) {
-//            org.getWorkQueue().getWorkRequestList().add(request);
-            userAccount.getWorkQueue().getWorkRequestList().add(request);
         }
     }
 

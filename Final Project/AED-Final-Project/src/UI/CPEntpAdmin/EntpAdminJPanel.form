@@ -6,6 +6,9 @@
       <Color blue="99" green="99" red="0" type="rgb"/>
     </Property>
   </Properties>
+  <Events>
+    <EventHandler event="componentShown" listener="java.awt.event.ComponentListener" parameters="java.awt.event.ComponentEvent" handler="formComponentShown"/>
+  </Events>
   <AuxValues>
     <AuxValue name="FormSettings_autoResourcing" type="java.lang.Integer" value="0"/>
     <AuxValue name="FormSettings_autoSetComponentName" type="java.lang.Boolean" value="false"/>
@@ -35,6 +38,8 @@
                       <Group type="103" groupAlignment="0" max="-2" attributes="0">
                           <Component id="empWrChartBtn" max="32767" attributes="0"/>
                           <Component id="orgChartBtn" max="32767" attributes="0"/>
+                          <Component id="medManufactureChartBtn" max="32767" attributes="0"/>
+                          <Component id="medResearchChartBtn" alignment="0" max="32767" attributes="0"/>
                       </Group>
                   </Group>
               </Group>
@@ -53,7 +58,11 @@
               <Component id="orgChartBtn" min="-2" max="-2" attributes="0"/>
               <EmptySpace type="separate" max="-2" attributes="0"/>
               <Component id="empWrChartBtn" min="-2" max="-2" attributes="0"/>
-              <EmptySpace pref="505" max="32767" attributes="0"/>
+              <EmptySpace type="separate" max="-2" attributes="0"/>
+              <Component id="medManufactureChartBtn" min="-2" max="-2" attributes="0"/>
+              <EmptySpace type="separate" max="-2" attributes="0"/>
+              <Component id="medResearchChartBtn" min="-2" max="-2" attributes="0"/>
+              <EmptySpace pref="405" max="32767" attributes="0"/>
           </Group>
       </Group>
     </DimensionLayout>
@@ -95,6 +104,22 @@
       </Properties>
       <Events>
         <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="empWrChartBtnActionPerformed"/>
+      </Events>
+    </Component>
+    <Component class="javax.swing.JButton" name="medManufactureChartBtn">
+      <Properties>
+        <Property name="text" type="java.lang.String" value="View Medicine-Manufacturing Distribution"/>
+      </Properties>
+      <Events>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="medManufactureChartBtnActionPerformed"/>
+      </Events>
+    </Component>
+    <Component class="javax.swing.JButton" name="medResearchChartBtn">
+      <Properties>
+        <Property name="text" type="java.lang.String" value="View Medicine-Research Distribution"/>
+      </Properties>
+      <Events>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="medResearchChartBtnActionPerformed"/>
       </Events>
     </Component>
   </SubComponents>

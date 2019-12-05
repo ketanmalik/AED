@@ -18,6 +18,7 @@ import static Business.Organization.Organization.Type.Advertising;
 import static Business.Organization.Organization.Type.Doctor;
 import static Business.Organization.Organization.Type.Patient;
 import Business.Role.CPEntpAdmin;
+import Business.Role.MktEntpAdmin;
 import Business.Role.SysAdminRole;
 import Business.UserAccount.UserAccount;
 import Business.util.DateUtil;
@@ -68,7 +69,7 @@ public class ConfigureASystem {
 
         // 6. Creating mktAdmin for Marketing
         Employee mktEmployee = marketingEnterprise.getEmployeeDirectory().createEmployee("Marketing Admin");
-        UserAccount mktAdmin = marketingEnterprise.getUserAccountDirectory().createUserAccount(mktEmployee.getName(), "mk", "mk", mktEmployee, new CPEntpAdmin(), "mktAdmin");
+        UserAccount mktAdmin = marketingEnterprise.getUserAccountDirectory().createUserAccount(mktEmployee.getName(), "mk", "mk", mktEmployee, new MktEntpAdmin(), "mktAdmin");
 
         // 7. Creating Organizations under CP Enterprise
         for (Network n : system.getNetworkDirectory().getNetworkList()) {
@@ -131,9 +132,10 @@ public class ConfigureASystem {
         // 10. Create Medicine List
         system.getMedicineList().add(new Medicine("Albendazole", 200, "Anti-worm Medication", 0.3, 1.1, 30, "Benzimidazoles", "Tablet"));
         system.getMedicineList().add(new Medicine("Bosentan", 125, "Pulmonary artery hypertension", 1.5, 5, 25, "phenylalanine", "Tablet"));
-        system.getMedicineList().add(new Medicine("Delsym", 0, "Cough & sour throat", 2, 18, 6, "Dextromethorphan Polistirex","Syrup"));
-        system.getMedicineList().add(new Medicine("Syprine", 250, "Wilson's deisease", 177.6, 222, 10, "Trientine hydrochloride","Capsule"));
+        system.getMedicineList().add(new Medicine("Delsym", 0, "Cough & sour throat", 2, 18, 6, "Dextromethorphan Polistirex", "Syrup"));
+        system.getMedicineList().add(new Medicine("Syprine", 250, "Wilson's deisease", 177.6, 222, 10, "Trientine hydrochloride", "Capsule"));
 
+        system.setId(1);
         return system;
     }
 

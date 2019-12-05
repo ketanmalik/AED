@@ -10,7 +10,6 @@ import Business.EnterpriseDirectory.CompoundPharmacyEnterprise;
 import Business.EnterpriseDirectory.Enterprise;
 import Business.MedicineList.Medicine;
 import Business.Network.Network;
-import Business.Organization.ManufactureOrganization;
 import Business.Organization.Organization;
 import Business.Organization.ResearchOrganization;
 import Business.UserAccount.UserAccount;
@@ -45,7 +44,7 @@ public class ResearchWRJPanel extends javax.swing.JPanel {
         this.enterprise = enterprise;
         this.organization = organization;
         this.ecoSystem = ecoSystem;
-        this.id = ecoSystem.id;
+        this.id = ecoSystem.getId();
     }
 
     /**
@@ -243,7 +242,7 @@ public class ResearchWRJPanel extends javax.swing.JPanel {
 
         CPResearchWorkRequest request = new CPResearchWorkRequest();
         request.setId("DR-WR-" + id++);
-        ecoSystem.id = id;
+        ecoSystem.setId(id);
         request.setSender(userAccount);
         request.setStatus("Research Request Accepted");
         request.setOriginator(userAccount);

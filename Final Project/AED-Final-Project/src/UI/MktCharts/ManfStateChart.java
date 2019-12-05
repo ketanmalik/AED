@@ -3,12 +3,19 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package UI.Charts;
+package UI.MktCharts;
 
 import Business.EnterpriseDirectory.Enterprise;
+import Business.Organization.AdvertisingOrganization;
 import Business.Organization.Organization;
+import Business.UserAccount.UserAccount;
+import Business.WorkQueue.CPManufactureWorkRequest;
+import Business.WorkQueue.WorkRequest;
 import java.awt.CardLayout;
 import java.awt.Component;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.Set;
 import javax.swing.JPanel;
 import org.jfree.chart.ChartFactory;
 import org.jfree.chart.ChartPanel;
@@ -19,30 +26,22 @@ import org.jfree.data.general.DefaultPieDataset;
  *
  * @author ketanmalik
  */
-public class EntpOrgChart extends javax.swing.JPanel {
+public class ManfStateChart extends javax.swing.JPanel {
 
     /**
-     * Creates new form EntpOrgChart
+     * Creates new form ManfStateChart
      */
     private JPanel displayPanel;
     private Enterprise enterprise;
-    private String title;
+    private Map<String, Integer> map;
 
-    public EntpOrgChart(JPanel displayPanel, Enterprise enterprise, String title) {
+    public ManfStateChart(JPanel displayPanel, Enterprise enterprise, String title) {
         this.displayPanel = displayPanel;
         this.enterprise = enterprise;
-        this.title = title;
+        map = new HashMap<>();
+        generateMap();
         initComponents();
         titleLabel.setText(title);
-    }
-
-    public JPanel createChart() {
-        DefaultPieDataset pieDataset = new DefaultPieDataset();
-        for (Organization o : enterprise.getOrganizationDirectory().getOrganizationList()) {
-            pieDataset.setValue(o.getName(), o.getEmployeeDirectory().getEmployeeList().size());
-        }
-        JFreeChart chart = ChartFactory.createPieChart3D("Employee distribution in organization", pieDataset, true, true, true);
-        return new ChartPanel(chart);
     }
 
     /**
@@ -118,6 +117,35 @@ public class EntpOrgChart extends javax.swing.JPanel {
         layout.previous(displayPanel);
     }//GEN-LAST:event_backBtnActionPerformed
 
+    private void generateMap() {
+        for (Organization o : enterprise.getOrganizationDirectory().getOrganizationList()) {
+            if (!(o instanceof AdvertisingOrganization)) {
+                for (UserAccount u : o.getUserAccountDirectory().getUserAccountList()) {
+                    for (WorkRequest wr : u.getWorkQueue().getWorkRequestList()) {
+                        if (wr instanceof CPManufactureWorkRequest) {
+                            if (map.containsKey(wr.getState())) {
+                                int i = map.get(wr.getState()) + 1;
+                                map.put(wr.getState(), i);
+                            } else {
+                                map.put(wr.getState(), 1);
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+
+    public JPanel createChart() {
+        DefaultPieDataset pieDataset = new DefaultPieDataset();
+
+        Set<String> key = map.keySet();
+        for (String s : key) {
+            pieDataset.setValue(s, map.get(s));
+        }
+        JFreeChart chart = ChartFactory.createPieChart3D("Manufacturing request distribution in different states", pieDataset, true, true, true);
+        return new ChartPanel(chart);
+    }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton backBtn;

@@ -23,7 +23,7 @@ public class EcoSystem extends Organization {
     private static EcoSystem ecoSystemObj = null;
     private NetworkDirectory networkDirectory;
     private List<Medicine> medicineList;
-    public static int id = 1;
+    private int id = 1;
 
     private EcoSystem() {
         super("Ecosystem");
@@ -61,5 +61,13 @@ public class EcoSystem extends Organization {
         Network network = new Network();
         networkDirectory.getNetworkList().add(network);
         return network;
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
     }
 }

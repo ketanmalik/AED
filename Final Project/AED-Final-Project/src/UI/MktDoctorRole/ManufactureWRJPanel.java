@@ -46,8 +46,8 @@ public class ManufactureWRJPanel extends javax.swing.JPanel {
         this.enterprise = enterprise;
         this.organization = organization;
         this.ecoSystem = ecoSystem;
-        this.id = ecoSystem.id;
-        this.idPatient = ecoSystem.id;
+        this.id = ecoSystem.getId();
+        this.idPatient = ecoSystem.getId();
         populateDetails();
     }
 
@@ -76,6 +76,8 @@ public class ManufactureWRJPanel extends javax.swing.JPanel {
         jLabel6 = new javax.swing.JLabel();
         jLabel7 = new javax.swing.JLabel();
         phoneTxtField = new javax.swing.JTextField();
+        jLabel8 = new javax.swing.JLabel();
+        stateDropdown = new javax.swing.JComboBox<>();
 
         setBackground(new java.awt.Color(0, 153, 153));
 
@@ -137,6 +139,11 @@ public class ManufactureWRJPanel extends javax.swing.JPanel {
         phoneTxtField.setText("8572078509");
         phoneTxtField.setEnabled(false);
 
+        jLabel8.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel8.setText("State:");
+
+        stateDropdown.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Arizona", "California", "Colorado", "Florida", "Georgia", "Illinois", "Massachusetts", "Michigan", "Texas", "Wisconsin" }));
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
         layout.setHorizontalGroup(
@@ -147,6 +154,9 @@ public class ManufactureWRJPanel extends javax.swing.JPanel {
                         .addGap(25, 25, 25)
                         .addComponent(backBtn))
                     .addGroup(layout.createSequentialGroup()
+                        .addGap(362, 362, 362)
+                        .addComponent(confirmBtn))
+                    .addGroup(layout.createSequentialGroup()
                         .addGap(76, 76, 76)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                             .addComponent(jLabel5)
@@ -154,23 +164,22 @@ public class ManufactureWRJPanel extends javax.swing.JPanel {
                             .addComponent(jLabel3)
                             .addComponent(jLabel2)
                             .addComponent(jLabel1)
+                            .addComponent(jLabel8)
                             .addComponent(jLabel7))
                         .addGap(18, 18, 18)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(stateDropdown, 0, 208, Short.MAX_VALUE)
                             .addComponent(medicineDropdown, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                             .addComponent(quantityDropdown, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                             .addComponent(priceTxtField)
-                            .addComponent(messageTxtField, javax.swing.GroupLayout.DEFAULT_SIZE, 200, Short.MAX_VALUE)
+                            .addComponent(messageTxtField)
                             .addComponent(orderTypeTxtField)
                             .addComponent(phoneTxtField))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(quantityLabel)
-                            .addComponent(jLabel6)))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(362, 362, 362)
-                        .addComponent(confirmBtn)))
-                .addContainerGap(537, Short.MAX_VALUE))
+                            .addComponent(jLabel6)
+                            .addComponent(quantityLabel))))
+                .addContainerGap(529, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -190,7 +199,7 @@ public class ManufactureWRJPanel extends javax.swing.JPanel {
                     .addComponent(jLabel3)
                     .addComponent(quantityDropdown, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(quantityLabel))
-                .addGap(18, 18, 18)
+                .addGap(19, 19, 19)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel4)
                     .addComponent(priceTxtField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -201,11 +210,15 @@ public class ManufactureWRJPanel extends javax.swing.JPanel {
                     .addComponent(jLabel5))
                 .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(stateDropdown, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel8))
+                .addGap(18, 18, 18)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(phoneTxtField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel7))
-                .addGap(71, 71, 71)
+                .addGap(27, 27, 27)
                 .addComponent(confirmBtn)
-                .addContainerGap(293, Short.MAX_VALUE))
+                .addContainerGap(292, Short.MAX_VALUE))
         );
     }// </editor-fold>//GEN-END:initComponents
 
@@ -268,13 +281,14 @@ public class ManufactureWRJPanel extends javax.swing.JPanel {
         double price = Double.parseDouble(priceTxtField.getText().substring(1));
         String message = (messageTxtField.getText().equals("") || messageTxtField.getText() == null) ? "" : messageTxtField.getText();
         String phoneNumber = phoneTxtField.getText();
+        String state = String.valueOf(stateDropdown.getSelectedItem());
         CPManufactureWorkRequest request = new CPManufactureWorkRequest();
         if (userAccount.getIdentifier().equals("mp")) {
             request.setId("PM-WR-" + idPatient++);
-            ecoSystem.id = idPatient;
+            ecoSystem.setId(idPatient);
         } else {
             request.setId("DM-WR-" + id++);
-            ecoSystem.id = id;
+            ecoSystem.setId(id);
         }
         request.setMedicine(medicine);
         request.setQuantity(quantity);
@@ -282,6 +296,7 @@ public class ManufactureWRJPanel extends javax.swing.JPanel {
         request.setStatus("Order Confirmed");
         request.setMessage(message);
         request.setPrice(price);
+        request.setState(state);
         request.setOriginator(userAccount);
         request.setPhoneNo("+1" + phoneNumber);
 
@@ -350,6 +365,7 @@ public class ManufactureWRJPanel extends javax.swing.JPanel {
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel7;
+    private javax.swing.JLabel jLabel8;
     private javax.swing.JComboBox<String> medicineDropdown;
     private javax.swing.JTextField messageTxtField;
     private javax.swing.JTextField orderTypeTxtField;
@@ -357,5 +373,6 @@ public class ManufactureWRJPanel extends javax.swing.JPanel {
     private javax.swing.JTextField priceTxtField;
     private javax.swing.JComboBox<String> quantityDropdown;
     private javax.swing.JLabel quantityLabel;
+    private javax.swing.JComboBox<String> stateDropdown;
     // End of variables declaration//GEN-END:variables
 }

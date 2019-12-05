@@ -11,6 +11,7 @@ import Business.EnterpriseDirectory.Enterprise;
 import Business.Network.Network;
 import Business.Organization.Organization;
 import Business.Role.CPEntpAdmin;
+import Business.Role.MktEntpAdmin;
 import Business.UserAccount.UserAccount;
 import Business.util.RegexValidations;
 import UI.MainJFrame.MainJFrame;
@@ -379,6 +380,7 @@ public class ManageEnterpriseAdmin extends javax.swing.JPanel {
             uaToUpdate.setPassword(password);
             uaToUpdate.setName(name);
         } else {
+            System.out.println(enterpriseDropdown.getSelectedItem());
             String identifier = enterpriseDropdown.getSelectedItem().equals("Compound Pharmacy") ? "cpAdmin" : "mktAdmin";
 
             if (!authenticateUsername(username)) {
@@ -389,19 +391,29 @@ public class ManageEnterpriseAdmin extends javax.swing.JPanel {
             Enterprise tempEntp = null;
             for (Network n : ecoSystem.getNetworkDirectory().getNetworkList()) {
                 for (Enterprise e : n.getEnterpriseDirectory().getEnterpriseList()) {
-                    if (e.getName().equalsIgnoreCase(String.valueOf(enterpriseDropdown.getSelectedItem()))) {
+                    if (e.getName().equalsIgnoreCase(entp)) {
+                        if (e.getUserAccountDirectory().getUserAccountList().size() != 0) {
+                            JOptionPane.showMessageDialog(null, "This enterprise already has an admin. Please update the details of existing admin or choose a different enterprise", "Multiple Admins", JOptionPane.ERROR_MESSAGE);
+                            return;
+                        }
                         tempEntp = e;
+                        identifier = tempEntp.getEnterpriseType().toString();
                         break;
                     }
                 }
             }
             Employee emp = tempEntp.getEmployeeDirectory().createEmployee(name);
-            tempEntp.getUserAccountDirectory().createUserAccount(name, username, password, emp, new CPEntpAdmin(), identifier);
-
+            System.out.println(identifier);
+            if (identifier.equalsIgnoreCase("compound pharmacy")) {
+                tempEntp.getUserAccountDirectory().createUserAccount(name, username, password, emp, new CPEntpAdmin(), "cpAdmin");
+            } else {
+                tempEntp.getUserAccountDirectory().createUserAccount(name, username, password, emp, new MktEntpAdmin(), "mktAdmin");
+            }
         }
         populateTable();
         clearFields();
         enableFields(false);
+        JOptionPane.showMessageDialog(null, "Enterprise admin added to the network");
     }//GEN-LAST:event_confirmBtnActionPerformed
 
     private void networkDropdownActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_networkDropdownActionPerformed

@@ -10,7 +10,6 @@ import Business.EnterpriseDirectory.Enterprise;
 import Business.Organization.InspectionOrganization;
 import Business.Organization.Organization;
 import Business.UserAccount.UserAccount;
-import Business.WorkQueue.CPResearchWorkRequest;
 import Business.WorkQueue.WorkRequest;
 import java.awt.CardLayout;
 import javax.swing.JOptionPane;
@@ -189,9 +188,15 @@ public class InspectorWorkAreaJPanel extends javax.swing.JPanel {
         if (selectedRow >= 0) {
             WorkRequest request = (WorkRequest) openRequestTbl.getValueAt(selectedRow, 0);
             if (request.getReceiver() == null) {
-                request.setReceiver(userAccount);
-                request.setStatus("Ready for Inspection");
-                populateTables();
+                if (userAccount.getWorkQueue().getWorkRequestList().size() != 0) {
+                    JOptionPane.showMessageDialog(null, "You already have an open request. Please process it before taking new requests", "Multiple Assignment", JOptionPane.ERROR_MESSAGE);
+                    return;
+                } else {
+                    request.setReceiver(userAccount);
+                    userAccount.getWorkQueue().getWorkRequestList().add(request);
+                    request.setStatus("Ready for Inspection");
+                    populateTables();
+                }
             } else {
                 JOptionPane.showMessageDialog(null, "The request has already been assigned to " + request.getReceiver(), "Multiple Assignment", JOptionPane.ERROR_MESSAGE);
                 return;

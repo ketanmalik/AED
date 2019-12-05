@@ -6,11 +6,9 @@
 package UI.EntpAdmin;
 
 import Business.EcoSystem.EcoSystem;
-import Business.Employee.Employee;
 import Business.EnterpriseDirectory.Enterprise;
 import Business.Organization.Organization;
 import Business.Organization.Organization.Type;
-import Business.Role.Role;
 import Business.UserAccount.UserAccount;
 import Business.util.RegexValidations;
 import UI.MainJFrame.MainJFrame;
@@ -208,6 +206,11 @@ public class ManageOrganizationJPanel extends javax.swing.JPanel {
         MainJFrame.manageAdminBtn.setContentAreaFilled(false);
         MainJFrame.manageAdminBtn.setBorderPainted(false);
         MainJFrame.manageAdminBtn.setForeground(Color.white);
+
+        MainJFrame.homeBtn.setVisible(true);
+        MainJFrame.homeBtn.setOpaque(false);
+        MainJFrame.homeBtn.setContentAreaFilled(false);
+        MainJFrame.homeBtn.setBorderPainted(false);
 
         MainJFrame.logoutBtn.setOpaque(false);
         MainJFrame.logoutBtn.setContentAreaFilled(false);
