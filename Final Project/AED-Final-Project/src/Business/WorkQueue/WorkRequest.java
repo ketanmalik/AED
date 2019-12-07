@@ -6,6 +6,7 @@
 package Business.WorkQueue;
 
 import Business.MedicineList.Medicine;
+import Business.Report.Report;
 import Business.UserAccount.UserAccount;
 import java.util.Date;
 
@@ -28,6 +29,7 @@ public class WorkRequest {
     private int code;
     private String phoneNo;
     private String state;
+    private Report report;
 
     public WorkRequest() {
         requestDate = new Date();
@@ -135,6 +137,14 @@ public class WorkRequest {
 
     public void setState(String state) {
         this.state = state;
+    }
+
+    public Report getReport() {
+        return report;
+    }
+
+    public void setReport(Report report) {
+        this.report = report;
     }
 
     @Override

@@ -279,6 +279,11 @@ public class ManageEmployeeJPanel extends javax.swing.JPanel {
         Type type = null;
 //        Type type = getType(s);
 
+        if (s == null || s.equals("") || s.equals("null")) {
+            JOptionPane.showMessageDialog(null, "Please create an organization first", "Invalid Entry", JOptionPane.ERROR_MESSAGE);
+            return;
+        }
+
         if (empName == null || empName.equals("") || !RegexValidations.nameValidation(empName)) {
             JOptionPane.showMessageDialog(null, "Please enter valid employee name", "Invalid Entry", JOptionPane.ERROR_MESSAGE);
             return;

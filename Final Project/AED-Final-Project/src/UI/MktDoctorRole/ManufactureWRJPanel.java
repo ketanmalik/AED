@@ -318,6 +318,7 @@ public class ManufactureWRJPanel extends javax.swing.JPanel {
         for (Network n : ecoSystem.getNetworkDirectory().getNetworkList()) {
             for (Enterprise e : n.getEnterpriseDirectory().getEnterpriseList()) {
                 if (e instanceof CompoundPharmacyEnterprise) {
+                    e.getWorkQueue().getWorkRequestList().add(request);
                     for (Organization o : e.getOrganizationDirectory().getOrganizationList()) {
                         if (o instanceof ManufactureOrganization) {
                             org.add(o);
@@ -329,6 +330,7 @@ public class ManufactureWRJPanel extends javax.swing.JPanel {
 
         if (org != null) {
             for (Organization o : org) {
+                System.out.println(o.getName());
                 o.getWorkQueue().getWorkRequestList().add(request);
             }
         }

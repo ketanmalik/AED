@@ -380,7 +380,6 @@ public class ManageEnterpriseAdmin extends javax.swing.JPanel {
             uaToUpdate.setPassword(password);
             uaToUpdate.setName(name);
         } else {
-            System.out.println(enterpriseDropdown.getSelectedItem());
             String identifier = enterpriseDropdown.getSelectedItem().equals("Compound Pharmacy") ? "cpAdmin" : "mktAdmin";
 
             if (!authenticateUsername(username)) {

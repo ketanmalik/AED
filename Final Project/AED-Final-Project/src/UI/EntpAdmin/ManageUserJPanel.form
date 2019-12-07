@@ -74,9 +74,9 @@
                                       <Component id="jScrollPane1" min="-2" pref="750" max="-2" attributes="0"/>
                                       <EmptySpace min="-2" pref="66" max="-2" attributes="0"/>
                                       <Group type="103" groupAlignment="0" max="-2" attributes="0">
-                                          <Component id="updateBtn" max="32767" attributes="0"/>
-                                          <Component id="addBtn" alignment="0" max="32767" attributes="0"/>
+                                          <Component id="addBtn" max="32767" attributes="0"/>
                                           <Component id="viewBtn" alignment="0" max="32767" attributes="0"/>
+                                          <Component id="updateBtn" alignment="0" pref="130" max="32767" attributes="0"/>
                                       </Group>
                                   </Group>
                               </Group>

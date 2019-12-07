@@ -12,6 +12,8 @@ import Business.Organization.Organization;
 import Business.UserAccount.UserAccount;
 import Business.WorkQueue.WorkRequest;
 import java.awt.CardLayout;
+import java.util.ArrayList;
+import java.util.List;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.table.DefaultTableModel;
@@ -189,19 +191,22 @@ public class DeliveryWorkAreaJPanel extends javax.swing.JPanel {
 
         dtm.setRowCount(0);
         dtm1.setRowCount(0);
+        List<String> temp = new ArrayList<>();
         for (WorkRequest request : deliveryOrganization.getWorkQueue().getWorkRequestList()) {
 
-            Object[] row = new Object[4];
-            row[0] = request;
-            row[1] = request.getMedicine();
-            row[2] = request.getSender();
-            row[3] = request.getReceiver();
+            if (!(temp.contains(request.getId()))) {
+                temp.add(request.getId());
+                Object[] row = new Object[4];
+                row[0] = request;
+                row[1] = request.getMedicine();
+                row[2] = request.getSender();
+                row[3] = request.getReceiver();
 
-            if (request.getStatus().equalsIgnoreCase("Available for pickup")) {
-                dtm1.addRow(row);
-            } else {
-                dtm.addRow(row);
-
+                if (request.getStatus().equalsIgnoreCase("Available for pickup")) {
+                    dtm1.addRow(row);
+                } else {
+                    dtm.addRow(row);
+                }
             }
         }
     }

@@ -195,7 +195,7 @@ public class MktAdminJPanel extends javax.swing.JPanel {
     }//GEN-LAST:event_empWrChartBtnActionPerformed
 
     private void medManufactureChartBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_medManufactureChartBtnActionPerformed
-        String title = "State-Wise data for manufacturing medicine";
+        String title = "State-Wise data for manufacturing medicine formulation";
         ManfStateChart manfStateChart = new ManfStateChart(displayPanel, enterprise, title);
         CardLayout layout = (CardLayout) displayPanel.getLayout();
         displayPanel.add("manfStateChart", manfStateChart);

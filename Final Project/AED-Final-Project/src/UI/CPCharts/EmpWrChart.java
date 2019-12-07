@@ -103,7 +103,7 @@ public class EmpWrChart extends javax.swing.JPanel {
 
     public JPanel createChart() {
         DefaultPieDataset pieDataset = new DefaultPieDataset();
-
+                                                                    
         for (Organization o : enterprise.getOrganizationDirectory().getOrganizationList()) {
             pieDataset.setValue(o.getName(), o.getWorkQueue().getWorkRequestList().size());
         }

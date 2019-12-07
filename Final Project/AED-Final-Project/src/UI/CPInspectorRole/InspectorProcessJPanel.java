@@ -16,7 +16,6 @@ import Business.Organization.InspectionOrganization;
 import Business.Organization.Organization;
 import Business.UserAccount.UserAccount;
 import Business.WorkQueue.WorkRequest;
-import Business.util.RegexValidations;
 import java.awt.CardLayout;
 import java.awt.Component;
 import java.util.ArrayList;
@@ -40,8 +39,9 @@ public class InspectorProcessJPanel extends javax.swing.JPanel {
     private EcoSystem ecoSystem;
     private WorkRequest request;
     private static int id = 1;
+    private boolean researcherMode;
 
-    public InspectorProcessJPanel(JPanel displayPanel, UserAccount userAccount, Enterprise enterprise, Organization organization, EcoSystem ecoSystem, WorkRequest request) {
+    public InspectorProcessJPanel(JPanel displayPanel, UserAccount userAccount, Enterprise enterprise, Organization organization, EcoSystem ecoSystem, WorkRequest request, boolean researchMode) {
         initComponents();
         this.displayPanel = displayPanel;
         this.userAccount = userAccount;
@@ -49,6 +49,33 @@ public class InspectorProcessJPanel extends javax.swing.JPanel {
         this.manufactureOrganization = (InspectionOrganization) organization;
         this.ecoSystem = ecoSystem;
         this.request = request;
+        this.researcherMode = researchMode;
+        if (!researchMode) {
+            showFields(true);
+            completeBtn.setEnabled(false);
+            failBtn.setEnabled(false);
+            runInspectionBtn.setEnabled(true);
+        } else {
+            showFields(false);
+            completeBtn.setEnabled(true);
+            failBtn.setEnabled(true);
+            runInspectionBtn.setEnabled(false);
+        }
+    }
+
+    public void showFields(boolean bool) {
+        jLabel2.setVisible(bool);
+        jLabel3.setVisible(bool);
+        jLabel4.setVisible(bool);
+        jLabel5.setVisible(bool);
+        jLabel6.setVisible(bool);
+        activeIngredient.setVisible(bool);
+        sub1.setVisible(bool);
+        ratio1.setVisible(bool);
+        sub2.setVisible(bool);
+        ratio2.setVisible(bool);
+        runInspectionBtn.setVisible(bool);
+
     }
 
     /**
@@ -61,10 +88,21 @@ public class InspectorProcessJPanel extends javax.swing.JPanel {
     private void initComponents() {
 
         backBtn = new javax.swing.JButton();
-        jLabel1 = new javax.swing.JLabel();
-        notesTxtField = new javax.swing.JTextField();
         completeBtn = new javax.swing.JButton();
         failBtn = new javax.swing.JButton();
+        jLabel2 = new javax.swing.JLabel();
+        jLabel3 = new javax.swing.JLabel();
+        jLabel4 = new javax.swing.JLabel();
+        jLabel5 = new javax.swing.JLabel();
+        jLabel6 = new javax.swing.JLabel();
+        activeIngredient = new javax.swing.JTextField();
+        sub1 = new javax.swing.JTextField();
+        ratio1 = new javax.swing.JTextField();
+        sub2 = new javax.swing.JTextField();
+        ratio2 = new javax.swing.JTextField();
+        runInspectionBtn = new javax.swing.JButton();
+        jLabel1 = new javax.swing.JLabel();
+        jLabel8 = new javax.swing.JLabel();
 
         setBackground(new java.awt.Color(0, 153, 153));
 
@@ -74,9 +112,6 @@ public class InspectorProcessJPanel extends javax.swing.JPanel {
                 backBtnActionPerformed(evt);
             }
         });
-
-        jLabel1.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel1.setText("Notes to Delivery Team:");
 
         completeBtn.setText("Complete Process");
         completeBtn.addActionListener(new java.awt.event.ActionListener() {
@@ -92,6 +127,44 @@ public class InspectorProcessJPanel extends javax.swing.JPanel {
             }
         });
 
+        jLabel2.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel2.setText("Active Ingredient:");
+
+        jLabel3.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel3.setText("Substance 1:");
+
+        jLabel4.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel4.setText("Ratio of substance 1:");
+
+        jLabel5.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel5.setText("Substance 2:");
+
+        jLabel6.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel6.setText("Ratio of substance 2:");
+
+        activeIngredient.setEnabled(false);
+
+        sub1.setEnabled(false);
+
+        ratio1.setEnabled(false);
+
+        sub2.setEnabled(false);
+
+        ratio2.setEnabled(false);
+
+        runInspectionBtn.setText("Run Inspection");
+        runInspectionBtn.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                runInspectionBtnActionPerformed(evt);
+            }
+        });
+
+        jLabel1.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel1.setText("Complete Process: Approves the inspection request and adds the medicine to the medicine list if not already there");
+
+        jLabel8.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel8.setText("Fail Inspection: Disapproves the inspection request and sends it back to either manufacture or research organization");
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
         layout.setHorizontalGroup(
@@ -102,31 +175,73 @@ public class InspectorProcessJPanel extends javax.swing.JPanel {
                         .addGap(25, 25, 25)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(layout.createSequentialGroup()
-                                .addComponent(jLabel1)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addComponent(notesTxtField, javax.swing.GroupLayout.PREFERRED_SIZE, 350, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addComponent(backBtn)))
+                                .addGap(308, 308, 308)
+                                .addComponent(completeBtn)
+                                .addGap(18, 18, 18)
+                                .addComponent(failBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 142, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(backBtn)
+                            .addComponent(jLabel1)
+                            .addComponent(jLabel8)))
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(290, 290, 290)
-                        .addComponent(completeBtn)
-                        .addGap(18, 18, 18)
-                        .addComponent(failBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 142, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap(408, Short.MAX_VALUE))
+                        .addGap(299, 299, 299)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(jLabel6)
+                                .addGap(18, 18, 18)
+                                .addComponent(ratio2, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                                    .addComponent(jLabel3)
+                                    .addComponent(jLabel2)
+                                    .addComponent(jLabel4)
+                                    .addComponent(jLabel5))
+                                .addGap(18, 18, 18)
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(activeIngredient, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(sub2, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(ratio1, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(sub1, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)))))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(413, 413, 413)
+                        .addComponent(runInspectionBtn)))
+                .addContainerGap(240, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addGap(25, 25, 25)
                 .addComponent(backBtn)
-                .addGap(73, 73, 73)
+                .addGap(18, 18, 18)
+                .addComponent(runInspectionBtn)
+                .addGap(70, 70, 70)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel1)
-                    .addComponent(notesTxtField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(68, 68, 68)
+                    .addComponent(jLabel2)
+                    .addComponent(activeIngredient, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(18, 18, 18)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel3)
+                    .addComponent(sub1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(18, 18, 18)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel4)
+                    .addComponent(ratio1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(18, 18, 18)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel5)
+                    .addComponent(sub2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(18, 18, 18)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel6)
+                    .addComponent(ratio2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(70, 70, 70)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(completeBtn)
                     .addComponent(failBtn))
-                .addContainerGap(546, Short.MAX_VALUE))
+                .addGap(60, 60, 60)
+                .addComponent(jLabel1)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jLabel8)
+                .addContainerGap(231, Short.MAX_VALUE))
         );
     }// </editor-fold>//GEN-END:initComponents
 
@@ -144,8 +259,8 @@ public class InspectorProcessJPanel extends javax.swing.JPanel {
         if (request.getMedicine().getPrice() == 0) {
             int input = JOptionPane.showOptionDialog(null, "Are you you want to send " + request.getId() + " request for marketing?", "Process Confirmation", JOptionPane.OK_OPTION, JOptionPane.INFORMATION_MESSAGE, null, null, null);
             if (input == JOptionPane.OK_OPTION) {
-                String progress = (notesTxtField.getText() == null || notesTxtField.getText().equals("")) ? "" : notesTxtField.getText();
-                request.setProgress(progress);
+//                String progress = (notesTxtField.getText() == null || notesTxtField.getText().equals("")) ? "" : notesTxtField.getText();
+//                request.setProgress(progress);
                 request.setStatus("Sent for marketing");
                 request.setSender(userAccount);
                 request.setReceiver(null);
@@ -164,8 +279,8 @@ public class InspectorProcessJPanel extends javax.swing.JPanel {
         } else {
             int input = JOptionPane.showOptionDialog(null, "Are you you want to send " + request.getId() + " order for delivery?", "Process Confirmation", JOptionPane.OK_OPTION, JOptionPane.INFORMATION_MESSAGE, null, null, null);
             if (input == JOptionPane.OK_OPTION) {
-                String progress = (notesTxtField.getText() == null || notesTxtField.getText().equals("")) ? "" : notesTxtField.getText();
-                request.setProgress(progress);
+//                String progress = (notesTxtField.getText() == null || notesTxtField.getText().equals("")) ? "" : notesTxtField.getText();
+//                request.setProgress(progress);
                 request.setStatus("Sent for delivery");
                 request.setSender(userAccount);
                 request.setReceiver(null);
@@ -186,16 +301,17 @@ public class InspectorProcessJPanel extends javax.swing.JPanel {
     }//GEN-LAST:event_completeBtnActionPerformed
 
     private void failBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_failBtnActionPerformed
-        String message = notesTxtField.getText();
-        if (message == null || message.equals("") || !RegexValidations.nameValidation(message)) {
-            JOptionPane.showMessageDialog(null, "Please enter valid message for failing the inspection", "Invalid Message", JOptionPane.ERROR_MESSAGE);
-            return;
-        }
+//        String message = notesTxtField.getText();
+//        if (message == null || message.equals("") || !RegexValidations.nameValidation(message)) {
+//            JOptionPane.showMessageDialog(null, "Please enter valid message for failing the inspection", "Invalid Message", JOptionPane.ERROR_MESSAGE);
+//            return;
+//        }
         int input = JOptionPane.showOptionDialog(null, "Are you you want to fail inspection for " + request.getId() + " request?", "Process Confirmation", JOptionPane.OK_OPTION, JOptionPane.INFORMATION_MESSAGE, null, null, null);
         if (input == JOptionPane.OK_OPTION) {
-            request.setMessage(message);
+//            request.setMessage(message);
             request.setSender(userAccount);
             request.setReceiver(null);
+            userAccount.getWorkQueue().getWorkRequestList().clear();
 
             if (request.getMedicine().getPrice() == 0) {
                 request.setStatus("Research Request Accepted");
@@ -212,6 +328,48 @@ public class InspectorProcessJPanel extends javax.swing.JPanel {
             layout.previous(displayPanel);
         }
     }//GEN-LAST:event_failBtnActionPerformed
+
+    private void runInspectionBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_runInspectionBtnActionPerformed
+        boolean pass = true;
+        if (!request.getReport().getActiveIngredient().equalsIgnoreCase(request.getMedicine().getActiveIngredient())) {
+            activeIngredient.setText("Fail");
+            pass = false;
+        } else {
+            activeIngredient.setText("Pass");
+        }
+        if (!request.getReport().getS1().equalsIgnoreCase(request.getMedicine().getS1())) {
+            sub1.setText("Fail");
+            pass = false;
+        } else {
+            sub1.setText("Pass");
+        }
+        if (request.getReport().getR1() != request.getMedicine().getR1()) {
+            ratio1.setText("Fail");
+            pass = false;
+        } else {
+            ratio1.setText("Pass");
+        }
+        if (!request.getReport().getS2().equalsIgnoreCase(request.getMedicine().getS2())) {
+            sub2.setText("Fail");
+            pass = false;
+        } else {
+            sub2.setText("Pass");
+        }
+        if (request.getReport().getR2() != request.getMedicine().getR2()) {
+            ratio2.setText("Fail");
+            pass = false;
+        } else {
+            ratio2.setText("Pass");
+        }
+
+        if (pass) {
+            completeBtn.setEnabled(true);
+            failBtn.setEnabled(false);
+        } else {
+            completeBtn.setEnabled(false);
+            failBtn.setEnabled(true);
+        }
+    }//GEN-LAST:event_runInspectionBtnActionPerformed
     private void sendToDelivery() {
 //        Organization org = null;
         List<Organization> org = new ArrayList<>();
@@ -266,10 +424,21 @@ public class InspectorProcessJPanel extends javax.swing.JPanel {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JTextField activeIngredient;
     private javax.swing.JButton backBtn;
     private javax.swing.JButton completeBtn;
     private javax.swing.JButton failBtn;
     private javax.swing.JLabel jLabel1;
-    private javax.swing.JTextField notesTxtField;
+    private javax.swing.JLabel jLabel2;
+    private javax.swing.JLabel jLabel3;
+    private javax.swing.JLabel jLabel4;
+    private javax.swing.JLabel jLabel5;
+    private javax.swing.JLabel jLabel6;
+    private javax.swing.JLabel jLabel8;
+    private javax.swing.JTextField ratio1;
+    private javax.swing.JTextField ratio2;
+    private javax.swing.JButton runInspectionBtn;
+    private javax.swing.JTextField sub1;
+    private javax.swing.JTextField sub2;
     // End of variables declaration//GEN-END:variables
 }

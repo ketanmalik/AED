@@ -429,7 +429,7 @@ public class ManageNetworkPanel extends javax.swing.JPanel {
             populateTable();
             clearFields();
             enableFields(false);
-            JOptionPane.showMessageDialog(null, "New network added in the Ecosystem. Please add Enterprises to this network", "Success", JOptionPane.PLAIN_MESSAGE);
+            JOptionPane.showMessageDialog(null, "New network added in the Ecosystem. Please add enterprises in this network", "Success", JOptionPane.PLAIN_MESSAGE);
         }
 
         if (mode.equals("update")) {

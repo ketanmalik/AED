@@ -247,9 +247,9 @@ public class ManageUserJPanel extends javax.swing.JPanel {
                                         .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 750, javax.swing.GroupLayout.PREFERRED_SIZE)
                                         .addGap(66, 66, 66)
                                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                            .addComponent(updateBtn, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                                             .addComponent(addBtn, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                            .addComponent(viewBtn, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
+                                            .addComponent(viewBtn, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                            .addComponent(updateBtn, javax.swing.GroupLayout.DEFAULT_SIZE, 130, Short.MAX_VALUE))))
                                 .addGap(0, 0, Short.MAX_VALUE)))))
                 .addContainerGap())
             .addGroup(layout.createSequentialGroup()
@@ -357,11 +357,20 @@ public class ManageUserJPanel extends javax.swing.JPanel {
 
     private void addUaBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addUaBtnActionPerformed
         String s = String.valueOf(orgNameDropdown.getSelectedItem());
+        if (s == null || s.equals("") || s.equals("null")) {
+            JOptionPane.showMessageDialog(null, "Please create an organization first", "Invalid Entry", JOptionPane.ERROR_MESSAGE);
+            return;
+        }
+        String empName = String.valueOf(empDropdown.getSelectedItem());
+        if (empName == null || empName.equals("") || empName.equals("null")) {
+            JOptionPane.showMessageDialog(null, "Please create an employee in this organization first", "Invalid Entry", JOptionPane.ERROR_MESSAGE);
+            return;
+        }
+
         Type type = getType(s);
 
         String username = usernameNameTxtField.getText();
         String password = passwordTxtField.getText();
-        String empName = String.valueOf(empDropdown.getSelectedItem());
         String r = String.valueOf(roleDropdown.getSelectedItem());
 
         if (username.equals("") || username == null || !RegexValidations.usernameValidation(username)) {
@@ -377,6 +386,12 @@ public class ManageUserJPanel extends javax.swing.JPanel {
             JOptionPane.showMessageDialog(null, "The username is already taken. Please enter a different username", "Duplicate Username", JOptionPane.ERROR_MESSAGE);
             return;
         }
+
+        if (empName == null || empName.equals("") || empName.equals("null")) {
+            JOptionPane.showMessageDialog(null, "Please add employees in this organization first", "No Employee Found", JOptionPane.ERROR_MESSAGE);
+            return;
+        }
+
         if (type == null) {
             for (Organization o : enterprise.getOrganizationDirectory().getOrganizationList()) {
                 if (o.getName().equals(s)) {

@@ -10,8 +10,11 @@ import Business.EnterpriseDirectory.Enterprise;
 import Business.Organization.InspectionOrganization;
 import Business.Organization.Organization;
 import Business.UserAccount.UserAccount;
+import Business.WorkQueue.CPResearchWorkRequest;
 import Business.WorkQueue.WorkRequest;
 import java.awt.CardLayout;
+import java.util.ArrayList;
+import java.util.List;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.table.DefaultTableModel;
@@ -115,7 +118,7 @@ public class InspectorWorkAreaJPanel extends javax.swing.JPanel {
 
         jLabel1.setFont(new java.awt.Font("Lucida Grande", 0, 14)); // NOI18N
         jLabel1.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel1.setText("As an Inspector, you can assign the inspection work request to yourseld and");
+        jLabel1.setText("As an Inspector, you can assign the inspection work request to yourself and");
 
         processBtn.setText("Process");
         processBtn.addActionListener(new java.awt.event.ActionListener() {
@@ -216,7 +219,7 @@ public class InspectorWorkAreaJPanel extends javax.swing.JPanel {
                 return;
             } else {
                 request.setStatus("Inspection In Process");
-                InspectorProcessJPanel process = new InspectorProcessJPanel(displayPanel, userAccount, enterprise, inspectionOrganization, ecoSystem, request);
+                InspectorProcessJPanel process = new InspectorProcessJPanel(displayPanel, userAccount, enterprise, inspectionOrganization, ecoSystem, request, request instanceof CPResearchWorkRequest);
                 CardLayout layout = (CardLayout) displayPanel.getLayout();
                 displayPanel.add("process", process);
                 layout.next(displayPanel);
@@ -233,21 +236,24 @@ public class InspectorWorkAreaJPanel extends javax.swing.JPanel {
 
         dtm.setRowCount(0);
         dtm1.setRowCount(0);
+        List<String> temp = new ArrayList<>();
         for (WorkRequest request : inspectionOrganization.getWorkQueue().getWorkRequestList()) {
 
-            Object[] row = new Object[4];
-            row[0] = request;
-            row[1] = request.getMedicine();
-            row[2] = request.getSender();
-            row[3] = request.getReceiver();
+            if (!(temp.contains(request.getId()))) {
+                temp.add(request.getId());
+                Object[] row = new Object[4];
+                row[0] = request;
+                row[1] = request.getMedicine();
+                row[2] = request.getSender();
+                row[3] = request.getReceiver();
 
-            if (request.getStatus().equalsIgnoreCase("Sent for inspection")
-                    || request.getStatus().equalsIgnoreCase("Ready for Inspection")
-                    || request.getStatus().equalsIgnoreCase("Inspection In Process")) {
-                dtm.addRow(row);
-            } else {
-                dtm1.addRow(row);
-
+                if (request.getStatus().equalsIgnoreCase("Sent for inspection")
+                        || request.getStatus().equalsIgnoreCase("Ready for Inspection")
+                        || request.getStatus().equalsIgnoreCase("Inspection In Process")) {
+                    dtm.addRow(row);
+                } else {
+                    dtm1.addRow(row);
+                }
             }
         }
     }
