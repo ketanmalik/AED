@@ -408,7 +408,7 @@ public class ManageNetworkPanel extends javax.swing.JPanel {
             invalidFieldsMessage("name");
             return;
         }
-        if (location.equals("") || location == null || !RegexValidations.nameValidation(location)) {
+        if (location.equals("") || location == null || !RegexValidations.locationValidation(location)) {
             invalidFieldsMessage("location");
             return;
         }

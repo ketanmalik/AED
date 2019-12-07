@@ -20,8 +20,15 @@ public class RegexValidations {
         return m.matches();
     }
 
+        public static boolean locationValidation(String str) {
+        Pattern p = Pattern.compile("^([a-zA-Z][a-zA-Z\\s\\-0-9]*[^,\\s]$)|([a-zA-Z][,]{0,1}[a-zA-Z\\s0-9]*[^,\\s]$)");
+        Matcher m = p.matcher(str);
+        return m.matches();
+    }
+        
     public static boolean usernameValidation(String str) {
-        Pattern p = Pattern.compile("[a-zA-Z]{6,12}+");
+//        Pattern p = Pattern.compile("[a-zA-Z]{6,12}+");
+        Pattern p = Pattern.compile("^[a-zA-Z][a-zA-Z0-9_]{5,11}[^_]$");
         Matcher m = p.matcher(str);
         System.out.println(m.matches());
         return m.matches();

@@ -127,7 +127,15 @@ public class ManufacturerWorkAreaJPanel extends javax.swing.JPanel {
             new String [] {
                 "Order ID", "Medicine Name", "Sender", "Receiver"
             }
-        ));
+        ) {
+            boolean[] canEdit = new boolean [] {
+                false, false, false, false
+            };
+
+            public boolean isCellEditable(int rowIndex, int columnIndex) {
+                return canEdit [columnIndex];
+            }
+        });
         jScrollPane1.setViewportView(openRequestTbl);
 
         assignToMeBtn.setText("Assign to me");
@@ -151,7 +159,15 @@ public class ManufacturerWorkAreaJPanel extends javax.swing.JPanel {
             new String [] {
                 "Order ID", "Medicine Name", "Sender", "Receiver"
             }
-        ));
+        ) {
+            boolean[] canEdit = new boolean [] {
+                false, false, false, false
+            };
+
+            public boolean isCellEditable(int rowIndex, int columnIndex) {
+                return canEdit [columnIndex];
+            }
+        });
         jScrollPane2.setViewportView(closedRequestTbl);
 
         jLabel3.setForeground(new java.awt.Color(255, 255, 255));

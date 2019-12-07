@@ -34,6 +34,9 @@ public class ManageEmployeeJPanel extends javax.swing.JPanel {
     private EcoSystem ecoSystem;
     private String mode = "";
     private String identifier = "";
+    private boolean update = false;
+    private Employee empToUpdate = null;
+    private Organization orgToUpdate = null;
 
     public ManageEmployeeJPanel(JPanel displayPanel, UserAccount userAccount, Enterprise enterprise, Organization organization, EcoSystem ecoSystem, String mode) {
         initComponents();
@@ -68,6 +71,7 @@ public class ManageEmployeeJPanel extends javax.swing.JPanel {
         orgCompLabel = new javax.swing.JLabel();
         orgAddBtn = new javax.swing.JButton();
         titleLabel = new javax.swing.JLabel();
+        updateBtn = new javax.swing.JButton();
 
         setBackground(new java.awt.Color(0, 153, 153));
 
@@ -130,6 +134,13 @@ public class ManageEmployeeJPanel extends javax.swing.JPanel {
         titleLabel.setForeground(new java.awt.Color(255, 255, 255));
         titleLabel.setText("Welcome Name");
 
+        updateBtn.setText("Update");
+        updateBtn.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                updateBtnActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
         layout.setHorizontalGroup(
@@ -153,11 +164,14 @@ public class ManageEmployeeJPanel extends javax.swing.JPanel {
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                     .addComponent(empNameTxtField, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE)
                                     .addComponent(orgNameDropdown, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                            .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 750, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 750, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(66, 66, 66)
+                                .addComponent(updateBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 130, javax.swing.GroupLayout.PREFERRED_SIZE))))
                     .addGroup(layout.createSequentialGroup()
                         .addGap(418, 418, 418)
                         .addComponent(orgAddBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 170, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap(116, Short.MAX_VALUE))
+                .addContainerGap(31, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -168,8 +182,13 @@ public class ManageEmployeeJPanel extends javax.swing.JPanel {
                 .addComponent(roleLabel)
                 .addGap(50, 50, 50)
                 .addComponent(orgCompLabel)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 250, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 250, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(47, 47, 47)
+                        .addComponent(updateBtn)))
                 .addGap(50, 50, 50)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(orgTypeLabel)
@@ -274,28 +293,44 @@ public class ManageEmployeeJPanel extends javax.swing.JPanel {
     }//GEN-LAST:event_empNameTxtFieldActionPerformed
 
     private void orgAddBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_orgAddBtnActionPerformed
-        String empName = empNameTxtField.getText();
-        String s = String.valueOf(orgNameDropdown.getSelectedItem());
-        Type type = null;
+        if (update) {
+            orgNameDropdown.setEnabled(false);
+            String name = empNameTxtField.getText();
+            if ((name.equalsIgnoreCase(empToUpdate.getName()))) {
+                JOptionPane.showMessageDialog(null, "Please make some changes to update", "No changes made", JOptionPane.ERROR_MESSAGE);
+                return;
+            } else {
+                if (name == null || name.equals("") || !RegexValidations.nameValidation(name)) {
+                    JOptionPane.showMessageDialog(null, "Please enter valid employee name", "Invalid Entry", JOptionPane.ERROR_MESSAGE);
+                    return;
+                }
+                empToUpdate.setName(name);
+                JOptionPane.showMessageDialog(null, "Employee details updated");
+            }
+        } else {
+            orgNameDropdown.setEnabled(true);
+            String empName = empNameTxtField.getText();
+            String s = String.valueOf(orgNameDropdown.getSelectedItem());
+            Type type = null;
 //        Type type = getType(s);
 
-        if (s == null || s.equals("") || s.equals("null")) {
-            JOptionPane.showMessageDialog(null, "Please create an organization first", "Invalid Entry", JOptionPane.ERROR_MESSAGE);
-            return;
-        }
-
-        if (empName == null || empName.equals("") || !RegexValidations.nameValidation(empName)) {
-            JOptionPane.showMessageDialog(null, "Please enter valid employee name", "Invalid Entry", JOptionPane.ERROR_MESSAGE);
-            return;
-        }
-
-        for (Organization o : enterprise.getOrganizationDirectory().getOrganizationList()) {
-            if (o.getName().equals(s)) {
-                type = o.getOrgType();
-                o.getEmployeeDirectory().createEmployee(empName);
-                break;
+            if (s == null || s.equals("") || s.equals("null")) {
+                JOptionPane.showMessageDialog(null, "Please create an organization first", "Invalid Entry", JOptionPane.ERROR_MESSAGE);
+                return;
             }
-        }
+
+            if (empName == null || empName.equals("") || !RegexValidations.nameValidation(empName)) {
+                JOptionPane.showMessageDialog(null, "Please enter valid employee name", "Invalid Entry", JOptionPane.ERROR_MESSAGE);
+                return;
+            }
+
+            for (Organization o : enterprise.getOrganizationDirectory().getOrganizationList()) {
+                if (o.getName().equals(s)) {
+                    type = o.getOrgType();
+                    o.getEmployeeDirectory().createEmployee(empName);
+                    break;
+                }
+            }
 
 //        if (type == null) {
 //            for (Organization o : enterprise.getOrganizationDirectory().getOrganizationList()) {
@@ -310,11 +345,31 @@ public class ManageEmployeeJPanel extends javax.swing.JPanel {
 //                o.getEmployeeDirectory().createEmployee(empName);
 //                break;
 //            }
-//        }
+//        }   
+        }
+
         populateTable();
         populateDropdown();
         empNameTxtField.setText("");
+        update = false;
+        orgNameDropdown.setEnabled(true);
+        orgAddBtn.setText("Add Employee");
     }//GEN-LAST:event_orgAddBtnActionPerformed
+
+    private void updateBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_updateBtnActionPerformed
+        int selectedRow = organizationTbl.getSelectedRow();
+        if (selectedRow >= 0) {
+            empToUpdate = (Employee) organizationTbl.getValueAt(selectedRow, 0);
+            orgToUpdate = (Organization) organizationTbl.getValueAt(selectedRow, 1);
+            orgNameDropdown.setSelectedItem(orgToUpdate.getName());
+            empNameTxtField.setText(empToUpdate.getName());
+            orgNameDropdown.setEnabled(false);
+            orgAddBtn.setText("Update Employee");
+            update = true;
+        } else {
+            JOptionPane.showMessageDialog(null, "Please select a row to update");
+        }
+    }//GEN-LAST:event_updateBtnActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
@@ -328,5 +383,6 @@ public class ManageEmployeeJPanel extends javax.swing.JPanel {
     private javax.swing.JTable organizationTbl;
     private javax.swing.JLabel roleLabel;
     private javax.swing.JLabel titleLabel;
+    private javax.swing.JButton updateBtn;
     // End of variables declaration//GEN-END:variables
 }

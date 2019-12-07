@@ -283,8 +283,18 @@ public class ProcessJPanel extends javax.swing.JPanel {
         descriptionTxtField.setText(request.getMedicine().getDescription());
         sub1txtField.setText(request.getMedicine().getS1());
         sub2TxtField.setText(request.getMedicine().getS2());
-        ratio1TxtField.setText(String.valueOf(request.getMedicine().getR1()));
-        ratio2TxtField.setText(String.valueOf(request.getMedicine().getR2()));
+        if (request.getMedicine().getR1() == 0) {
+            ratio1TxtField.setText("");
+        } else {
+            ratio1TxtField.setText(String.valueOf(request.getMedicine().getR1()));
+        }
+        if (request.getMedicine().getR2() == 0) {
+            ratio2TxtField.setText("");
+        } else {
+            ratio2TxtField.setText(String.valueOf(request.getMedicine().getR2()));
+        }
+//        ratio1TxtField.setText(String.valueOf(request.getMedicine().getR1()));
+//        ratio2TxtField.setText(String.valueOf(request.getMedicine().getR2()));
         String type = request.getMedicine().getType();
         if (type.equals("Tablet")) {
             typeDropdown.setSelectedIndex(0);
@@ -296,7 +306,6 @@ public class ProcessJPanel extends javax.swing.JPanel {
     }
 
     private void saveDetails() {
-        System.out.println("UI.CPResearcherRole.ProcessJPanel.saveDetails()");
         request.getMedicine().setName(medicineName);
         request.getMedicine().setActiveIngredient(activeIngredient);
         request.getMedicine().setType(type);
@@ -322,6 +331,10 @@ public class ProcessJPanel extends javax.swing.JPanel {
         type = String.valueOf(typeDropdown.getSelectedItem());
         try {
             Integer.parseInt(strengthTxtField.getText());
+            if (Integer.parseInt(strengthTxtField.getText()) == 0) {
+                JOptionPane.showMessageDialog(null, "Medicine strength cannot be 0", "Invalid Value", JOptionPane.ERROR_MESSAGE);
+                return;
+            }
         } catch (Exception e) {
             JOptionPane.showMessageDialog(null, "Please enter valid value for strength", "Invalid Value", JOptionPane.ERROR_MESSAGE);
             return;
@@ -334,6 +347,10 @@ public class ProcessJPanel extends javax.swing.JPanel {
         }
         try {
             Integer.parseInt(ratio1TxtField.getText());
+            if (Integer.parseInt(ratio1TxtField.getText()) == 0) {
+                JOptionPane.showMessageDialog(null, "Ratio for substance 1 strength cannot be 0", "Invalid Value", JOptionPane.ERROR_MESSAGE);
+                return;
+            }
         } catch (Exception e) {
             JOptionPane.showMessageDialog(null, "Please enter valid value for subtance 1 ratio", "Invalid Value", JOptionPane.ERROR_MESSAGE);
             return;
@@ -346,6 +363,10 @@ public class ProcessJPanel extends javax.swing.JPanel {
         }
         try {
             Integer.parseInt(ratio2TxtField.getText());
+            if (Integer.parseInt(ratio2TxtField.getText()) == 0) {
+                JOptionPane.showMessageDialog(null, "Ratio for substance 2 strength cannot be 0", "Invalid Value", JOptionPane.ERROR_MESSAGE);
+                return;
+            }
         } catch (Exception e) {
             JOptionPane.showMessageDialog(null, "Please enter valid value for subtance 2 ratio", "Invalid Value", JOptionPane.ERROR_MESSAGE);
             return;
@@ -477,7 +498,7 @@ public class ProcessJPanel extends javax.swing.JPanel {
             }
         }
         saveDetails();
-        JOptionPane.showMessageDialog(null, "Details saved successdully");
+        JOptionPane.showMessageDialog(null, "Details saved successfully");
     }//GEN-LAST:event_saveBtnActionPerformed
 
     private void sendToInspection() {

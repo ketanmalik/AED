@@ -297,7 +297,7 @@ public class ManageUserJPanel extends javax.swing.JPanel {
                     .addComponent(jLabel2))
                 .addGap(50, 50, 50)
                 .addComponent(addUaBtn)
-                .addContainerGap(94, Short.MAX_VALUE))
+                .addContainerGap(151, Short.MAX_VALUE))
         );
     }// </editor-fold>//GEN-END:initComponents
 

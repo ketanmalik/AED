@@ -245,6 +245,10 @@ public class ResearchWRJPanel extends javax.swing.JPanel {
                 return;
             }
             medicineStrength = Integer.parseInt(strengthTxtField.getText());
+            if (medicineStrength == 0) {
+                JOptionPane.showMessageDialog(null, "Medicine strength cannot be 0", "Invalid medicine strength", JOptionPane.ERROR_MESSAGE);
+                return;
+            }
         }
         String activeIngredient = ingredientTxtField.getText();
         if (activeIngredient == null || activeIngredient.equals("")) {

@@ -11,6 +11,7 @@ import Business.Organization.Organization;
 import Business.UserAccount.UserAccount;
 import Business.WorkQueue.WorkRequest;
 import Business.util.DateUtil;
+import UI.RequestDetails.ViewMedicineList;
 import UI.RequestDetails.ViewRequest;
 import java.awt.CardLayout;
 import javax.swing.JOptionPane;
@@ -82,6 +83,7 @@ public class DoctorWorkAreaJPanel extends javax.swing.JPanel {
         viewOrderBtn = new javax.swing.JButton();
         description2 = new javax.swing.JLabel();
         requestResearchBtn = new javax.swing.JButton();
+        viewMedicineBtn = new javax.swing.JButton();
 
         setBackground(new java.awt.Color(0, 153, 153));
 
@@ -92,7 +94,15 @@ public class DoctorWorkAreaJPanel extends javax.swing.JPanel {
             new String [] {
                 "Order ID", "Receiver", "Request Date", "Status"
             }
-        ));
+        ) {
+            boolean[] canEdit = new boolean [] {
+                false, false, false, false
+            };
+
+            public boolean isCellEditable(int rowIndex, int columnIndex) {
+                return canEdit [columnIndex];
+            }
+        });
         requestTbl.setFocusCycleRoot(true);
         jScrollPane1.setViewportView(requestTbl);
 
@@ -133,6 +143,13 @@ public class DoctorWorkAreaJPanel extends javax.swing.JPanel {
             }
         });
 
+        viewMedicineBtn.setText("View Medicine List");
+        viewMedicineBtn.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                viewMedicineBtnActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
         layout.setHorizontalGroup(
@@ -150,15 +167,16 @@ public class DoctorWorkAreaJPanel extends javax.swing.JPanel {
                             .addComponent(description2)
                             .addGroup(layout.createSequentialGroup()
                                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 803, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(18, 18, 18)
+                                .addGap(30, 30, 30)
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                                     .addComponent(requestMedicineBtn, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                                     .addComponent(requestResearchBtn, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                    .addComponent(viewOrderBtn, javax.swing.GroupLayout.DEFAULT_SIZE, 155, Short.MAX_VALUE)))))
+                                    .addComponent(viewOrderBtn, javax.swing.GroupLayout.DEFAULT_SIZE, 155, Short.MAX_VALUE)
+                                    .addComponent(viewMedicineBtn, javax.swing.GroupLayout.DEFAULT_SIZE, 155, Short.MAX_VALUE)))))
                     .addGroup(layout.createSequentialGroup()
                         .addGap(45, 45, 45)
                         .addComponent(description1)))
-                .addContainerGap(47, Short.MAX_VALUE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -171,18 +189,18 @@ public class DoctorWorkAreaJPanel extends javax.swing.JPanel {
                 .addComponent(description1)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(description2)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGap(35, 35, 35)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(35, 35, 35)
-                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 170, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(51, 51, 51)
                         .addComponent(requestResearchBtn)
                         .addGap(18, 18, 18)
                         .addComponent(requestMedicineBtn)
                         .addGap(18, 18, 18)
-                        .addComponent(viewOrderBtn)))
-                .addContainerGap(443, Short.MAX_VALUE))
+                        .addComponent(viewOrderBtn)
+                        .addGap(18, 18, 18)
+                        .addComponent(viewMedicineBtn))
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE))
+                .addContainerGap(427, Short.MAX_VALUE))
         );
     }// </editor-fold>//GEN-END:initComponents
 
@@ -214,6 +232,13 @@ public class DoctorWorkAreaJPanel extends javax.swing.JPanel {
         }
     }//GEN-LAST:event_viewOrderBtnActionPerformed
 
+    private void viewMedicineBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_viewMedicineBtnActionPerformed
+        ViewMedicineList vml = new ViewMedicineList(displayPanel, ecoSystem);
+        CardLayout layout = (CardLayout) displayPanel.getLayout();
+        displayPanel.add("vml", vml);
+        layout.next(displayPanel);
+    }//GEN-LAST:event_viewMedicineBtnActionPerformed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel description1;
@@ -224,6 +249,7 @@ public class DoctorWorkAreaJPanel extends javax.swing.JPanel {
     private javax.swing.JButton requestResearchBtn;
     private javax.swing.JTable requestTbl;
     private javax.swing.JLabel titleLabel;
+    private javax.swing.JButton viewMedicineBtn;
     private javax.swing.JButton viewOrderBtn;
     // End of variables declaration//GEN-END:variables
 }
