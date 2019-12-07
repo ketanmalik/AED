@@ -11,7 +11,10 @@ import Business.Organization.ManufactureOrganization;
 import Business.Organization.Organization;
 import Business.UserAccount.UserAccount;
 import Business.WorkQueue.WorkRequest;
+import UI.RequestDetails.ViewRequest;
 import java.awt.CardLayout;
+import java.util.ArrayList;
+import java.util.List;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.table.DefaultTableModel;
@@ -33,6 +36,7 @@ public class ManufacturerWorkAreaJPanel extends javax.swing.JPanel {
 
     public ManufacturerWorkAreaJPanel(JPanel displayPanel, UserAccount userAccount, Enterprise enterprise, Organization organization, EcoSystem ecoSystem) {
         initComponents();
+        System.out.println("UI.CPManufacturerRole.ManufacturerWorkAreaJPanel.<init>()");
         this.displayPanel = displayPanel;
         this.userAccount = userAccount;
         this.enterprise = enterprise;
@@ -53,21 +57,24 @@ public class ManufacturerWorkAreaJPanel extends javax.swing.JPanel {
 
         dtm.setRowCount(0);
         dtm1.setRowCount(0);
+        List<String> temp = new ArrayList<>();
         for (WorkRequest request : manufactureOrganization.getWorkQueue().getWorkRequestList()) {
+            if (!(temp.contains(request.getId()))) {
+                temp.add(request.getId());
+                Object[] row = new Object[4];
+                row[0] = request;
+                row[1] = request.getMedicine();
+                row[2] = request.getSender();
+                row[3] = request.getReceiver();
 
-            Object[] row = new Object[4];
-            row[0] = request;
-            row[1] = request.getMedicine();
-            row[2] = request.getSender();
-            row[3] = request.getReceiver();
+                if (request.getStatus().equalsIgnoreCase("order confirmed")
+                        || request.getStatus().equalsIgnoreCase("ready for manufacturing")
+                        || request.getStatus().equalsIgnoreCase("manufacturing in process")) {
+                    dtm.addRow(row);
+                } else {
+                    dtm1.addRow(row);
 
-            if (request.getStatus().equalsIgnoreCase("order confirmed")
-                    || request.getStatus().equalsIgnoreCase("ready for manufacturing")
-                    || request.getStatus().equalsIgnoreCase("manufacturing in process")) {
-                dtm.addRow(row);
-            } else {
-                dtm1.addRow(row);
-
+                }
             }
         }
     }
@@ -93,6 +100,7 @@ public class ManufacturerWorkAreaJPanel extends javax.swing.JPanel {
         closedRequestTbl = new javax.swing.JTable();
         jLabel3 = new javax.swing.JLabel();
         jLabel4 = new javax.swing.JLabel();
+        viewOrderBtn = new javax.swing.JButton();
 
         setBackground(new java.awt.Color(0, 153, 153));
 
@@ -119,7 +127,15 @@ public class ManufacturerWorkAreaJPanel extends javax.swing.JPanel {
             new String [] {
                 "Order ID", "Medicine Name", "Sender", "Receiver"
             }
-        ));
+        ) {
+            boolean[] canEdit = new boolean [] {
+                false, false, false, false
+            };
+
+            public boolean isCellEditable(int rowIndex, int columnIndex) {
+                return canEdit [columnIndex];
+            }
+        });
         jScrollPane1.setViewportView(openRequestTbl);
 
         assignToMeBtn.setText("Assign to me");
@@ -143,7 +159,15 @@ public class ManufacturerWorkAreaJPanel extends javax.swing.JPanel {
             new String [] {
                 "Order ID", "Medicine Name", "Sender", "Receiver"
             }
-        ));
+        ) {
+            boolean[] canEdit = new boolean [] {
+                false, false, false, false
+            };
+
+            public boolean isCellEditable(int rowIndex, int columnIndex) {
+                return canEdit [columnIndex];
+            }
+        });
         jScrollPane2.setViewportView(closedRequestTbl);
 
         jLabel3.setForeground(new java.awt.Color(255, 255, 255));
@@ -151,6 +175,13 @@ public class ManufacturerWorkAreaJPanel extends javax.swing.JPanel {
 
         jLabel4.setForeground(new java.awt.Color(255, 255, 255));
         jLabel4.setText("Open Requests:");
+
+        viewOrderBtn.setText("View Order Details");
+        viewOrderBtn.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                viewOrderBtnActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
@@ -165,10 +196,11 @@ public class ManufacturerWorkAreaJPanel extends javax.swing.JPanel {
                             .addComponent(jLabel1)
                             .addGroup(layout.createSequentialGroup()
                                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 675, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(29, 29, 29)
+                                .addGap(30, 30, 30)
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                                     .addComponent(assignToMeBtn, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                    .addComponent(processBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 113, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                                    .addComponent(viewOrderBtn, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                    .addComponent(processBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 155, javax.swing.GroupLayout.PREFERRED_SIZE)))
                             .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 675, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(jLabel3)
                             .addComponent(jLabel4)))
@@ -177,7 +209,7 @@ public class ManufacturerWorkAreaJPanel extends javax.swing.JPanel {
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.CENTER)
                             .addComponent(enterpriseLabel)
                             .addComponent(titleLabel))))
-                .addContainerGap(158, Short.MAX_VALUE))
+                .addContainerGap(117, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -192,14 +224,17 @@ public class ManufacturerWorkAreaJPanel extends javax.swing.JPanel {
                 .addComponent(jLabel2)
                 .addGap(50, 50, 50)
                 .addComponent(jLabel4)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 170, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(34, 34, 34)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 170, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(22, 22, 22)
                         .addComponent(assignToMeBtn)
                         .addGap(18, 18, 18)
-                        .addComponent(processBtn)))
+                        .addComponent(processBtn)
+                        .addGap(18, 18, 18)
+                        .addComponent(viewOrderBtn)))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 77, Short.MAX_VALUE)
                 .addComponent(jLabel3)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -254,6 +289,20 @@ public class ManufacturerWorkAreaJPanel extends javax.swing.JPanel {
         }
     }//GEN-LAST:event_assignToMeBtnActionPerformed
 
+    private void viewOrderBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_viewOrderBtnActionPerformed
+        int selectedRow = openRequestTbl.getSelectedRow();
+        if (selectedRow >= 0) {
+            WorkRequest wr = (WorkRequest) openRequestTbl.getValueAt(selectedRow, 0);
+            ViewRequest vr = new ViewRequest(displayPanel, wr);
+            CardLayout layout = (CardLayout) displayPanel.getLayout();
+            displayPanel.add("vr", vr);
+            layout.next(displayPanel);
+        } else {
+            JOptionPane.showMessageDialog(null, "Please select a row to view");
+            return;
+        }
+    }//GEN-LAST:event_viewOrderBtnActionPerformed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton assignToMeBtn;
@@ -268,5 +317,6 @@ public class ManufacturerWorkAreaJPanel extends javax.swing.JPanel {
     private javax.swing.JTable openRequestTbl;
     private javax.swing.JButton processBtn;
     private javax.swing.JLabel titleLabel;
+    private javax.swing.JButton viewOrderBtn;
     // End of variables declaration//GEN-END:variables
 }

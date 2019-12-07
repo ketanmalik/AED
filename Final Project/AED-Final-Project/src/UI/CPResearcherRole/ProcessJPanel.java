@@ -37,6 +37,15 @@ public class ProcessJPanel extends javax.swing.JPanel {
     private EcoSystem ecoSystem;
     private WorkRequest request;
     private static int id = 1;
+    String medicineName = "";
+    int strength = 0;
+    String type = "";
+    String description = "";
+    String activeIngredient = "";
+    String sub1 = "";
+    String sub2 = "";
+    int r1 = 0;
+    int r2 = 0;
 
     public ProcessJPanel(JPanel displayPanel, UserAccount userAccount, Enterprise enterprise, Organization organization, EcoSystem ecoSystem, WorkRequest request) {
         initComponents();
@@ -72,6 +81,17 @@ public class ProcessJPanel extends javax.swing.JPanel {
         activeIngredientTxtField = new javax.swing.JTextField();
         jLabel4 = new javax.swing.JLabel();
         descriptionTxtField = new javax.swing.JTextField();
+        jLabel5 = new javax.swing.JLabel();
+        orderNoTxtField = new javax.swing.JTextField();
+        jLabel6 = new javax.swing.JLabel();
+        sub1txtField = new javax.swing.JTextField();
+        jLabel9 = new javax.swing.JLabel();
+        ratio1TxtField = new javax.swing.JTextField();
+        jLabel10 = new javax.swing.JLabel();
+        sub2TxtField = new javax.swing.JTextField();
+        jLabel11 = new javax.swing.JLabel();
+        ratio2TxtField = new javax.swing.JTextField();
+        saveBtn = new javax.swing.JButton();
 
         setBackground(new java.awt.Color(0, 153, 153));
 
@@ -117,72 +137,131 @@ public class ProcessJPanel extends javax.swing.JPanel {
 
         descriptionTxtField.setText("jTextField7");
 
+        jLabel5.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel5.setText("Order Number:");
+
+        orderNoTxtField.setEnabled(false);
+
+        jLabel6.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel6.setText("Substance 1:");
+
+        jLabel9.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel9.setText("Ratio:");
+
+        jLabel10.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel10.setText("Substance 2");
+
+        jLabel11.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel11.setText("Ratio:");
+
+        saveBtn.setText("Save");
+        saveBtn.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                saveBtnActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
+                .addGap(25, 25, 25)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(78, 78, 78)
+                        .addGap(1, 1, 1)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addComponent(jLabel3)
+                            .addComponent(jLabel5)
                             .addComponent(jLabel2)
                             .addComponent(jLabel7)
                             .addComponent(jLabel8)
-                            .addComponent(jLabel4))
+                            .addComponent(jLabel3)
+                            .addComponent(jLabel6)
+                            .addComponent(jLabel10)
+                            .addComponent(jLabel4)
+                            .addComponent(jLabel1))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(nameTxtField)
-                            .addComponent(strengthTxtField)
-                            .addComponent(typeDropdown, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(activeIngredientTxtField)
-                            .addComponent(descriptionTxtField, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(25, 25, 25)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(layout.createSequentialGroup()
-                                .addComponent(jLabel1)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addComponent(notesTxtField, javax.swing.GroupLayout.PREFERRED_SIZE, 350, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addComponent(backBtn)
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                    .addComponent(orderNoTxtField)
+                                    .addComponent(nameTxtField)
+                                    .addComponent(activeIngredientTxtField)
+                                    .addComponent(typeDropdown, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                    .addComponent(strengthTxtField)
+                                    .addComponent(sub1txtField, javax.swing.GroupLayout.DEFAULT_SIZE, 200, Short.MAX_VALUE)
+                                    .addComponent(sub2TxtField, javax.swing.GroupLayout.DEFAULT_SIZE, 200, Short.MAX_VALUE))
+                                .addGap(18, 18, 18)
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addGroup(layout.createSequentialGroup()
+                                        .addComponent(jLabel9)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                        .addComponent(ratio1TxtField, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                    .addGroup(layout.createSequentialGroup()
+                                        .addComponent(jLabel11)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                        .addComponent(ratio2TxtField, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                                .addComponent(notesTxtField, javax.swing.GroupLayout.Alignment.LEADING)
+                                .addComponent(descriptionTxtField, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 200, Short.MAX_VALUE))
                             .addGroup(layout.createSequentialGroup()
-                                .addGap(378, 378, 378)
-                                .addComponent(completeBtn)))))
-                .addContainerGap(447, Short.MAX_VALUE))
+                                .addGap(129, 129, 129)
+                                .addComponent(saveBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 142, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(18, 18, 18)
+                                .addComponent(completeBtn))))
+                    .addComponent(backBtn))
+                .addContainerGap(330, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addGap(25, 25, 25)
                 .addComponent(backBtn)
-                .addGap(73, 73, 73)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel1)
-                    .addComponent(notesTxtField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(jLabel5)
+                    .addComponent(orderNoTxtField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel2)
                     .addComponent(nameTxtField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel3)
-                    .addComponent(strengthTxtField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(jLabel7)
+                    .addComponent(activeIngredientTxtField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel8)
                     .addComponent(typeDropdown, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel7)
-                    .addComponent(activeIngredientTxtField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(jLabel3)
+                    .addComponent(strengthTxtField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(18, 18, 18)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel6)
+                    .addComponent(sub1txtField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel9)
+                    .addComponent(ratio1TxtField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(18, 18, 18)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel10)
+                    .addComponent(sub2TxtField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel11)
+                    .addComponent(ratio2TxtField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel4)
                     .addComponent(descriptionTxtField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(64, 64, 64)
-                .addComponent(completeBtn)
-                .addContainerGap(338, Short.MAX_VALUE))
+                .addGap(18, 18, 18)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jLabel1)
+                    .addComponent(notesTxtField, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(45, 45, 45)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(saveBtn)
+                    .addComponent(completeBtn))
+                .addGap(272, 272, 272))
         );
     }// </editor-fold>//GEN-END:initComponents
 
@@ -197,10 +276,25 @@ public class ProcessJPanel extends javax.swing.JPanel {
     }//GEN-LAST:event_backBtnActionPerformed
 
     private void populateFields() {
+        orderNoTxtField.setText(request.getId());
         nameTxtField.setText(request.getMedicine().getName());
         strengthTxtField.setText(String.valueOf(request.getMedicine().getStrength()));
         activeIngredientTxtField.setText(request.getMedicine().getActiveIngredient());
         descriptionTxtField.setText(request.getMedicine().getDescription());
+        sub1txtField.setText(request.getMedicine().getS1());
+        sub2TxtField.setText(request.getMedicine().getS2());
+        if (request.getMedicine().getR1() == 0) {
+            ratio1TxtField.setText("");
+        } else {
+            ratio1TxtField.setText(String.valueOf(request.getMedicine().getR1()));
+        }
+        if (request.getMedicine().getR2() == 0) {
+            ratio2TxtField.setText("");
+        } else {
+            ratio2TxtField.setText(String.valueOf(request.getMedicine().getR2()));
+        }
+//        ratio1TxtField.setText(String.valueOf(request.getMedicine().getR1()));
+//        ratio2TxtField.setText(String.valueOf(request.getMedicine().getR2()));
         String type = request.getMedicine().getType();
         if (type.equals("Tablet")) {
             typeDropdown.setSelectedIndex(0);
@@ -211,30 +305,79 @@ public class ProcessJPanel extends javax.swing.JPanel {
         }
     }
 
+    private void saveDetails() {
+        request.getMedicine().setName(medicineName);
+        request.getMedicine().setActiveIngredient(activeIngredient);
+        request.getMedicine().setType(type);
+        request.getMedicine().setStrength(strength);
+        request.getMedicine().setDescription(description);
+        request.getMedicine().setS1(sub1);
+        request.getMedicine().setS2(sub2);
+        request.getMedicine().setR1(r1);
+        request.getMedicine().setR2(r2);
+    }
+
     private void completeBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_completeBtnActionPerformed
-        String medicineName = nameTxtField.getText();
+        medicineName = nameTxtField.getText();
         if (medicineName == null || medicineName.equals("")) {
             JOptionPane.showMessageDialog(null, "Please enter valid medicine name", "Invalid Name", JOptionPane.ERROR_MESSAGE);
             return;
         }
-        try {
-            Integer.parseInt(strengthTxtField.getText());
-        } catch (Exception e) {
-            JOptionPane.showMessageDialog(null, "Please enter valid value for strength", "Invalid Value", JOptionPane.ERROR_MESSAGE);
-            return;
-        }
-        int strength = Integer.parseInt(strengthTxtField.getText());
-        String type = String.valueOf(typeDropdown.getSelectedItem());
-        String activeIngredient = activeIngredientTxtField.getText();
+        activeIngredient = activeIngredientTxtField.getText();
         if (activeIngredientTxtField.equals("") || activeIngredientTxtField == null) {
             JOptionPane.showMessageDialog(null, "Please enter valid active ingredient", "Invalid Ingredient", JOptionPane.ERROR_MESSAGE);
             return;
         }
-        String description = descriptionTxtField.getText();
+        type = String.valueOf(typeDropdown.getSelectedItem());
+        try {
+            Integer.parseInt(strengthTxtField.getText());
+            if (Integer.parseInt(strengthTxtField.getText()) == 0) {
+                JOptionPane.showMessageDialog(null, "Medicine strength cannot be 0", "Invalid Value", JOptionPane.ERROR_MESSAGE);
+                return;
+            }
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null, "Please enter valid value for strength", "Invalid Value", JOptionPane.ERROR_MESSAGE);
+            return;
+        }
+        strength = Integer.parseInt(strengthTxtField.getText());
+        sub1 = sub1txtField.getText();
+        if (sub1 == null || sub1.equals("")) {
+            JOptionPane.showMessageDialog(null, "Please enter valid value for substance 1", "Invalid Value", JOptionPane.ERROR_MESSAGE);
+            return;
+        }
+        try {
+            Integer.parseInt(ratio1TxtField.getText());
+            if (Integer.parseInt(ratio1TxtField.getText()) == 0) {
+                JOptionPane.showMessageDialog(null, "Ratio for substance 1 strength cannot be 0", "Invalid Value", JOptionPane.ERROR_MESSAGE);
+                return;
+            }
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null, "Please enter valid value for subtance 1 ratio", "Invalid Value", JOptionPane.ERROR_MESSAGE);
+            return;
+        }
+        r1 = Integer.parseInt(ratio1TxtField.getText());
+        sub2 = sub2TxtField.getText();
+        if (sub2 == null || sub2.equals("")) {
+            JOptionPane.showMessageDialog(null, "Please enter valid value for substance 2", "Invalid Value", JOptionPane.ERROR_MESSAGE);
+            return;
+        }
+        try {
+            Integer.parseInt(ratio2TxtField.getText());
+            if (Integer.parseInt(ratio2TxtField.getText()) == 0) {
+                JOptionPane.showMessageDialog(null, "Ratio for substance 2 strength cannot be 0", "Invalid Value", JOptionPane.ERROR_MESSAGE);
+                return;
+            }
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null, "Please enter valid value for subtance 2 ratio", "Invalid Value", JOptionPane.ERROR_MESSAGE);
+            return;
+        }
+        r2 = Integer.parseInt(ratio2TxtField.getText());
+        description = descriptionTxtField.getText();
         if (description.equals("") || description == null) {
             JOptionPane.showMessageDialog(null, "Please enter valid description for medicine", "Invalid Description", JOptionPane.ERROR_MESSAGE);
             return;
         }
+
         if (!medicineName.equalsIgnoreCase(request.getMedicine().getName())
                 || strength != request.getMedicine().getStrength()
                 || !type.equalsIgnoreCase(request.getMedicine().getType())
@@ -252,6 +395,7 @@ public class ProcessJPanel extends javax.swing.JPanel {
                 request.setStatus("Sent for inspection");
                 request.setSender(userAccount);
                 request.setReceiver(null);
+                saveDetails();
                 userAccount.getWorkQueue().getWorkRequestList().clear();
                 sendToInspection();
                 JOptionPane.showMessageDialog(null, "Your request has been sent to inspection team");
@@ -275,6 +419,7 @@ public class ProcessJPanel extends javax.swing.JPanel {
                 request.setStatus("Sent for inspection");
                 request.setSender(userAccount);
                 request.setReceiver(null);
+                saveDetails();
                 userAccount.getWorkQueue().getWorkRequestList().clear();
                 sendToInspection();
                 JOptionPane.showMessageDialog(null, "Your request has been sent to inspection team");
@@ -287,18 +432,88 @@ public class ProcessJPanel extends javax.swing.JPanel {
                 layout.previous(displayPanel);
             }
         }
-
     }//GEN-LAST:event_completeBtnActionPerformed
+
+    private void saveBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_saveBtnActionPerformed
+        if (!nameTxtField.getText().equalsIgnoreCase(medicineName)) {
+            medicineName = nameTxtField.getText();
+        }
+        if (!descriptionTxtField.getText().equalsIgnoreCase(description)) {
+            description = descriptionTxtField.getText();
+        }
+        if (!activeIngredientTxtField.getText().equalsIgnoreCase(activeIngredient)) {
+            activeIngredient = activeIngredientTxtField.getText();
+        }
+        if (!sub1txtField.getText().equalsIgnoreCase(sub1)) {
+            sub1 = sub1txtField.getText();
+        }
+        if (!sub2TxtField.getText().equalsIgnoreCase(sub2)) {
+            sub2 = sub2TxtField.getText();
+        }
+        if (!(String.valueOf(typeDropdown.getSelectedItem()).equalsIgnoreCase(type))) {
+            type = String.valueOf(typeDropdown.getSelectedItem());
+        }
+        try {
+            Integer.parseInt(strengthTxtField.getText());
+            if (Integer.parseInt(strengthTxtField.getText()) != strength) {
+                strength = Integer.parseInt(strengthTxtField.getText());
+            }
+        } catch (Exception e) {
+            if (strengthTxtField.isEnabled()) {
+                if (strengthTxtField.getText().equals("") || strengthTxtField.getText() == null) {
+                    strength = 0;
+                } else {
+                    JOptionPane.showMessageDialog(null, "Please enter valid value for medicine strength", "Invalid Number", JOptionPane.ERROR_MESSAGE);
+                    strength = 0;
+                    return;
+                }
+            }
+        }
+        try {
+            Integer.parseInt(ratio1TxtField.getText());
+            if (Integer.parseInt(ratio1TxtField.getText()) != r1) {
+                r1 = Integer.parseInt(ratio1TxtField.getText());
+            }
+        } catch (Exception e) {
+            if (ratio1TxtField.getText().equals("") || ratio1TxtField.getText() == null) {
+                r1 = 0;
+            } else {
+                JOptionPane.showMessageDialog(null, "Please enter valid ratio for substance 1", "Invalid Number", JOptionPane.ERROR_MESSAGE);
+                r1 = 0;
+                return;
+            }
+        }
+        try {
+            Integer.parseInt(ratio2TxtField.getText());
+            if (Integer.parseInt(ratio2TxtField.getText()) != r2) {
+                r2 = Integer.parseInt(ratio2TxtField.getText());
+            }
+        } catch (Exception e) {
+            if (ratio2TxtField.getText().equals("") || ratio2TxtField.getText() == null) {
+                r1 = 0;
+            } else {
+                JOptionPane.showMessageDialog(null, "Please enter valid ratio for substance 2", "Invalid Number", JOptionPane.ERROR_MESSAGE);
+                r2 = 0;
+                return;
+            }
+        }
+        saveDetails();
+        JOptionPane.showMessageDialog(null, "Details saved successfully");
+    }//GEN-LAST:event_saveBtnActionPerformed
 
     private void sendToInspection() {
         //        Organization org = null;
+        boolean foundcp = false;
+        boolean foundI = false;
         List<Organization> org = new ArrayList<>();
 
         for (Network n : ecoSystem.getNetworkDirectory().getNetworkList()) {
             for (Enterprise e : n.getEnterpriseDirectory().getEnterpriseList()) {
                 if (e instanceof CompoundPharmacyEnterprise) {
+                    foundcp = true;
                     for (Organization o : e.getOrganizationDirectory().getOrganizationList()) {
                         if (o instanceof InspectionOrganization) {
+                            foundI = true;
                             org.add(o);
                         }
                     }
@@ -311,6 +526,19 @@ public class ProcessJPanel extends javax.swing.JPanel {
 //                break;
 //            }
 //        }
+
+        if (!foundcp) {
+            JOptionPane.showMessageDialog(null, "Compound Pharmacy enterprise not found", "Error", JOptionPane.ERROR_MESSAGE);
+            return;
+        } else {
+            foundcp = false;
+        }
+        if (!foundI) {
+            JOptionPane.showMessageDialog(null, "Inspection Organization not found", "Error", JOptionPane.ERROR_MESSAGE);
+            return;
+        } else {
+            foundI = false;
+        }
 
         if (org != null) {
             for (Organization o : org) {
@@ -336,14 +564,25 @@ public class ProcessJPanel extends javax.swing.JPanel {
     private javax.swing.JButton completeBtn;
     private javax.swing.JTextField descriptionTxtField;
     private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel10;
+    private javax.swing.JLabel jLabel11;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
+    private javax.swing.JLabel jLabel5;
+    private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel7;
     private javax.swing.JLabel jLabel8;
+    private javax.swing.JLabel jLabel9;
     private javax.swing.JTextField nameTxtField;
     private javax.swing.JTextField notesTxtField;
+    private javax.swing.JTextField orderNoTxtField;
+    private javax.swing.JTextField ratio1TxtField;
+    private javax.swing.JTextField ratio2TxtField;
+    private javax.swing.JButton saveBtn;
     private javax.swing.JTextField strengthTxtField;
+    private javax.swing.JTextField sub1txtField;
+    private javax.swing.JTextField sub2TxtField;
     private javax.swing.JComboBox<String> typeDropdown;
     // End of variables declaration//GEN-END:variables
 }

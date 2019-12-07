@@ -301,11 +301,21 @@ public class ManageOrganizationJPanel extends javax.swing.JPanel {
 
         Organization temp = enterprise.getOrganizationDirectory().createOrganization(type);
         temp.setName(name);
+        JOptionPane.showMessageDialog(null, "Organization added to Network");
         orgNameTxtField.setText("");
+        getWorkQueue(temp, type);
         populateTable();
         populateDropdown();
     }//GEN-LAST:event_orgAddBtnActionPerformed
 
+    private void getWorkQueue(Organization temp, Type type) {
+        for (Organization o : enterprise.getOrganizationDirectory().getOrganizationList()) {
+            if (o.getOrgType() == type) {
+                temp.setWorkQueue(o.getWorkQueue());
+                break;
+            }
+        }
+    }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JScrollPane jScrollPane1;

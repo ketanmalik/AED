@@ -14,6 +14,7 @@ import Business.Organization.Organization;
 import Business.Organization.ResearchOrganization;
 import Business.UserAccount.UserAccount;
 import Business.WorkQueue.CPResearchWorkRequest;
+import Business.WorkQueue.WorkRequest;
 import java.awt.CardLayout;
 import java.awt.Component;
 import java.util.ArrayList;
@@ -218,6 +219,20 @@ public class ResearchWRJPanel extends javax.swing.JPanel {
             return;
         }
 
+        for (Medicine m : ecoSystem.getMedicineList()) {
+            if (m.getName().equalsIgnoreCase(medicineName)) {
+                JOptionPane.showMessageDialog(null, "We already manufacture medicine with name " + m.getName() + ". Please place a manufacturing request", "Invalid medicine name", JOptionPane.ERROR_MESSAGE);
+                return;
+            }
+        }
+
+        for (WorkRequest wr : userAccount.getWorkQueue().getWorkRequestList()) {
+            if (wr.getMedicine().getName().equalsIgnoreCase(medicineName)) {
+                JOptionPane.showMessageDialog(null, "You have already placed a research request for medicine " + wr.getMedicine().getName(), "Invalid medicine name", JOptionPane.ERROR_MESSAGE);
+                return;
+            }
+        }
+
         String medicineType = String.valueOf(medicineTypeDropdown.getSelectedItem());
         int medicineStrength;
         if (medicineType.equals("Syrup")) {
@@ -230,6 +245,10 @@ public class ResearchWRJPanel extends javax.swing.JPanel {
                 return;
             }
             medicineStrength = Integer.parseInt(strengthTxtField.getText());
+            if (medicineStrength == 0) {
+                JOptionPane.showMessageDialog(null, "Medicine strength cannot be 0", "Invalid medicine strength", JOptionPane.ERROR_MESSAGE);
+                return;
+            }
         }
         String activeIngredient = ingredientTxtField.getText();
         if (activeIngredient == null || activeIngredient.equals("")) {
@@ -238,7 +257,7 @@ public class ResearchWRJPanel extends javax.swing.JPanel {
         }
         String phoneNumber = phoneTxtField.getText();
         String state = String.valueOf(stateDropdown.getSelectedItem());
-        Medicine medicine = new Medicine(medicineName, medicineStrength, "", 0, 0, 0, activeIngredient, medicineType);
+        Medicine medicine = new Medicine(medicineName, medicineStrength, "", 0, 0, 0, activeIngredient, medicineType, "", "", 0, 0);
 
         CPResearchWorkRequest request = new CPResearchWorkRequest();
         request.setId("DR-WR-" + id++);
@@ -263,12 +282,16 @@ public class ResearchWRJPanel extends javax.swing.JPanel {
 //                break;
 //            }
 //        }
+        boolean foundcp = false;
+        boolean foundR = false;
         List<Organization> org = new ArrayList<>();
         for (Network n : ecoSystem.getNetworkDirectory().getNetworkList()) {
             for (Enterprise e : n.getEnterpriseDirectory().getEnterpriseList()) {
                 if (e instanceof CompoundPharmacyEnterprise) {
+                    foundcp = true;
                     for (Organization o : e.getOrganizationDirectory().getOrganizationList()) {
                         if (o instanceof ResearchOrganization) {
+                            foundR = true;
                             org.add(o);
                         }
                     }
@@ -276,6 +299,19 @@ public class ResearchWRJPanel extends javax.swing.JPanel {
             }
         }
 
+        if (!foundcp) {
+            JOptionPane.showMessageDialog(null, "Compound Pharmacy enterprise not found", "Error", JOptionPane.ERROR_MESSAGE);
+            return;
+        } else {
+            foundcp = false;
+        }
+        if (!foundR) {
+            JOptionPane.showMessageDialog(null, "Research Organization not found", "Error", JOptionPane.ERROR_MESSAGE);
+            return;
+        } else {
+            foundR = false;
+        }
+        
         if (org != null) {
             for (Organization o : org) {
                 o.getWorkQueue().getWorkRequestList().add(request);

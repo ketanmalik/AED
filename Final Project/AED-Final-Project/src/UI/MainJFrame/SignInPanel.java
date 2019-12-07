@@ -29,7 +29,6 @@ public class SignInPanel extends javax.swing.JPanel {
     private UserAccount userFound = null;
     private Enterprise inEnterprise = null;
     private Organization inOrganization = null;
-   
 
     ;
 
@@ -53,6 +52,7 @@ public class SignInPanel extends javax.swing.JPanel {
         usernameTxtField = new javax.swing.JTextField();
         signInBtn = new javax.swing.JButton();
         passwordField = new javax.swing.JPasswordField();
+        showPassword = new javax.swing.JCheckBox();
 
         setBackground(new java.awt.Color(0, 153, 153));
 
@@ -75,24 +75,33 @@ public class SignInPanel extends javax.swing.JPanel {
             }
         });
 
+        showPassword.setForeground(new java.awt.Color(255, 255, 255));
+        showPassword.setText("Show Password");
+        showPassword.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                showPasswordActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGap(329, 329, 329)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(329, 329, 329)
+                        .addComponent(signInBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 107, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(28, 28, 28)
+                        .addComponent(showPassword))
+                    .addGroup(layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                             .addComponent(jLabel1)
                             .addComponent(jLabel2))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                             .addComponent(usernameTxtField, javax.swing.GroupLayout.DEFAULT_SIZE, 180, Short.MAX_VALUE)
-                            .addComponent(passwordField)))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(461, 461, 461)
-                        .addComponent(signInBtn)))
+                            .addComponent(passwordField))))
                 .addContainerGap(413, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
@@ -106,9 +115,11 @@ public class SignInPanel extends javax.swing.JPanel {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(passwordField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel2))
-                .addGap(27, 27, 27)
-                .addComponent(signInBtn)
-                .addContainerGap(473, Short.MAX_VALUE))
+                .addGap(42, 42, 42)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(signInBtn)
+                    .addComponent(showPassword))
+                .addContainerGap(458, Short.MAX_VALUE))
         );
     }// </editor-fold>//GEN-END:initComponents
 
@@ -170,11 +181,21 @@ public class SignInPanel extends javax.swing.JPanel {
         }
     }//GEN-LAST:event_signInBtnActionPerformed
 
+    private void showPasswordActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_showPasswordActionPerformed
+        if (showPassword.isSelected()) {
+            passwordField.setEchoChar((char) 0); //password = JPasswordField
+        } else {
+            passwordField.setEchoChar('*');
+        }
+
+    }//GEN-LAST:event_showPasswordActionPerformed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JPasswordField passwordField;
+    private javax.swing.JCheckBox showPassword;
     private javax.swing.JButton signInBtn;
     private javax.swing.JTextField usernameTxtField;
     // End of variables declaration//GEN-END:variables

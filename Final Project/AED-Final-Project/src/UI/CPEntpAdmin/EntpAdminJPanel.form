@@ -34,16 +34,16 @@
                       </Group>
                   </Group>
                   <Group type="102" alignment="0" attributes="0">
-                      <EmptySpace min="-2" pref="418" max="-2" attributes="0"/>
+                      <EmptySpace min="-2" pref="357" max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="0" max="-2" attributes="0">
                           <Component id="empWrChartBtn" max="32767" attributes="0"/>
                           <Component id="orgChartBtn" max="32767" attributes="0"/>
                           <Component id="medManufactureChartBtn" max="32767" attributes="0"/>
-                          <Component id="medResearchChartBtn" alignment="0" max="32767" attributes="0"/>
+                          <Component id="medResearchChartBtn" alignment="0" min="-2" pref="314" max="-2" attributes="0"/>
                       </Group>
                   </Group>
               </Group>
-              <EmptySpace pref="386" max="32767" attributes="0"/>
+              <EmptySpace pref="447" max="32767" attributes="0"/>
           </Group>
       </Group>
     </DimensionLayout>

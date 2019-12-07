@@ -151,13 +151,13 @@ public class EntpAdminJPanel extends javax.swing.JPanel {
                             .addComponent(titleLabel)
                             .addComponent(roleLabel)))
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(418, 418, 418)
+                        .addGap(357, 357, 357)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                             .addComponent(empWrChartBtn, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                             .addComponent(orgChartBtn, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                             .addComponent(medManufactureChartBtn, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(medResearchChartBtn, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
-                .addContainerGap(386, Short.MAX_VALUE))
+                            .addComponent(medResearchChartBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 314, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                .addContainerGap(447, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -195,7 +195,7 @@ public class EntpAdminJPanel extends javax.swing.JPanel {
     }//GEN-LAST:event_empWrChartBtnActionPerformed
 
     private void medManufactureChartBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_medManufactureChartBtnActionPerformed
-        String title = "Work Requests for manufacturing medicine";
+        String title = "Work Requests for manufacturing medicines";
         MedManufChart medManufChart = new MedManufChart(displayPanel, enterprise, ecoSystem, title);
         CardLayout layout = (CardLayout) displayPanel.getLayout();
         displayPanel.add("medManufChart", medManufChart);

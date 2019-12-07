@@ -408,7 +408,7 @@ public class ManageNetworkPanel extends javax.swing.JPanel {
             invalidFieldsMessage("name");
             return;
         }
-        if (location.equals("") || location == null || !RegexValidations.nameValidation(location)) {
+        if (location.equals("") || location == null || !RegexValidations.locationValidation(location)) {
             invalidFieldsMessage("location");
             return;
         }
@@ -429,7 +429,7 @@ public class ManageNetworkPanel extends javax.swing.JPanel {
             populateTable();
             clearFields();
             enableFields(false);
-            JOptionPane.showMessageDialog(null, "New network added in the Ecosystem. Please add Enterprises to this network", "Success", JOptionPane.PLAIN_MESSAGE);
+            JOptionPane.showMessageDialog(null, "New network added in the Ecosystem. Please add enterprises in this network", "Success", JOptionPane.PLAIN_MESSAGE);
         }
 
         if (mode.equals("update")) {

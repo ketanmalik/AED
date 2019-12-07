@@ -314,12 +314,17 @@ public class ManufactureWRJPanel extends javax.swing.JPanel {
 //                }
 //            }
 //        }
+        boolean foundcp = false;
+        boolean foundMf = false;
         List<Organization> org = new ArrayList<>();
         for (Network n : ecoSystem.getNetworkDirectory().getNetworkList()) {
             for (Enterprise e : n.getEnterpriseDirectory().getEnterpriseList()) {
                 if (e instanceof CompoundPharmacyEnterprise) {
+                    foundcp = true;
+                    e.getWorkQueue().getWorkRequestList().add(request);
                     for (Organization o : e.getOrganizationDirectory().getOrganizationList()) {
                         if (o instanceof ManufactureOrganization) {
+                            foundMf = true;
                             org.add(o);
                         }
                     }
@@ -327,10 +332,25 @@ public class ManufactureWRJPanel extends javax.swing.JPanel {
             }
         }
 
+        if (!foundcp) {
+            JOptionPane.showMessageDialog(null, "Compound Pharmacy enterprise not found", "Error", JOptionPane.ERROR_MESSAGE);
+            return;
+        } else {
+            foundcp = false;
+        }
+        if (!foundMf) {
+            JOptionPane.showMessageDialog(null, "Manufacturing Organization not found", "Error", JOptionPane.ERROR_MESSAGE);
+            return;
+        } else {
+            foundMf = false;
+        }
         if (org != null) {
             for (Organization o : org) {
+                System.out.println(o.getName());
                 o.getWorkQueue().getWorkRequestList().add(request);
             }
+        } else {
+            System.out.println("null");
         }
         if (org != null) {
 //            org.getWorkQueue().getWorkRequestList().add(request);

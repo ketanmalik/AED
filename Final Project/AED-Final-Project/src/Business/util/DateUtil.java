@@ -18,7 +18,6 @@ public class DateUtil {
         SimpleDateFormat sdf = new SimpleDateFormat("MM/dd/yyyy");
         try {
             Date date = sdf.parse(dateString);
-            System.out.println(date);
             return date;
         } catch (Exception e) {
 

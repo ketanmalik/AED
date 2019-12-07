@@ -243,17 +243,18 @@ public class ProcessJPanel extends javax.swing.JPanel {
         if (type.equals("Tablet")) {
             strengthLabel.setText("(mg)");
             strengthTxtField.setText(String.valueOf(request.getMedicine().getStrength()));
-            quantityLabel.setText("(units per pack)");
+            quantityLabel.setText("(unit(s) per pack)");
             typeDropdown.setSelectedIndex(0);
         } else if (type.equals("Capsule")) {
             strengthLabel.setText("(mg)");
             strengthTxtField.setText(String.valueOf(request.getMedicine().getStrength()));
-            quantityLabel.setText("(units per pack)");
+            quantityLabel.setText("(unit(s) per pack)");
             typeDropdown.setSelectedIndex(1);
         } else if (type.equals("Syrup")) {
             strengthLabel.setText("");
             strengthTxtField.setText("");
-            quantityLabel.setText("(ml)");
+            quantityLabel.setText("(unit(s) per pack)");
+//            quantityLabel.setText("(ml)");
             typeDropdown.setSelectedIndex(2);
         }
     }
@@ -265,6 +266,7 @@ public class ProcessJPanel extends javax.swing.JPanel {
         activeIngredientTxtField.setEnabled(false);
         descriptionTxtField.setEnabled(false);
     }
+
     private void backBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_backBtnActionPerformed
         displayPanel.remove(this);
         Component[] componentArray = displayPanel.getComponents();
@@ -281,24 +283,40 @@ public class ProcessJPanel extends javax.swing.JPanel {
         int quantity;
         try {
             Double.parseDouble(priceTxtField.getText());
+            if (Double.parseDouble(priceTxtField.getText()) == 0) {
+                JOptionPane.showMessageDialog(null, "Price cannot be 0", "Invalid Price", JOptionPane.ERROR_MESSAGE);
+                return;
+            }
         } catch (Exception e) {
             JOptionPane.showMessageDialog(null, "Please enter valid value for price", "Invalid Price", JOptionPane.ERROR_MESSAGE);
             return;
         }
         try {
             Double.parseDouble(marketPriceTxtField.getText());
+            if (Double.parseDouble(marketPriceTxtField.getText()) == 0) {
+                JOptionPane.showMessageDialog(null, "Market price cannot be 0", "Invalid Price", JOptionPane.ERROR_MESSAGE);
+                return;
+            }
         } catch (Exception e) {
-            JOptionPane.showMessageDialog(null, "Please enter valid value for price", "Invalid Price", JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(null, "Please enter valid value for market price", "Invalid Price", JOptionPane.ERROR_MESSAGE);
             return;
         }
         try {
             Integer.parseInt(quantityTxtField.getText());
+            if (Integer.parseInt(quantityTxtField.getText()) == 0) {
+                JOptionPane.showMessageDialog(null, "Quantity cannot be 0", "Invalid Quantity", JOptionPane.ERROR_MESSAGE);
+                return;
+            }
         } catch (Exception e) {
-            JOptionPane.showMessageDialog(null, "Please enter valid value for price", "Invalid Price", JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(null, "Please enter valid quantity", "Invalid Quantity", JOptionPane.ERROR_MESSAGE);
             return;
         }
         price = Double.parseDouble(priceTxtField.getText());
         marketPrice = Double.parseDouble(marketPriceTxtField.getText());
+        if (price >= marketPrice) {
+            JOptionPane.showMessageDialog(null, "We cannot manufacture medicines for prices higher than or equal to the market price", "Price mismatch", JOptionPane.ERROR_MESSAGE);
+            return;
+        }
         quantity = Integer.parseInt(quantityTxtField.getText());
 
         int input = JOptionPane.showOptionDialog(null, "Are you you want to complete " + request.getId() + " request", "Process Confirmation", JOptionPane.OK_OPTION, JOptionPane.INFORMATION_MESSAGE, null, null, null);
@@ -310,7 +328,7 @@ public class ProcessJPanel extends javax.swing.JPanel {
             request.getMedicine().setMarketPrice(marketPrice);
             request.getMedicine().setQuantity(quantity);
             request.setStatus("Request Completed");
-            request.setRequestDate(new Date());
+            request.setResolveDate(new Date());
             request.setSender(userAccount);
             request.setReceiver(null);
             userAccount.getWorkQueue().getWorkRequestList().clear();
