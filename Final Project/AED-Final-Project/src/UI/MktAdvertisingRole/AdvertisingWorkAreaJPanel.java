@@ -11,6 +11,7 @@ import Business.Organization.AdvertisingOrganization;
 import Business.Organization.Organization;
 import Business.UserAccount.UserAccount;
 import Business.WorkQueue.WorkRequest;
+import UI.RequestDetails.ViewRequest;
 import java.awt.CardLayout;
 import java.util.ArrayList;
 import java.util.List;
@@ -63,6 +64,7 @@ public class AdvertisingWorkAreaJPanel extends javax.swing.JPanel {
         jLabel4 = new javax.swing.JLabel();
         jScrollPane1 = new javax.swing.JScrollPane();
         openRequestTbl = new javax.swing.JTable();
+        viewOrderBtn = new javax.swing.JButton();
 
         setBackground(new java.awt.Color(0, 153, 153));
 
@@ -114,6 +116,13 @@ public class AdvertisingWorkAreaJPanel extends javax.swing.JPanel {
         ));
         jScrollPane1.setViewportView(openRequestTbl);
 
+        viewOrderBtn.setText("View Order Details");
+        viewOrderBtn.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                viewOrderBtnActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
         layout.setHorizontalGroup(
@@ -124,16 +133,16 @@ public class AdvertisingWorkAreaJPanel extends javax.swing.JPanel {
                     .addComponent(enterpriseLabel)
                     .addComponent(titleLabel)
                     .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                        .addGroup(layout.createSequentialGroup()
-                            .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 675, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addGap(29, 29, 29)
-                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                .addComponent(assignToMeBtn, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addComponent(processBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 113, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 675, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 675, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addComponent(jLabel3)
                         .addComponent(jLabel4)))
-                .addContainerGap(158, Short.MAX_VALUE))
+                .addGap(30, 30, 30)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(assignToMeBtn, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(viewOrderBtn, javax.swing.GroupLayout.DEFAULT_SIZE, 155, Short.MAX_VALUE)
+                    .addComponent(processBtn, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap(115, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -148,10 +157,12 @@ public class AdvertisingWorkAreaJPanel extends javax.swing.JPanel {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 170, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(34, 34, 34)
+                        .addGap(15, 15, 15)
                         .addComponent(assignToMeBtn)
                         .addGap(18, 18, 18)
-                        .addComponent(processBtn)))
+                        .addComponent(processBtn)
+                        .addGap(18, 18, 18)
+                        .addComponent(viewOrderBtn)))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 77, Short.MAX_VALUE)
                 .addComponent(jLabel3)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -229,6 +240,20 @@ public class AdvertisingWorkAreaJPanel extends javax.swing.JPanel {
         }
     }//GEN-LAST:event_processBtnActionPerformed
 
+    private void viewOrderBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_viewOrderBtnActionPerformed
+        int selectedRow = openRequestTbl.getSelectedRow();
+        if (selectedRow >= 0) {
+            WorkRequest wr = (WorkRequest) openRequestTbl.getValueAt(selectedRow, 0);
+            ViewRequest vr = new ViewRequest(displayPanel, wr);
+            CardLayout layout = (CardLayout) displayPanel.getLayout();
+            displayPanel.add("vr", vr);
+            layout.next(displayPanel);
+        } else {
+            JOptionPane.showMessageDialog(null, "Please select a row to view");
+            return;
+        }
+    }//GEN-LAST:event_viewOrderBtnActionPerformed
+
     private void setLabel() {
         titleLabel.setText("Welcome " + userAccount.getName());
         enterpriseLabel.setText("Enterprise: " + enterprise.getName());
@@ -246,5 +271,6 @@ public class AdvertisingWorkAreaJPanel extends javax.swing.JPanel {
     private javax.swing.JTable openRequestTbl;
     private javax.swing.JButton processBtn;
     private javax.swing.JLabel titleLabel;
+    private javax.swing.JButton viewOrderBtn;
     // End of variables declaration//GEN-END:variables
 }

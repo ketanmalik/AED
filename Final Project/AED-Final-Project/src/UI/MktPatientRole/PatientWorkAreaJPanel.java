@@ -12,6 +12,7 @@ import Business.UserAccount.UserAccount;
 import Business.util.DateUtil;
 import Business.WorkQueue.WorkRequest;
 import UI.MktDoctorRole.ManufactureWRJPanel;
+import UI.RequestDetails.ViewRequest;
 import java.awt.CardLayout;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
@@ -392,35 +393,10 @@ public class PatientWorkAreaJPanel extends javax.swing.JPanel {
         int selectedRow = requestTbl.getSelectedRow();
         if (selectedRow >= 0) {
             WorkRequest wr = (WorkRequest) requestTbl.getValueAt(selectedRow, 0);
-            requestIdTxtBox.setText(wr.getId());
-
-            try {
-                receiverTxtBox.setText(wr.getReceiver().getName());
-
-            } catch (Exception e) {
-                receiverTxtBox.setText("");
-            }
-
-            statusTxtBpx.setText(wr.getStatus());
-            requestDateTxtBox.setText(DateUtil.getDateToString(wr.getRequestDate()));
-            try {
-                resolveDateTxtBox.setText(DateUtil.getDateToString(wr.getResolveDate()));
-
-            } catch (Exception e) {
-                resolveDateTxtBox.setText("");
-            }
-
-            progressTxtBox.setText(wr.getProgress());
-            codeTxtBox.setText(wr.getCode() == 0 ? "" : String.valueOf(wr.getCode()));
-            phoneTxtBox.setText(String.valueOf(wr.getPhoneNo()));
-            medicineNameTxtBox.setText(wr.getMedicine().getName());
-            strengthTxtBox.setText(String.valueOf(wr.getMedicine().getStrength()));
-            descriptionTxtBox.setText(wr.getMedicine().getDescription());
-            priceTxtBox.setText(String.valueOf(wr.getMedicine().getPrice()));
-            marketPriceTxtBox.setText(String.valueOf(wr.getMedicine().getMarketPrice()));
-            quantityTxtBox.setText(String.valueOf(wr.getMedicine().getQuantity()));
-            activeIngredientTxtBox.setText(wr.getMedicine().getActiveIngredient());
-            medicintTypeTxtBox.setText(wr.getMedicine().getType());
+            ViewRequest vr = new ViewRequest(displayPanel, wr);
+            CardLayout layout = (CardLayout) displayPanel.getLayout();
+            displayPanel.add("vr", vr);
+            layout.next(displayPanel);
         } else {
             JOptionPane.showMessageDialog(null, "Please select a row to view");
             return;

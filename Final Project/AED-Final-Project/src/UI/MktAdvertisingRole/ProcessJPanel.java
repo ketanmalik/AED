@@ -310,7 +310,7 @@ public class ProcessJPanel extends javax.swing.JPanel {
             request.getMedicine().setMarketPrice(marketPrice);
             request.getMedicine().setQuantity(quantity);
             request.setStatus("Request Completed");
-            request.setRequestDate(new Date());
+            request.setResolveDate(new Date());
             request.setSender(userAccount);
             request.setReceiver(null);
             userAccount.getWorkQueue().getWorkRequestList().clear();

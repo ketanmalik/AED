@@ -35,7 +35,7 @@ public class DeliveryProcessJPanel extends javax.swing.JPanel {
     private WorkRequest request;
     private static int id = 1;
     private static int code = 1001;
-
+    
     public DeliveryProcessJPanel(JPanel displayPanel, UserAccount userAccount, Enterprise enterprise, Organization organization, EcoSystem ecoSystem, WorkRequest request) {
         initComponents();
         this.displayPanel = displayPanel;
@@ -56,8 +56,6 @@ public class DeliveryProcessJPanel extends javax.swing.JPanel {
     private void initComponents() {
 
         completeBtn = new javax.swing.JButton();
-        codeTxtField = new javax.swing.JTextField();
-        jLabel1 = new javax.swing.JLabel();
         backBtn = new javax.swing.JButton();
         jLabel2 = new javax.swing.JLabel();
         notesTxtField = new javax.swing.JTextField();
@@ -70,11 +68,6 @@ public class DeliveryProcessJPanel extends javax.swing.JPanel {
                 completeBtnActionPerformed(evt);
             }
         });
-
-        codeTxtField.setEnabled(false);
-
-        jLabel1.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel1.setText("Code for Pickup:");
 
         backBtn.setText("Back");
         backBtn.addActionListener(new java.awt.event.ActionListener() {
@@ -96,18 +89,13 @@ public class DeliveryProcessJPanel extends javax.swing.JPanel {
                         .addGap(407, 407, 407)
                         .addComponent(completeBtn))
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(25, 25, 25)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                        .addGap(26, 26, 26)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(layout.createSequentialGroup()
                                 .addComponent(jLabel2)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                                 .addComponent(notesTxtField, javax.swing.GroupLayout.PREFERRED_SIZE, 350, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                .addGroup(layout.createSequentialGroup()
-                                    .addComponent(jLabel1)
-                                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                    .addComponent(codeTxtField, javax.swing.GroupLayout.PREFERRED_SIZE, 350, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                .addComponent(backBtn)))))
+                            .addComponent(backBtn))))
                 .addContainerGap(451, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
@@ -115,26 +103,21 @@ public class DeliveryProcessJPanel extends javax.swing.JPanel {
             .addGroup(layout.createSequentialGroup()
                 .addGap(25, 25, 25)
                 .addComponent(backBtn)
-                .addGap(73, 73, 73)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel1)
-                    .addComponent(codeTxtField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGap(65, 65, 65)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel2)
                     .addComponent(notesTxtField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(32, 32, 32)
+                .addGap(65, 65, 65)
                 .addComponent(completeBtn)
-                .addContainerGap(546, Short.MAX_VALUE))
+                .addContainerGap(557, Short.MAX_VALUE))
         );
     }// </editor-fold>//GEN-END:initComponents
 
     private void completeBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_completeBtnActionPerformed
         int input = JOptionPane.showOptionDialog(null, "Are you you want to send " + request.getId() + " order for pickup?", "Process Confirmation", JOptionPane.OK_OPTION, JOptionPane.INFORMATION_MESSAGE, null, null, null);
-
+        
         if (input == JOptionPane.OK_OPTION) {
-            String progress = (codeTxtField.getText() == null || codeTxtField.getText().equals("")) ? "" : codeTxtField.getText();
-            request.setProgress(progress);
+            request.setMessage(notesTxtField.getText());
             request.setStatus("Available for pickup");
             request.setSender(userAccount);
             request.setReceiver(null);
@@ -167,9 +150,7 @@ public class DeliveryProcessJPanel extends javax.swing.JPanel {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton backBtn;
-    private javax.swing.JTextField codeTxtField;
     private javax.swing.JButton completeBtn;
-    private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JTextField notesTxtField;
     // End of variables declaration//GEN-END:variables
