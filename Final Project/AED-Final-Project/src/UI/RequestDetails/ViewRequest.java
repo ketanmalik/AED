@@ -64,6 +64,8 @@ public class ViewRequest extends javax.swing.JPanel {
         r1TxtField.setText(String.valueOf(wr.getMedicine().getR1()));
         r2TxtField.setText(String.valueOf(wr.getMedicine().getR2()));
         msgTxtField.setText(wr.getMessage());
+        stateTxtField1.setText(wr.getState());
+        originatorTxtField.setText(wr.getOriginator().getName() );
     }
 
     /**
@@ -119,6 +121,10 @@ public class ViewRequest extends javax.swing.JPanel {
         r2TxtField = new javax.swing.JTextField();
         jLabel6 = new javax.swing.JLabel();
         jLabel23 = new javax.swing.JLabel();
+        jLabel24 = new javax.swing.JLabel();
+        originatorTxtField = new javax.swing.JTextField();
+        jLabel25 = new javax.swing.JLabel();
+        stateTxtField1 = new javax.swing.JTextField();
 
         setBackground(new java.awt.Color(0, 153, 153));
 
@@ -244,6 +250,16 @@ public class ViewRequest extends javax.swing.JPanel {
         jLabel23.setForeground(new java.awt.Color(255, 255, 255));
         jLabel23.setText("(unit(s) per pack)");
 
+        jLabel24.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel24.setText("State:");
+
+        originatorTxtField.setEnabled(false);
+
+        jLabel25.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel25.setText("Request Originator:");
+
+        stateTxtField1.setEnabled(false);
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
         layout.setHorizontalGroup(
@@ -252,8 +268,13 @@ public class ViewRequest extends javax.swing.JPanel {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
                         .addGap(25, 25, 25)
+                        .addComponent(backBtn))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(411, 411, 411)
+                        .addComponent(jLabel17))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(71, 71, 71)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(backBtn)
                             .addGroup(layout.createSequentialGroup()
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                                     .addComponent(jLabel1)
@@ -265,7 +286,8 @@ public class ViewRequest extends javax.swing.JPanel {
                                     .addComponent(jLabel8)
                                     .addComponent(jLabel18)
                                     .addComponent(jLabel21)
-                                    .addComponent(jLabel22))
+                                    .addComponent(jLabel22)
+                                    .addComponent(jLabel24))
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                                     .addComponent(requestIdTxtBox)
@@ -277,13 +299,10 @@ public class ViewRequest extends javax.swing.JPanel {
                                     .addComponent(phoneTxtBox)
                                     .addComponent(s1TxtField)
                                     .addComponent(s2TxtField)
-                                    .addComponent(msgTxtField, javax.swing.GroupLayout.PREFERRED_SIZE, 220, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                .addGap(170, 170, 170)
-                                .addComponent(r1TxtField, javax.swing.GroupLayout.PREFERRED_SIZE, 220, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(411, 411, 411)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(msgTxtField, javax.swing.GroupLayout.PREFERRED_SIZE, 220, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(stateTxtField1, javax.swing.GroupLayout.PREFERRED_SIZE, 220, javax.swing.GroupLayout.PREFERRED_SIZE)))
                             .addGroup(layout.createSequentialGroup()
+                                .addGap(386, 386, 386)
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                                     .addComponent(jLabel15)
                                     .addComponent(jLabel14)
@@ -294,7 +313,8 @@ public class ViewRequest extends javax.swing.JPanel {
                                     .addComponent(jLabel12)
                                     .addComponent(jLabel13)
                                     .addComponent(jLabel19)
-                                    .addComponent(jLabel20))
+                                    .addComponent(jLabel20)
+                                    .addComponent(jLabel25))
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                     .addComponent(medicineNameTxtBox, javax.swing.GroupLayout.PREFERRED_SIZE, 220, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -311,9 +331,10 @@ public class ViewRequest extends javax.swing.JPanel {
                                         .addComponent(jLabel23))
                                     .addComponent(activeIngredientTxtBox, javax.swing.GroupLayout.PREFERRED_SIZE, 220, javax.swing.GroupLayout.PREFERRED_SIZE)
                                     .addComponent(medicintTypeTxtBox, javax.swing.GroupLayout.PREFERRED_SIZE, 220, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(r2TxtField, javax.swing.GroupLayout.PREFERRED_SIZE, 220, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                            .addComponent(jLabel17))))
-                .addContainerGap(140, Short.MAX_VALUE))
+                                    .addComponent(r2TxtField, javax.swing.GroupLayout.PREFERRED_SIZE, 220, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(originatorTxtField, javax.swing.GroupLayout.PREFERRED_SIZE, 220, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(r1TxtField, javax.swing.GroupLayout.PREFERRED_SIZE, 220, javax.swing.GroupLayout.PREFERRED_SIZE))))))
+                .addContainerGap(83, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -384,7 +405,13 @@ public class ViewRequest extends javax.swing.JPanel {
                     .addComponent(s2TxtField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel20)
                     .addComponent(r2TxtField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(217, Short.MAX_VALUE))
+                .addGap(18, 18, 18)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel24)
+                    .addComponent(originatorTxtField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel25)
+                    .addComponent(stateTxtField1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(175, Short.MAX_VALUE))
         );
     }// </editor-fold>//GEN-END:initComponents
 
@@ -429,6 +456,8 @@ public class ViewRequest extends javax.swing.JPanel {
     private javax.swing.JLabel jLabel21;
     private javax.swing.JLabel jLabel22;
     private javax.swing.JLabel jLabel23;
+    private javax.swing.JLabel jLabel24;
+    private javax.swing.JLabel jLabel25;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
@@ -440,6 +469,7 @@ public class ViewRequest extends javax.swing.JPanel {
     private javax.swing.JTextField medicineNameTxtBox;
     private javax.swing.JTextField medicintTypeTxtBox;
     private javax.swing.JTextField msgTxtField;
+    private javax.swing.JTextField originatorTxtField;
     private javax.swing.JTextField phoneTxtBox;
     private javax.swing.JTextField priceTxtBox;
     private javax.swing.JTextField quantityTxtBox;
@@ -451,6 +481,7 @@ public class ViewRequest extends javax.swing.JPanel {
     private javax.swing.JTextField resolveDateTxtBox;
     private javax.swing.JTextField s1TxtField;
     private javax.swing.JTextField s2TxtField;
+    private javax.swing.JTextField stateTxtField1;
     private javax.swing.JTextField statusTxtBpx;
     private javax.swing.JTextField strengthTxtBox;
     // End of variables declaration//GEN-END:variables

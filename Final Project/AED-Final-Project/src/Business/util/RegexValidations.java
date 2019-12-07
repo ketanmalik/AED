@@ -21,7 +21,7 @@ public class RegexValidations {
     }
 
         public static boolean locationValidation(String str) {
-        Pattern p = Pattern.compile("^([a-zA-Z][a-zA-Z\\s\\-0-9]*[^,\\s]$)|([a-zA-Z][,]{0,1}[a-zA-Z\\s0-9]*[^,\\s]$)");
+        Pattern p = Pattern.compile("^([a-zA-Z][a-zA-Z\\s\\-0-9]*[^,\\s]$)|([a-zA-Z]+[,]{0,1}[a-zA-Z\\s0-9]*[^,\\s]$)");
         Matcher m = p.matcher(str);
         return m.matches();
     }

@@ -149,18 +149,17 @@ public class PatientWorkAreaJPanel extends javax.swing.JPanel {
                 .addComponent(enterpriseLabel)
                 .addGap(35, 35, 35)
                 .addComponent(description1)
+                .addGap(35, 35, 35)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 350, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(35, 35, 35)
-                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 170, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(54, 54, 54)
+                        .addGap(80, 80, 80)
                         .addComponent(requestMedicineBtn)
                         .addGap(18, 18, 18)
                         .addComponent(viewOrderBtn)
                         .addGap(18, 18, 18)
                         .addComponent(viewMedicineBtn)))
-                .addContainerGap(456, Short.MAX_VALUE))
+                .addContainerGap(276, Short.MAX_VALUE))
         );
     }// </editor-fold>//GEN-END:initComponents
 

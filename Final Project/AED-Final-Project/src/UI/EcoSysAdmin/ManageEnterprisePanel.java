@@ -121,6 +121,7 @@ public class ManageEnterprisePanel extends javax.swing.JPanel {
         employeesTxtField = new javax.swing.JTextField();
         empLabel = new javax.swing.JLabel();
         orgLabel = new javax.swing.JLabel();
+        deleteBtn = new javax.swing.JButton();
 
         setBackground(new java.awt.Color(0, 153, 153));
 
@@ -195,6 +196,13 @@ public class ManageEnterprisePanel extends javax.swing.JPanel {
         orgLabel.setForeground(new java.awt.Color(255, 255, 255));
         orgLabel.setText("(Enterprise admins can add organization)");
 
+        deleteBtn.setText("Delete");
+        deleteBtn.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                deleteBtnActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
         layout.setHorizontalGroup(
@@ -211,7 +219,8 @@ public class ManageEnterprisePanel extends javax.swing.JPanel {
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                     .addComponent(updateBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
                                     .addComponent(viewBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(addBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                                    .addComponent(addBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(deleteBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)))
                             .addGroup(layout.createSequentialGroup()
                                 .addGap(288, 288, 288)
                                 .addComponent(confirmBtn))))
@@ -284,7 +293,9 @@ public class ManageEnterprisePanel extends javax.swing.JPanel {
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addComponent(viewBtn)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(updateBtn)))
+                        .addComponent(updateBtn)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(deleteBtn)))
                 .addContainerGap(205, Short.MAX_VALUE))
         );
     }// </editor-fold>//GEN-END:initComponents
@@ -316,6 +327,12 @@ public class ManageEnterprisePanel extends javax.swing.JPanel {
         }
     }
 
+    private void clearFields(){
+        nameTxtField.setText("");
+        employeesTxtField.setText("");
+        organizationDropdown.setSelectedItem(null);
+    }
+    
     private void addBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addBtnActionPerformed
         mode = "add";
         enableFields(true);
@@ -423,10 +440,30 @@ public class ManageEnterprisePanel extends javax.swing.JPanel {
         }
     }//GEN-LAST:event_confirmBtnActionPerformed
 
+    private void deleteBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_deleteBtnActionPerformed
+        int selectedRow = enterpriseTbl.getSelectedRow();
+        if (selectedRow >= 0) {
+            Enterprise entpToDelete = (Enterprise) enterpriseTbl.getValueAt(selectedRow, 0);
+            Network inNetwork = (Network) enterpriseTbl.getValueAt(selectedRow, 1);
+            inNetwork.getEnterpriseDirectory().getEnterpriseList().remove(entpToDelete);
+            populateTable();
+            populateDropdowns();
+            clearFields();
+            enableFields(false);
+            empLabel.setVisible(false);
+            orgLabel.setVisible(false);
+            JOptionPane.showMessageDialog(null, "Enterprise deleted from Network", "Success", JOptionPane.PLAIN_MESSAGE);
+        } else {
+            JOptionPane.showMessageDialog(null, "Please select an enterprise to delete");
+
+        }
+    }//GEN-LAST:event_deleteBtnActionPerformed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton addBtn;
     private javax.swing.JButton confirmBtn;
+    private javax.swing.JButton deleteBtn;
     private javax.swing.JLabel empLabel;
     private javax.swing.JTextField employeesTxtField;
     private javax.swing.JTable enterpriseTbl;

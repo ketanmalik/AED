@@ -363,7 +363,7 @@ public class ManageUserJPanel extends javax.swing.JPanel {
         }
         String empName = String.valueOf(empDropdown.getSelectedItem());
         if (empName == null || empName.equals("") || empName.equals("null")) {
-            JOptionPane.showMessageDialog(null, "Please create an employee in this organization first", "Invalid Entry", JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(null, "Please add employees in this organization first", "No Employee Found", JOptionPane.ERROR_MESSAGE);
             return;
         }
 
@@ -382,16 +382,6 @@ public class ManageUserJPanel extends javax.swing.JPanel {
             return;
         }
 
-        if (!validateUsername(username)) {
-            JOptionPane.showMessageDialog(null, "The username is already taken. Please enter a different username", "Duplicate Username", JOptionPane.ERROR_MESSAGE);
-            return;
-        }
-
-        if (empName == null || empName.equals("") || empName.equals("null")) {
-            JOptionPane.showMessageDialog(null, "Please add employees in this organization first", "No Employee Found", JOptionPane.ERROR_MESSAGE);
-            return;
-        }
-
         if (type == null) {
             for (Organization o : enterprise.getOrganizationDirectory().getOrganizationList()) {
                 if (o.getName().equals(s)) {
@@ -401,6 +391,11 @@ public class ManageUserJPanel extends javax.swing.JPanel {
             }
         }
         if (opr.equalsIgnoreCase("add")) {
+
+            if (!validateUsername(username)) {
+                JOptionPane.showMessageDialog(null, "The username is already taken. Please enter a different username", "Duplicate Username", JOptionPane.ERROR_MESSAGE);
+                return;
+            }
             Organization org = null;
             Employee emp = null;
             Role role = getRole(r);

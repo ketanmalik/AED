@@ -405,13 +405,17 @@ public class ProcessJPanel extends javax.swing.JPanel {
 
     private void sendToInspection() {
 //        Organization org = null;
+        boolean foundcp = false;
+        boolean foundI = false;
         List<Organization> org = new ArrayList<>();
 
         for (Network n : ecoSystem.getNetworkDirectory().getNetworkList()) {
             for (Enterprise e : n.getEnterpriseDirectory().getEnterpriseList()) {
                 if (e instanceof CompoundPharmacyEnterprise) {
+                    foundcp = true;
                     for (Organization o : e.getOrganizationDirectory().getOrganizationList()) {
                         if (o instanceof InspectionOrganization) {
+                            foundI = true;
                             org.add(o);
                         }
                     }
@@ -424,6 +428,18 @@ public class ProcessJPanel extends javax.swing.JPanel {
 //                break;
 //            }
 //        }
+        if (!foundcp) {
+            JOptionPane.showMessageDialog(null, "Compound Pharmacy enterprise not found", "Error", JOptionPane.ERROR_MESSAGE);
+            return;
+        } else {
+            foundcp = false;
+        }
+        if (!foundI) {
+            JOptionPane.showMessageDialog(null, "Inspection Organization not found", "Error", JOptionPane.ERROR_MESSAGE);
+            return;
+        } else {
+            foundI = false;
+        }
 
         if (org != null) {
             for (Organization o : org) {

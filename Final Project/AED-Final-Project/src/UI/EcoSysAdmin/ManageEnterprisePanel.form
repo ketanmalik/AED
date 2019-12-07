@@ -34,6 +34,7 @@
                                   <Component id="updateBtn" alignment="0" min="-2" pref="100" max="-2" attributes="0"/>
                                   <Component id="viewBtn" alignment="0" min="-2" pref="100" max="-2" attributes="0"/>
                                   <Component id="addBtn" alignment="0" min="-2" pref="100" max="-2" attributes="0"/>
+                                  <Component id="deleteBtn" min="-2" pref="100" max="-2" attributes="0"/>
                               </Group>
                           </Group>
                           <Group type="102" alignment="0" attributes="0">
@@ -131,6 +132,8 @@
                       <Component id="viewBtn" min="-2" max="-2" attributes="0"/>
                       <EmptySpace type="unrelated" max="-2" attributes="0"/>
                       <Component id="updateBtn" min="-2" max="-2" attributes="0"/>
+                      <EmptySpace type="unrelated" max="-2" attributes="0"/>
+                      <Component id="deleteBtn" min="-2" max="-2" attributes="0"/>
                   </Group>
               </Group>
               <EmptySpace pref="205" max="32767" attributes="0"/>
@@ -311,6 +314,14 @@
         </Property>
         <Property name="text" type="java.lang.String" value="(Enterprise admins can add organization)"/>
       </Properties>
+    </Component>
+    <Component class="javax.swing.JButton" name="deleteBtn">
+      <Properties>
+        <Property name="text" type="java.lang.String" value="Delete"/>
+      </Properties>
+      <Events>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="deleteBtnActionPerformed"/>
+      </Events>
     </Component>
   </SubComponents>
 </Form>

@@ -372,6 +372,8 @@ public class InspectorProcessJPanel extends javax.swing.JPanel {
     }//GEN-LAST:event_runInspectionBtnActionPerformed
     private void sendToDelivery() {
 //        Organization org = null;
+        boolean foundcp = false;
+        boolean foundI = false;
         List<Organization> org = new ArrayList<>();
 
 //        for (Organization o : enterprise.getOrganizationDirectory().getOrganizationList()) {
@@ -383,13 +385,28 @@ public class InspectorProcessJPanel extends javax.swing.JPanel {
         for (Network n : ecoSystem.getNetworkDirectory().getNetworkList()) {
             for (Enterprise e : n.getEnterpriseDirectory().getEnterpriseList()) {
                 if (e instanceof CompoundPharmacyEnterprise) {
+                    foundcp = true;
                     for (Organization o : e.getOrganizationDirectory().getOrganizationList()) {
                         if (o instanceof DeliveryOrganization) {
+                            foundI = true;
                             org.add(o);
                         }
                     }
                 }
             }
+        }
+
+        if (!foundcp) {
+            JOptionPane.showMessageDialog(null, "Compound Pharmacy enterprise not found", "Error", JOptionPane.ERROR_MESSAGE);
+            return;
+        } else {
+            foundcp = false;
+        }
+        if (!foundI) {
+            JOptionPane.showMessageDialog(null, "Delivery Organization not found", "Error", JOptionPane.ERROR_MESSAGE);
+            return;
+        } else {
+            foundI = false;
         }
 
         if (org != null) {
@@ -402,19 +419,36 @@ public class InspectorProcessJPanel extends javax.swing.JPanel {
 
     private void sendToMarketing() {
 //        Organization org = null;
+        boolean foundM = false;
+        boolean foundA = false;
         List<Organization> org = new ArrayList<>();
-
         for (Network n : ecoSystem.getNetworkDirectory().getNetworkList()) {
             for (Enterprise e : n.getEnterpriseDirectory().getEnterpriseList()) {
                 if (e instanceof MarketingEnterprise) {
+                    foundM = true;
                     for (Organization o : e.getOrganizationDirectory().getOrganizationList()) {
                         if (o instanceof AdvertisingOrganization) {
+                            foundA = true;
                             org.add(o);
                         }
                     }
                 }
             }
         }
+
+        if (!foundM) {
+            JOptionPane.showMessageDialog(null, "Marketing enterprise not found", "Error", JOptionPane.ERROR_MESSAGE);
+            return;
+        } else {
+            foundM = false;
+        }
+        if (!foundA) {
+            JOptionPane.showMessageDialog(null, "Advertising Organization not found", "Error", JOptionPane.ERROR_MESSAGE);
+            return;
+        } else {
+            foundA = false;
+        }
+
         if (org != null) {
 //            org.getWorkQueue().getWorkRequestList().add(request);
             for (Organization o : org) {

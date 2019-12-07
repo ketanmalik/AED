@@ -313,7 +313,7 @@ public class ProcessJPanel extends javax.swing.JPanel {
         }
         price = Double.parseDouble(priceTxtField.getText());
         marketPrice = Double.parseDouble(marketPriceTxtField.getText());
-        if (price <= marketPrice) {
+        if (price >= marketPrice) {
             JOptionPane.showMessageDialog(null, "We cannot manufacture medicines for prices higher than or equal to the market price", "Price mismatch", JOptionPane.ERROR_MESSAGE);
             return;
         }

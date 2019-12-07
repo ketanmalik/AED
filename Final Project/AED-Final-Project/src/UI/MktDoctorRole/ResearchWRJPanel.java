@@ -282,12 +282,16 @@ public class ResearchWRJPanel extends javax.swing.JPanel {
 //                break;
 //            }
 //        }
+        boolean foundcp = false;
+        boolean foundR = false;
         List<Organization> org = new ArrayList<>();
         for (Network n : ecoSystem.getNetworkDirectory().getNetworkList()) {
             for (Enterprise e : n.getEnterpriseDirectory().getEnterpriseList()) {
                 if (e instanceof CompoundPharmacyEnterprise) {
+                    foundcp = true;
                     for (Organization o : e.getOrganizationDirectory().getOrganizationList()) {
                         if (o instanceof ResearchOrganization) {
+                            foundR = true;
                             org.add(o);
                         }
                     }
@@ -295,6 +299,19 @@ public class ResearchWRJPanel extends javax.swing.JPanel {
             }
         }
 
+        if (!foundcp) {
+            JOptionPane.showMessageDialog(null, "Compound Pharmacy enterprise not found", "Error", JOptionPane.ERROR_MESSAGE);
+            return;
+        } else {
+            foundcp = false;
+        }
+        if (!foundR) {
+            JOptionPane.showMessageDialog(null, "Research Organization not found", "Error", JOptionPane.ERROR_MESSAGE);
+            return;
+        } else {
+            foundR = false;
+        }
+        
         if (org != null) {
             for (Organization o : org) {
                 o.getWorkQueue().getWorkRequestList().add(request);

@@ -35,7 +35,7 @@ public class ConfigureASystem {
 
         // 1. Creating EcoSystem Admin Employee & User Account
         Employee employee = system.getEmployeeDirectory().createEmployee("Ecosystem Admin");
-        UserAccount sysAdmin = system.getUserAccountDirectory().createUserAccount(employee.getName(), "a", "a", employee, new SysAdminRole(), "sysAdmin");
+        UserAccount sysAdmin = system.getUserAccountDirectory().createUserAccount(employee.getName(), "ecosysadmin", "Gmail@123", employee, new SysAdminRole(), "sysAdmin");
 
         // 2. Creating Boston Network under EcoSystem Admin
         Network network = system.addNetwork();
@@ -65,11 +65,11 @@ public class ConfigureASystem {
 
         // 5. Creating CP Admin Employee & User Account
         Employee cpEmployee = compoundEnterprise.getEmployeeDirectory().createEmployee("Compound Pharmacy Admin");
-        UserAccount cpAdmin = compoundEnterprise.getUserAccountDirectory().createUserAccount(cpEmployee.getName(), "cp", "cp", cpEmployee, new CPEntpAdmin(), "cpAdmin");
+        UserAccount cpAdmin = compoundEnterprise.getUserAccountDirectory().createUserAccount(cpEmployee.getName(), "cpadmin", "Gmail@123", cpEmployee, new CPEntpAdmin(), "cpAdmin");
 
         // 6. Creating mktAdmin for Marketing
         Employee mktEmployee = marketingEnterprise.getEmployeeDirectory().createEmployee("Marketing Admin");
-        UserAccount mktAdmin = marketingEnterprise.getUserAccountDirectory().createUserAccount(mktEmployee.getName(), "mk", "mk", mktEmployee, new MktEntpAdmin(), "mktAdmin");
+        UserAccount mktAdmin = marketingEnterprise.getUserAccountDirectory().createUserAccount(mktEmployee.getName(), "mkadmin", "Gmail@123", mktEmployee, new MktEntpAdmin(), "mktAdmin");
 
         // 7. Creating Organizations under CP Enterprise
         for (Network n : system.getNetworkDirectory().getNetworkList()) {
@@ -104,26 +104,26 @@ public class ConfigureASystem {
                 for (Organization o : e.getOrganizationDirectory().getOrganizationList()) {
                     if (o.getName().equals("Manufacturing Organization")) {
                         tempEmp = o.getEmployeeDirectory().createEmployee("Manufacturer-1");
-                        o.getUserAccountDirectory().createUserAccount(tempEmp.getName(), "cm", "cm", tempEmp, o.getSupportedRole().get(0), "cm");
+                        o.getUserAccountDirectory().createUserAccount(tempEmp.getName(), "cpmadmin", "Gmail@123", tempEmp, o.getSupportedRole().get(0), "cm");
                     } else if (o.getName().equals("Research Organization")) {
                         tempEmp = o.getEmployeeDirectory().createEmployee("Researcher-1");
-                        o.getUserAccountDirectory().createUserAccount(tempEmp.getName(), "cr", "cr", tempEmp, o.getSupportedRole().get(0), "cr");
+                        o.getUserAccountDirectory().createUserAccount(tempEmp.getName(), "cpradmin", "Gmail@123", tempEmp, o.getSupportedRole().get(0), "cr");
                     } else if (o.getName().equals("Inspection Organization")) {
                         tempEmp = o.getEmployeeDirectory().createEmployee("Inspector-1");
-                        o.getUserAccountDirectory().createUserAccount(tempEmp.getName(), "ci", "ci", tempEmp, o.getSupportedRole().get(0), "ci");
+                        o.getUserAccountDirectory().createUserAccount(tempEmp.getName(), "cpiadmin", "Gmail@123", tempEmp, o.getSupportedRole().get(0), "ci");
                     } else if (o.getName().equals("Delivery Organization")) {
                         tempEmp = o.getEmployeeDirectory().createEmployee("Delivery-Manager-1");
-                        o.getUserAccountDirectory().createUserAccount(tempEmp.getName(), "cd", "cd", tempEmp, o.getSupportedRole().get(0), "cd");
+                        o.getUserAccountDirectory().createUserAccount(tempEmp.getName(), "cpdadmin", "Gmail@123", tempEmp, o.getSupportedRole().get(0), "cd");
                     } else if (o.getName().equals("Advertising Organization")) {
                         tempEmp = o.getEmployeeDirectory().createEmployee("Advertising-Supervisor-1");
-                        o.getUserAccountDirectory().createUserAccount(tempEmp.getName(), "ma", "ma", tempEmp, o.getSupportedRole().get(0), "ma");
+                        o.getUserAccountDirectory().createUserAccount(tempEmp.getName(), "mkaadmin", "Gmail@123", tempEmp, o.getSupportedRole().get(0), "ma");
                     } else if (o.getName().equals("Doctor Organization")) {
                         tempEmp = o.getEmployeeDirectory().createEmployee("Doctor-HR-1");
-                        o.getUserAccountDirectory().createUserAccount(tempEmp.getName(), "md", "md", tempEmp, o.getSupportedRole().get(0), "md");
+                        o.getUserAccountDirectory().createUserAccount(tempEmp.getName(), "mkdadmin", "Gmail@123", tempEmp, o.getSupportedRole().get(0), "md");
                         System.out.println("role:" + o.getSupportedRole().get(0));
                     } else if (o.getName().equals("Patient Organization")) {
                         tempEmp = o.getEmployeeDirectory().createEmployee("Patient-HR-1");
-                        o.getUserAccountDirectory().createUserAccount(tempEmp.getName(), "mp", "mp", tempEmp, o.getSupportedRole().get(0), "mp");
+                        o.getUserAccountDirectory().createUserAccount(tempEmp.getName(), "mkpadmin", "Gmail@123", tempEmp, o.getSupportedRole().get(0), "mp");
                     }
                 }
             }
